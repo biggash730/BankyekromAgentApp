@@ -1,0 +1,19 @@
+page-dashboard {
+    .card-ios {
+        box-shadow: 1px 1px 1px 1px #f1f0f0 !important;
+        border: solid 1px #f1f0f0 !important;
+        border-radius: 5px !important;
+        max-height: 142.44px !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+    }
+    .card-header-ios {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #333;
+        padding: 16px;
+        padding-bottom: 0px;
+        padding-left: 5px;
+    }
+}

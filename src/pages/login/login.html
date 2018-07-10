@@ -1,0 +1,37 @@
+<ion-content>
+    <div padding class="login-page">
+        <ion-row>
+            <ion-col>
+                <img src="assets/images/logo200.png" />
+                <h1 style="color: white;font-size: 28px; font-family: script-mt-bold-font; margin-top: 0px;">Lending Square</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-list inset>
+                    <p style="color: #ffffff;font-weight: 400;">Login with your phone number and password
+                    </p>
+                    <ion-item>
+                        <!--<ion-label fixed>Phone Number</ion-label>-->
+                        <ion-icon name="md-call" item-start color="lightgrey" class="input-icon"> +233 </ion-icon>
+                        <ion-input type="tel" [(ngModel)]="phoneNumber" placeholder="Phone Number" maxlength="9"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <!--<ion-label fixed>Password</ion-label>-->
+                        <ion-icon name="md-lock" item-start color="lightgrey" class="input-icon"></ion-icon>
+                        <ion-input type="password" [(ngModel)]="password" placeholder="password"></ion-input>
+                    </ion-item>
+                    <!--<br/>-->
+                    <button ion-button type="submit" block class="login-button" (click)="login()">Login</button>
+                    <p style="color: #ffffff;font-weight: 400;">Not verified? <a style="color:#007AFF" (click)="verify()">Verify phone number</a>
+                    </p>
+                    <p style="color: #ffffff;font-weight: 400;">Forgotten password? <a style="color:#007AFF" (click)="reset()">Reset</a>
+                    </p>
+
+                    <!--<p style="color: #ffffff;font-weight: 400;">New User? <a style="color:#007AFF" (click)="signup()">Signup</a>
+                    </p>-->
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
