@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController, Events} from 'ionic-angular';
+import { Nav, Platform, AlertController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -58,7 +58,7 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
-  signout(){
+  logout() {
     //let self = this
     let alert = this.alertCtrl.create({
       title: 'App Logout',
@@ -76,22 +76,19 @@ export class MyApp {
           handler: () => {
             //console.log('Cancel the request');
             this.backendService.logout().subscribe(data => {
-            //console.log(data)
-            if(data.success) 
-            {
-              this.storage.remove(this.userService.HAS_LOGGED_IN)
-              this.nav.parent.parent.setRoot(IntroPage);
-            }
-          }, (error) => {
-            console.log(error);
-          });
-          //this.storage.remove(this.userService.HAS_LOGGED_IN)
-          //this.nav.parent.parent.setRoot(LoginPage);
+              //console.log(data)
+              if (data.success) {
+                this.storage.remove(this.userService.HAS_LOGGED_IN)
+                this.nav.setRoot(IntroPage);
+              }
+            }, (error) => {
+              console.log(error);
+            });
           }
         }
       ]
     });
-    alert.present();   
-    
+    alert.present();
+
   }
 }

@@ -37,7 +37,7 @@ export class UserDataProvider {
   constructor(public events: Events, public storage: Storage) {
     //var self = this;
     //this.baseUrl = "https://xxx.azurewebsites.net/api/";
-    this.baseUrl = "http://localhost:9001/api/";
+    this.baseUrl = "http://localhost:1501/api/";
     storage.ready().then(() => {
     })
   }

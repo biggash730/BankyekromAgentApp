@@ -3,10 +3,7 @@ import { Component} from '@angular/core';
 import { UserDataProvider } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
-import { SignupPage } from '../../pages/signup/signup';
 import { HomePage } from '../../pages/home/home';
-import { VerifyPage } from '../../pages/verify/verify';
-import { ResetRequestPage } from '../../pages/reset-request/reset-request';
 
 /**
  * Generated class for the LoginPage page.
@@ -21,8 +18,7 @@ import { ResetRequestPage } from '../../pages/reset-request/reset-request';
   
 })
 export class LoginPage {
-  cities:any[]
-  phoneNumber:string;
+  username:string;
   password:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public alertCtrl: AlertController,public loadingCtrl:LoadingController, public backendService: BackendProvider, public storage: Storage) {
@@ -32,42 +28,23 @@ export class LoginPage {
   ionViewDidLoad() {
     this.storage.get(this.userService.PHONENUMBER).then((val) => {
       //console.log(val)
-      this.phoneNumber = JSON.parse(val)
+      this.username = JSON.parse(val)
     });
-  }
-
-  signup(){
-    this.navCtrl.push(SignupPage);
-  }
-  verify(){
-    this.navCtrl.push(VerifyPage);
-  }
-  reset(){
-    this.navCtrl.push(ResetRequestPage);
   }
 
   login(){
     var obj = {
-        userName: this.phoneNumber, password: this.password
+        username: this.username, password: this.password
       }
       //console.log(obj)
-    if (!obj.userName) {
+    if (!obj.username) {
       let alert = this.alertCtrl.create({
-          title:'Phone Number Error', 
-          subTitle:'Please enter a valid phone number',
+          title:'Username Error', 
+          subTitle:'Please enter a valid username',
           buttons:['OK']
         });
         alert.present();        
         return;
-    }
-    else if(obj.userName.startsWith("0")){
-      let alert = this.alertCtrl.create({
-        title:'Phone Number Error', 
-        subTitle:'Please enter a valid phone number without the preceding zero (0)',
-        buttons:['OK']
-      });
-      alert.present();        
-      return;
     }
     else if (!obj.password) {
       let alert = this.alertCtrl.create({
@@ -82,9 +59,7 @@ export class LoginPage {
       let loader = this.loadingCtrl.create({
         content: "Login Initiated..."
       });
-      loader.present();   
-
-      obj.userName = "0"+obj.userName;
+      loader.present();  
 
       this.backendService.login(obj).subscribe(data => {
           //console.log(data)
@@ -97,13 +72,10 @@ export class LoginPage {
                 buttons:['OK']
               });
               alert.present();
-              //save the user details and set that login is successful
-              //this.userService.setUsername(data.data.name);
               this.userService.setLoggedIn()
               this.userService.setCurrentUser(data.data)
               this.userService.setToken(data.data.token)
-              //redirect to the verification page
-              this.navCtrl.push(HomePage);
+              this.navCtrl.setRoot(HomePage)
             }
             else{
               let alert = this.alertCtrl.create({

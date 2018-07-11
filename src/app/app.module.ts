@@ -14,16 +14,11 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
-import { VerifyPage } from '../pages/verify/verify';
-import { ResendVerificationPage } from '../pages/resend-verification/resend-verification';
-import { SignupPage } from '../pages/signup/signup';
 import { ProfilePage } from '../pages/profile/profile';
 import { PhotoPage } from '../pages/photo/photo';
 import { UpdateProfilePage } from '../pages/update-profile/update-profile';
 import { DashboardPage } from '../pages/dashboard/dashboard';;
 import { SettingsPage } from '../pages/settings/settings';
-import { ResetPage } from '../pages/reset/reset';
-import { ResetRequestPage } from '../pages/reset-request/reset-request';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -47,11 +42,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ListPage,
     IntroPage,
     LoginPage,
-    SignupPage,
-    VerifyPage,
-    ResendVerificationPage,
-    ResetPage,
-    ResetRequestPage,
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
@@ -73,11 +63,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ListPage,
     IntroPage,
     LoginPage,
-    SignupPage,
-    VerifyPage,
-    ResendVerificationPage,
-    ResetPage,
-    ResetRequestPage,
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
