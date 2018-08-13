@@ -17,7 +17,6 @@ import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
 import { PhotoPage } from '../pages/photo/photo';
 import { UpdateProfilePage } from '../pages/update-profile/update-profile';
-import { DashboardPage } from '../pages/dashboard/dashboard';;
 import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,8 +44,7 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
-    SettingsPage,
-    DashboardPage
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -66,8 +64,7 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
-    SettingsPage,
-    DashboardPage
+    SettingsPage
   ],
   providers: [
     StatusBar,

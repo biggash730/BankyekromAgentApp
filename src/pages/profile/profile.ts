@@ -34,8 +34,6 @@ export class ProfilePage {
       this.documents = []
       this.profile = {};
       this.getProfile()
-      //this.getIds()
-      //this.getDocs()
       this.profileUpdated()
   }
 
@@ -95,29 +93,7 @@ export class ProfilePage {
     
   }
 
-  getIds(){
-    this.backendService.getIds().subscribe(data => {
-      if(data.success) 
-        {
-          this.ids = data.data;
-        }
-    }, (error) => {
-        //console.log(error);
-  });
-    
-  }
-
-  getDocs(){
-    this.backendService.getDocs().subscribe(data => {
-      if(data.success) 
-        {
-          this.documents = data.data;
-        }
-    }, (error) => {
-        //console.log(error);
-  });
-    
-  }
+  
 
   logout(){
     //let self = this

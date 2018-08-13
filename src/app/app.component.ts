@@ -9,6 +9,7 @@ import { BackendProvider } from '../providers/backend';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { IntroPage } from '../pages/intro/intro';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,8 +26,10 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'List', component: ListPage, icon: 'body' },
-      { title: 'Settings', component: HomePage, icon: 'settings' }
+      { title: 'Seasons', component: ListPage, icon: 'body' },
+      { title: 'Farms', component: ListPage, icon: 'body' },
+      { title: 'Farmers', component: ListPage, icon: 'body' },
+      { title: 'Settings', component: SettingsPage, icon: 'settings' }
     ];
     this.user = {}
 

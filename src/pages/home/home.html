@@ -1,18 +1,54 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar color="bk3">
+        <button ion-button menuToggle>
+    <ion-icon name="md-grid"></ion-icon>
+  </button>
+        <ion-title>Dashboard</ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+<ion-content>
+    <ion-list>
+        <ion-card color="light">
+            <ion-card-header>
+                Registered Farmers
+            </ion-card-header>
+            <span>12</span>
+        </ion-card>
+        <ion-card color="light">
+            <ion-card-header>
+                Loans This Year
+            </ion-card-header>
+            <!--<value-bar [value]="stats.numberOfLoans" [width]="(stats.numberOfLoans % 100)"></value-bar>-->
+        </ion-card>
+        <ion-card color="light">
+            <ion-card-header>
+                Your Wallets
+            </ion-card-header>
+            <!--<value-bar [value]="stats.numberOfWallets" [width]="(stats.numberOfWallets % 100)"></value-bar>-->
+        </ion-card>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+        <ion-card color="light" [hidden]="loan.showActive">
+            <ion-card-title style=" font-size: 1.50em; text-align: center;">
+                No Active Loan
+            </ion-card-title>
+        </ion-card>
+        <ion-card color="light" [hidden]="!loan.showActive">
+            <ion-card-title style=" font-size: 1.50em; text-align: center;">
+                Active Loan
+            </ion-card-title>
+            <ion-item>
+                <h2 style="color:#807e7e; font-size: 2.0em;text-align: center;">GHS {{loan.amountPayable | number}}</h2>
+                <p style="text-align: center; color:#212020;">
+                    Amount Payable
+                </p>
+            </ion-item>
+            <ion-item color="danger">
+                <ion-icon color="danger" large item-start>{{loan.daysTillDue}}</ion-icon>
+                Day<span [hidden]="loan.days > 1">s</span> till due date
+            </ion-item>
+        </ion-card>
+    </ion-list>
+
 </ion-content>
