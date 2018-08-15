@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, Loading, Events} from 'ionic-angular/umd';
+import { NavController, NavParams, LoadingController, AlertController, Loading, Events} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
 import { UserDataProvider } from '../../providers/user-data';

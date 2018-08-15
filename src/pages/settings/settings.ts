@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular/umd';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { LoginPage } from '../login/login';
 import { BackendProvider } from '../../providers/backend';

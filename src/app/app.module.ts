@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular/umd';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import {Storage, IonicStorageModule} from '@ionic/storage';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {HttpInterceptor} from './http.interceptor';
@@ -12,6 +12,7 @@ import { BackendProvider } from '../providers/backend';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { FarmersPage } from '../pages/farmers/farmers';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
@@ -44,7 +45,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
-    SettingsPage
+    SettingsPage,
+    FarmersPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
-    SettingsPage
+    SettingsPage,
+    FarmersPage
   ],
   providers: [
     StatusBar,

@@ -1,4 +1,4 @@
-import { NavController, NavParams,AlertController, LoadingController } from 'ionic-angular/umd';
+import { NavController, NavParams,AlertController, LoadingController } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { UserDataProvider } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
