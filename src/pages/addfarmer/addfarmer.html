@@ -5,80 +5,66 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar color="lndsqr">
+    <ion-navbar color="bk3">
         <ion-title>New Farmer</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
     <ion-list>
         <ion-item>
-            <h1 style="color:#807e7e; font-size: 3.0em;text-align: center;">{{score.scorePercentage | number}}%</h1>
-            <p style="text-align: center">
-                Credit Score Percentage
-            </p>
+            <ion-label stacked color="linkedin">Name</ion-label>
+            <ion-input type="text" [(ngModel)]="formData.name" placeholder="Name"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label stacked style="font-size: 1.5rem;color: #807e7e;">Slide to select the loan amount</ion-label>
-            <ion-range [(ngModel)]="data.amount" min="{{amountRange.minAmount}}" max="{{amountRange.maxAmount}}" (ngModelChange)="valuesChanged()" step="1">
-                <ion-label range-left>{{amountRange.minAmount}}ghs</ion-label>
-                <ion-label range-right>{{amountRange.maxAmount}}ghs</ion-label>
-            </ion-range>
+            <ion-label stacked color="linkedin">Phone Number</ion-label>
+            <ion-input type="tel" [(ngModel)]="formData.phoneNumber" placeholder="Phone Number"></ion-input>
         </ion-item>
         <ion-item>
-            <h2>GHS {{data.amount | number}}</h2>
-            <ion-note item-end>Selected Amount</ion-note>
+            <ion-label stacked color="linkedin">Date of Birth</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.dateOfBirth"></ion-datetime>
         </ion-item>
         <ion-item>
-            <h2>{{data.days}}</h2>
-            <ion-note item-end>Duration (Days)</ion-note>
+            <ion-label stacked color="linkedin">Gender</ion-label>
+            <ion-select [(ngModel)]="formData.gender" value="Male">
+                <ion-option value="Female">Female</ion-option>
+                <ion-option value="Male">Male</ion-option>
+            </ion-select>
         </ion-item>
         <ion-item>
-            <ion-row>
-                <ion-col>
-                    <h4 style="color:#212020; text-align: left; font-weight: 400">Rate</h4>
-                    <p style="text-align: left">
-                        {{data.rate}}%
-                    </p>
-                </ion-col>
-                <ion-col>
-                    <h4 style="color:#212020; text-align: right; font-weight: 400">Interest</h4>
-                    <p style="text-align: right">
-                        {{data.interest | number}} ghs
-                    </p>
-                </ion-col>
-            </ion-row>
-
+            <ion-label stacked color="linkedin">Select District</ion-label>
+            <ion-select [(ngModel)]="formData.districtId">
+                <ion-option *ngFor="let p of districts" [value]="p.id">{{p.name}}</ion-option>
+            </ion-select>
         </ion-item>
-        <!--<ion-item>
-            <ion-row>
-                <ion-col>
-                    <ion-item>
-                        <h4 style="color:#807e7e; text-align: left;">Rate</h4>
-                        <p style="text-align: left">
-                            {{data.rate}}%
-                        </p>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item>
-                        <h4 style="color:#807e7e; text-align: right;">Interest</h4>
-                        <p style="text-align: right">
-                            {{data.interest}}ghs
-                        </p>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-item>-->
         <ion-item>
-            <ion-label stacked>Purpose</ion-label>
-            <ion-textarea [(ngModel)]="data.purpose" placeholder="Purpose"></ion-textarea>
+            <ion-label stacked color="linkedin">Town</ion-label>
+            <ion-input type="text" [(ngModel)]="formData.town" placeholder="Town"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked color="linkedin">Residential Address</ion-label>
+            <ion-textarea [(ngModel)]="formData.residentialAddress" placeholder="Address"></ion-textarea>
+        </ion-item>
+        <ion-item-divider color="light">
+            Identification Information
+        </ion-item-divider>
+        <ion-item>
+            <ion-label stacked color="linkedin">Select ID Type</ion-label>
+            <ion-select [(ngModel)]="formData.idTypeId">
+                <ion-option *ngFor="let p of idtypes" [value]="p.id">{{p.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked color="linkedin">ID Number</ion-label>
+            <ion-input type="text" [(ngModel)]="formData.idNumber" placeholder="Id Number"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked color="linkedin">Expiry Date</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.idExpiryDate" min="2017" max="2030-10-10"></ion-datetime>
         </ion-item>
         <p style="text-align: center;color:#f53d3d;margin-bottom: 0px;">
-            Please note that your loan will attract a flat processing fee
+            Please confirm that you have entered the right details in the fields provided.
         </p>
         <br/>
-        <button ion-button type="submit" block class="save-button" (click)="makeRequest()" style="    background-color: #007AFF;">Make Request </button>
-
+        <button ion-button type="submit" block class="save-button" (click)="save(formData)" style="    background-color: #04700d;">Save</button>
     </ion-list>
-
 </ion-content>

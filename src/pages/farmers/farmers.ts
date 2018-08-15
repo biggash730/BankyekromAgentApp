@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,LoadingController, AlertController, Events } from 'ionic-angular';
 import { BackendProvider } from '../../providers/backend';
-//import { AddFarmerPage } from '../../pages/addfarmer/addfarmer';
+import { AddfarmerPage } from '../../pages/addfarmer/addfarmer';
 //import { UpdateFarmerPage } from '../../pages/updatefarmer/updatefarmer';
 
 @Component({
@@ -30,13 +30,13 @@ export class FarmersPage {
     }
 
     newFarmer(){
-    this.events.subscribe('Request: saved', () => {
+    this.events.subscribe('Farmer: saved', () => {
       this.start();
     });
   }
 
   openAdd(){
-    //this.navCtrl.push(AddFarmerPage);
+    this.navCtrl.push(AddfarmerPage);
   }
 
   openUpdate(param){

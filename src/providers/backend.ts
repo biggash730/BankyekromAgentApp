@@ -59,8 +59,20 @@ export class BackendProvider {
         return this.http.post(this.userService.baseUrl + "farmers/mobilequery",obj)
             .map(res => res.json());
     }
+    saveFarmer(obj) {
+        return this.http.post(this.userService.baseUrl + "farmers",obj)
+            .map(res => res.json());
+    }
     getFarms(obj) {
         return this.http.post(this.userService.baseUrl + "farms/mobilequery",obj)
+            .map(res => res.json());
+    }
+    getDistricts() {
+        return this.http.get(this.userService.baseUrl + "districts")
+            .map(res => res.json());
+    }
+    getIdTypes() {
+        return this.http.get(this.userService.baseUrl + "idtypes")
             .map(res => res.json());
     }
 
