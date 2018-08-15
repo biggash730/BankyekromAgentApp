@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { UserDataProvider } from '../providers/user-data';
+import { UserDataProvider } from './user-data';
 
 /*
   Generated class for the BackendProvider provider.

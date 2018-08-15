@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController, Events } from 'ionic-angular';
+import { Nav, Platform, AlertController, Events } from 'ionic-angular/umd';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -8,6 +8,7 @@ import { BackendProvider } from '../providers/backend';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { FarmersPage } from '../pages/farmers/farmers';
 import { IntroPage } from '../pages/intro/intro';
 import { SettingsPage } from '../pages/settings/settings';
 
@@ -26,14 +27,22 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
+      { title: 'Services', component: ListPage, icon: 'body' },
       { title: 'Seasons', component: ListPage, icon: 'body' },
       { title: 'Farms', component: ListPage, icon: 'body' },
-      { title: 'Farmers', component: ListPage, icon: 'body' },
+      { title: 'Farmers', component: FarmersPage, icon: 'body' },
       { title: 'Settings', component: SettingsPage, icon: 'settings' }
     ];
     this.user = {}
+    //get user
 
     this.storage.get(this.userService.HAS_LOGGED_IN).then((val) => {
+
+      //get user
+      this.storage.get(this.userService.CURRENT_USER).then((val) => {
+        //console.log(val)
+        this.user = JSON.parse(val)
+      });      
 
       //console.log(val)
       var res = JSON.parse(val);

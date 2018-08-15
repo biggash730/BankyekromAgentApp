@@ -1,9 +1,9 @@
-import { NavController, NavParams,AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams,AlertController, LoadingController } from 'ionic-angular/umd';
 import { Component} from '@angular/core';
 import { UserDataProvider } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
-import { HomePage } from '../../pages/home/home';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the LoginPage page.

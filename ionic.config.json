@@ -1,8 +1,7 @@
 {
-    "name": "sidemenustarter_sixonelabs",
-    "app_id": "",
-    "type": "ionic-angular",
-    "integrations": {
-        "cordova": {}
-    }
+  "name": "sidemenustarter_sixonelabs",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
 }

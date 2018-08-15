@@ -7,7 +7,7 @@ import {
   LoadingController,
   AlertController,
   Events
-} from 'ionic-angular';
+} from 'ionic-angular/umd';
 import {
   BackendProvider
 } from '../../providers/backend';

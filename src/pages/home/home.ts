@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, Events } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, Events } from 'ionic-angular/umd';
 import { BackendProvider } from '../../providers/backend';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../../providers/user-data';
-import { LoginPage } from '../../pages/login/login';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DashboardPage');
+    //console.log('ionViewDidLoad DashboardPage');
   }
 
   ionViewWillEnter() {
@@ -28,7 +28,7 @@ export class HomePage {
   }
 
   onPageWillEnter() {
-    console.log('onPageWillEnter ****on page will enter messages pane');
+    //console.log('onPageWillEnter ****on page will enter messages pane');
 
   }
 

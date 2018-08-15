@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
-import { NavController, NavParams, LoadingController, AlertController, Loading, Events, Platform } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, Loading, Events, Platform } from 'ionic-angular/umd';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
 import { UserDataProvider } from '../../providers/user-data';

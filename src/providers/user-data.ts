@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { Events } from 'ionic-angular/umd';
 import { Storage } from '@ionic/storage';
 import { RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';

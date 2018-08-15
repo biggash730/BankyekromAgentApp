@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular/umd';
 import {Storage, IonicStorageModule} from '@ionic/storage';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {HttpInterceptor} from './http.interceptor';

@@ -1,11 +1,11 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, Loading, Events} from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, Loading, Events} from 'ionic-angular/umd';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
 import { UserDataProvider } from '../../providers/user-data';
 import { UpdateProfilePage } from '../update-profile/update-profile';
-import { LoginPage } from '../../pages/login/login';
-import { PhotoPage } from '../../pages/photo/photo';
+import { LoginPage } from '../login/login';
+import { PhotoPage } from '../photo/photo';
 
 /**
  * Generated class for the ProfilePage page.
