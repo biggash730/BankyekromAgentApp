@@ -55,4 +55,13 @@ export class BackendProvider {
             .map(res => res.json());
     }
 
+    getFarmers(obj) {
+        return this.http.post(this.userService.baseUrl + "farmers/mobilequery",obj)
+            .map(res => res.json());
+    }
+    getFarms(obj) {
+        return this.http.post(this.userService.baseUrl + "farms/mobilequery",obj)
+            .map(res => res.json());
+    }
+
 }

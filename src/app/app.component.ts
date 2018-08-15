@@ -31,7 +31,7 @@ export class MyApp {
       { title: 'Seasons', component: ListPage, icon: 'body' },
       { title: 'Farms', component: ListPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },
-      { title: 'Settings', component: SettingsPage, icon: 'settings' }
+      /*{ title: 'Settings', component: SettingsPage, icon: 'settings' }*/
     ];
     this.user = {}
     //get user

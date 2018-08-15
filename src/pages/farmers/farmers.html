@@ -1,23 +1,72 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="bk3">
         <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-icon name="md-grid"></ion-icon>
+  </button>
         <ion-title>Registered Farmers</ion-title>
+        <ion-buttons end>
+            <button (click)="openAdd()" ion-button icon-only clear>
+                        <ion-icon name="md-add-circle" color="light">
+                        </ion-icon>
+                    </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-list-header [hidden]="farmers.length > 0" (click)="openAdd()" text-center padding>
+        You have not registered any farmers yet.
+        <h2>Register a new Farmer</h2>
+    </ion-list-header>
     <ion-list>
-        <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+        <ion-card *ngFor="let farmer of farmers">
+            <ion-item>
+                <p style="text-align: center; color:#0083fd">
+                    {{farmer.createdAt | date:'mediumDate'}} - {{farmer.status}}
+                </p>
+            </ion-item>
+            <ion-item>
+                <h2 style="color:#807e7e; font-size: 2.0em;text-align: center;">GHS {{farmer.amount | number}}</h2>
+                <p style="text-align: center; color:#212020;">
+                    Amount Requested
+                </p>
+            </ion-item>
+            <ion-item>
+                <ion-row>
+                    <ion-col>
+                        <h4 style="color:#212020; text-align: center; font-weight: 400">Duration</h4>
+                        <p style="text-align: center">
+                            {{farmer.days}} Days
+                        </p>
+                    </ion-col>
+                    <ion-col>
+                        <h4 style="color:#212020; text-align: center; font-weight: 400">Rate</h4>
+                        <p style="text-align: center">
+                            {{farmer.rate | number}}%
+                        </p>
+                    </ion-col>
+                    <ion-col>
+                        <h4 style="color:#212020; text-align: center; font-weight: 400">Interest</h4>
+                        <p style="text-align: center">
+                            GHS {{farmer.interest | number}}
+                        </p>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+            <ion-item>
+                <h4 style="color:#212020; text-align: left; font-weight: 400">Purpose</h4>
+                <p>{{request.purpose}}</p>
+            </ion-item>
+            <br/>
+            <div style="padding-left: 18px;padding-right: 18px;">
+                <button ion-button type="submit" block class="save-button" (click)="cancel(request)" style="    background-color: #f53d3d;" [hidden]="request.status != 'Pending'">Cancel Request </button></div>
+            <br/>
+        </ion-card>
     </ion-list>
-    <div *ngIf="selectedItem" padding>
-        You navigated here from <b>{{selectedItem.title}}</b>
-    </div>
+    <button ion-button full (click)="loadMore()" [hidden]="!(total > farmers.length)">Load More</button>
+
 </ion-content>

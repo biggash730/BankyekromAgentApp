@@ -1,37 +1,89 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,LoadingController, AlertController, Events } from 'ionic-angular';
+import { BackendProvider } from '../../providers/backend';
+//import { AddFarmerPage } from '../../pages/addfarmer/addfarmer';
+//import { UpdateFarmerPage } from '../../pages/updatefarmer/updatefarmer';
 
 @Component({
   selector: 'page-farmers',
   templateUrl: 'farmers.html'
 })
 export class FarmersPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  farmers: any[]
+  total: any = 0
+  page: any= 1
+  size: any = 20
+  obj: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl:LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+    this.farmers = []
+    this.start()
+    this.newFarmer()
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(FarmersPage, {
-      item: item
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad RequestsPage');
+  }
+
+  ionViewWillEnter(){
+    this.start()
+    }
+
+    newFarmer(){
+    this.events.subscribe('Request: saved', () => {
+      this.start();
     });
   }
+
+  openAdd(){
+    //this.navCtrl.push(AddFarmerPage);
+  }
+
+  openUpdate(param){
+    //this.navCtrl.push(UpdateFarmerPage, param);
+  }
+
+  getList(){
+
+    let self = this
+    let loader = this.loadingCtrl.create({
+      content: ""
+    });
+    loader.present().then(()=>{
+      self.backendService.getFarmers(self.obj).subscribe(data => {
+        //console.log(data)
+        loader.dismissAll();
+        if(data.success) 
+          {
+            self.farmers = data.data;
+            self.total = data.total
+          }
+      }, (error) => {
+        loader.dismissAll();
+          console.log(error);
+    });
+    })
+    
+  }
+
+  start(){
+    this.page = 1;
+    this.obj = {pager:{page:this.page, size: this.size}};    
+    this.getList()
+  }
+  
+  loadMore() {
+    let self = this
+    self.obj.pager.page = self.obj.pager.page + 1;
+    self.getList()
+  }
+
+  doRefresh(refresher) {
+    this.start()
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
+  }
+
+
 }

@@ -1,0 +1,84 @@
+<!--
+  Generated template for the RequestsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="lndsqr">
+        <ion-title>New Farmer</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <h1 style="color:#807e7e; font-size: 3.0em;text-align: center;">{{score.scorePercentage | number}}%</h1>
+            <p style="text-align: center">
+                Credit Score Percentage
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked style="font-size: 1.5rem;color: #807e7e;">Slide to select the loan amount</ion-label>
+            <ion-range [(ngModel)]="data.amount" min="{{amountRange.minAmount}}" max="{{amountRange.maxAmount}}" (ngModelChange)="valuesChanged()" step="1">
+                <ion-label range-left>{{amountRange.minAmount}}ghs</ion-label>
+                <ion-label range-right>{{amountRange.maxAmount}}ghs</ion-label>
+            </ion-range>
+        </ion-item>
+        <ion-item>
+            <h2>GHS {{data.amount | number}}</h2>
+            <ion-note item-end>Selected Amount</ion-note>
+        </ion-item>
+        <ion-item>
+            <h2>{{data.days}}</h2>
+            <ion-note item-end>Duration (Days)</ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-row>
+                <ion-col>
+                    <h4 style="color:#212020; text-align: left; font-weight: 400">Rate</h4>
+                    <p style="text-align: left">
+                        {{data.rate}}%
+                    </p>
+                </ion-col>
+                <ion-col>
+                    <h4 style="color:#212020; text-align: right; font-weight: 400">Interest</h4>
+                    <p style="text-align: right">
+                        {{data.interest | number}} ghs
+                    </p>
+                </ion-col>
+            </ion-row>
+
+        </ion-item>
+        <!--<ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <h4 style="color:#807e7e; text-align: left;">Rate</h4>
+                        <p style="text-align: left">
+                            {{data.rate}}%
+                        </p>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <h4 style="color:#807e7e; text-align: right;">Interest</h4>
+                        <p style="text-align: right">
+                            {{data.interest}}ghs
+                        </p>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-item>-->
+        <ion-item>
+            <ion-label stacked>Purpose</ion-label>
+            <ion-textarea [(ngModel)]="data.purpose" placeholder="Purpose"></ion-textarea>
+        </ion-item>
+        <p style="text-align: center;color:#f53d3d;margin-bottom: 0px;">
+            Please note that your loan will attract a flat processing fee
+        </p>
+        <br/>
+        <button ion-button type="submit" block class="save-button" (click)="makeRequest()" style="    background-color: #007AFF;">Make Request </button>
+
+    </ion-list>
+
+</ion-content>
