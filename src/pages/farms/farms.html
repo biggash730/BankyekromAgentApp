@@ -24,12 +24,15 @@
     </ion-list-header>
     <ion-list>
         <ion-card *ngFor="let farm of farms" (click)="openView(farm)">
+            <ion-item-divider color="light">
+                {{farm.farmer}}
+                <ion-note item-end color="grey">
+                    {{farm.createdAt | date:'shortDate'}}
+                </ion-note>
+            </ion-item-divider>
             <ion-item>
-                <ion-icon name="md-contact" item-end></ion-icon> {{farm.name}}
+                Code: {{farm.code}}
                 <p>Reference: {{farm.reference}}</p>
-            </ion-item>
-            <ion-item>
-                <ion-icon name="md-call" item-end></ion-icon> {{farm.phoneNumber}}
             </ion-item>
             <ion-item>
                 <span item-start>{{farm.district}}</span>

@@ -12,27 +12,33 @@
 <ion-content>
     <ion-list>
         <ion-card>
+            <ion-item>
+                <ion-label stacked color="linkedin">Select Farmer</ion-label>
+                <ion-select [(ngModel)]="formData.farmer">
+                    <ion-option *ngFor="let p of farmers" [value]="p">{{p.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.farmer.phoneNumber}}</h2>
+                <button ion-button clear item-end color="linkedin">Phone</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.farmer.town}}</h2>
+                <button ion-button clear item-end color="linkedin">Town</button>
+            </ion-item>
+
+        </ion-card>
+        <ion-card [hidden]="formData.farmer == {}">
             <ion-item-divider color="light">
-                Basic Information
+                New Farm Information
             </ion-item-divider>
             <ion-item>
-                <ion-label stacked color="linkedin">Name</ion-label>
-                <ion-input type="text" [(ngModel)]="formData.name" placeholder="Name"></ion-input>
+                <ion-label stacked color="linkedin">Code</ion-label>
+                <ion-input type="text" [(ngModel)]="formData.code" placeholder="Code"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked color="linkedin">Phone Number</ion-label>
-                <ion-input type="tel" [(ngModel)]="formData.phoneNumber" placeholder="Phone Number"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked color="linkedin">Date of Birth</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.dateOfBirth"></ion-datetime>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked color="linkedin">Gender</ion-label>
-                <ion-select [(ngModel)]="formData.gender" value="Male">
-                    <ion-option value="Female">Female</ion-option>
-                    <ion-option value="Male">Male</ion-option>
-                </ion-select>
+                <ion-label stacked color="linkedin">Number of Acres</ion-label>
+                <ion-input type="tel" [(ngModel)]="formData.numberOfAcres" placeholder="Number of Acres"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Select District</ion-label>
@@ -45,26 +51,10 @@
                 <ion-input type="text" [(ngModel)]="formData.town" placeholder="Town"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked color="linkedin">Residential Address</ion-label>
-                <ion-textarea [(ngModel)]="formData.residentialAddress" placeholder="Address"></ion-textarea>
+                <ion-label stacked color="linkedin">Location</ion-label>
+                <ion-textarea [(ngModel)]="formData.location" placeholder="Location"></ion-textarea>
             </ion-item>
-            <ion-item-divider color="light">
-                Identification Information
-            </ion-item-divider>
-            <ion-item>
-                <ion-label stacked color="linkedin">Select ID Type</ion-label>
-                <ion-select [(ngModel)]="formData.idTypeId">
-                    <ion-option *ngFor="let p of idtypes" [value]="p.id">{{p.name}}</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked color="linkedin">ID Number</ion-label>
-                <ion-input type="text" [(ngModel)]="formData.idNumber" placeholder="Id Number"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked color="linkedin">Expiry Date</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.idExpiryDate" min="2017" max="2030-10-10"></ion-datetime>
-            </ion-item>
+
             <p style="text-align: center;color:#f53d3d;margin-bottom: 0px;">
                 Please confirm that you have entered the right details in the fields provided.
             </p>

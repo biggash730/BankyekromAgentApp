@@ -57,7 +57,7 @@ export class AddfarmPage {
     });
   }
 
-save() {
+  save() {
     //do validations
     //do save action here
     let self = this
@@ -66,42 +66,43 @@ save() {
       content: ""
     });
     loader.present().then(() => {
-
-        self.backendService.saveFarm(self.formData).subscribe(data => {
-          loader.dismissAll();
-          if (data.success) {
-            let alert = self.alertCtrl.create({
-              title: 'Save Successful',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-            self.events.publish('Farm: saved');
-            self.navCtrl.pop();
-          } else {
-            let alert = self.alertCtrl.create({
-              title: 'Save Error',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-        }, (error) => {
-          loader.dismissAll();
-          console.log(error);
-        });
+      self.formData.farmerId = self.formData.farmer.id;
+      self.backendService.saveFarm(self.formData).subscribe(data => {
+        loader.dismissAll();
+        if (data.success) {
+          let alert = self.alertCtrl.create({
+            title: 'Save Successful',
+            subTitle: data.message,
+            buttons: ['OK']
+          });
+          alert.present();
+          self.events.publish('Farm: saved');
+          self.navCtrl.pop();
+        } else {
+          let alert = self.alertCtrl.create({
+            title: 'Save Error',
+            subTitle: data.message,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      }, (error) => {
+        loader.dismissAll();
+        console.log(error);
       });
-    }
-
-    start() {
-      this.loader = this.loadingCtrl.create({
-        content: ""
-      });
-      this.getDistricts();
-      this.formData = {};
-    }
-    refresh() {
-      this.formData = {}
-    }
-
+    });
   }
+
+  start() {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
+    this.getDistricts();
+    this.getFarmers();
+    this.formData = {farmer:{}};
+  }
+  refresh() {
+    this.formData = {farmer:{}};
+  }
+
+}

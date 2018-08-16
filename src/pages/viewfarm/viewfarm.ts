@@ -22,10 +22,10 @@ import { UpdatefarmerPage } from '../../pages/updatefarmer/updatefarmer';
  */
 
 @Component({
-  selector: 'page-viewfarmer',
-  templateUrl: 'viewfarmer.html',
+  selector: 'page-viewfarm',
+  templateUrl: 'viewfarm.html',
 })
-export class ViewfarmerPage {
+export class ViewfarmPage {
   loader: any
   formData: any
   districts: any[]
@@ -41,11 +41,12 @@ export class ViewfarmerPage {
   }
 
   openUpdate(data) {
-    this.navCtrl.push(UpdatefarmerPage, data);
+    //this.navCtrl.push(UpdatefarmerPage, data);
   }
 
-  getFarmer() {
-    this.backendService.getFarmer(this.formData.id).subscribe(data => {
+
+  getFarm() {
+    this.backendService.getFarm(this.formData.id).subscribe(data => {
       if (data.success) {
         this.formData = data.data
       }
@@ -58,6 +59,6 @@ export class ViewfarmerPage {
     this.loader = this.loadingCtrl.create({
       content: ""
     });
-    this.getFarmer();
+    this.getFarm();
   }
 }
