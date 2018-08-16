@@ -59,8 +59,16 @@ export class BackendProvider {
         return this.http.post(this.userService.baseUrl + "farmers/mobilequery",obj)
             .map(res => res.json());
     }
+    getAllFarmers() {
+        return this.http.get(this.userService.baseUrl + "farmers")
+            .map(res => res.json());
+    }
     saveFarmer(obj) {
         return this.http.post(this.userService.baseUrl + "farmers",obj)
+            .map(res => res.json());
+    }
+    updateFarmer(obj) {
+        return this.http.put(this.userService.baseUrl + "farmers",obj)
             .map(res => res.json());
     }
     getFarmer(id) {
@@ -69,6 +77,26 @@ export class BackendProvider {
     }
     getFarms(obj) {
         return this.http.post(this.userService.baseUrl + "farms/mobilequery",obj)
+            .map(res => res.json());
+    }
+    getAllFarms() {
+        return this.http.get(this.userService.baseUrl + "farms")
+            .map(res => res.json());
+    }
+    getFarmerFarms(id) {
+        return this.http.get(this.userService.baseUrl + "farms/getfarmerfarms?farmerId="+id)
+            .map(res => res.json());
+    }
+    saveFarm(obj) {
+        return this.http.post(this.userService.baseUrl + "farms",obj)
+            .map(res => res.json());
+    }
+    updateFarm(obj) {
+        return this.http.put(this.userService.baseUrl + "farms",obj)
+            .map(res => res.json());
+    }
+    getFarm(id) {
+        return this.http.get(this.userService.baseUrl + "farms?id="+id)
             .map(res => res.json());
     }
     getDistricts() {

@@ -21,17 +21,16 @@ import {
  */
 
 @Component({
-  selector: 'page-updatefarmer',
-  templateUrl: 'updatefarmer.html',
+  selector: 'page-addfarm',
+  templateUrl: 'addfarm.html',
 })
-export class UpdatefarmerPage {
+export class AddfarmPage {
   loader: any
   formData: any
   districts: any[]
-  idtypes: any[]
+  farmers: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
-    this.formData = this.navParams.data;
     this.start()
   }
 
@@ -48,17 +47,17 @@ export class UpdatefarmerPage {
       console.log(error);
     });
   }
-  getIdTypes() {
-    this.backendService.getIdTypes().subscribe(data => {
+  getFarmers() {
+    this.backendService.getAllFarmers().subscribe(data => {
       if (data.success) {
-        this.idtypes = data.data;
+        this.farmers = data.data;
       }
     }, (error) => {
       console.log(error);
     });
   }
 
-update() {
+save() {
     //do validations
     //do save action here
     let self = this
@@ -68,20 +67,20 @@ update() {
     });
     loader.present().then(() => {
 
-        self.backendService.updateFarmer(self.formData).subscribe(data => {
+        self.backendService.saveFarm(self.formData).subscribe(data => {
           loader.dismissAll();
           if (data.success) {
             let alert = self.alertCtrl.create({
-              title: 'Updated Successful',
+              title: 'Save Successful',
               subTitle: data.message,
               buttons: ['OK']
             });
             alert.present();
-            self.events.publish('Farmer: saved');
+            self.events.publish('Farm: saved');
             self.navCtrl.pop();
           } else {
             let alert = self.alertCtrl.create({
-              title: 'Update Error',
+              title: 'Save Error',
               subTitle: data.message,
               buttons: ['OK']
             });
@@ -99,7 +98,10 @@ update() {
         content: ""
       });
       this.getDistricts();
-      this.getIdTypes();
-      //this.getFarmer();
+      this.formData = {};
     }
+    refresh() {
+      this.formData = {}
+    }
+
   }

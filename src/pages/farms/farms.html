@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar color="bk3">
+        <button ion-button menuToggle>
+    <ion-icon name="md-grid"></ion-icon>
+  </button>
+        <ion-title>Added Farms</ion-title>
+        <ion-buttons end>
+            <button (click)="openAdd()" ion-button icon-only clear>
+                        <ion-icon name="md-add-circle" color="light">
+                        </ion-icon>
+                    </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-list-header [hidden]="farms.length > 0" (click)="openAdd()" text-center padding>
+        You have not any farms yet.
+        <h2>Add a new Farm</h2>
+    </ion-list-header>
+    <ion-list>
+        <ion-card *ngFor="let farm of farms" (click)="openView(farm)">
+            <ion-item>
+                <ion-icon name="md-contact" item-end></ion-icon> {{farm.name}}
+                <p>Reference: {{farm.reference}}</p>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="md-call" item-end></ion-icon> {{farm.phoneNumber}}
+            </ion-item>
+            <ion-item>
+                <span item-start>{{farm.district}}</span>
+                <button ion-button icon-start clear item-end>
+                          <ion-icon name="md-navigate"></ion-icon>
+                          {{farm.town}}
+                        </button>
+            </ion-item>
+        </ion-card>
+    </ion-list>
+    <button ion-button full (click)="loadMore()" [hidden]="!(total > farms.length)">Load More</button>
+
+</ion-content>

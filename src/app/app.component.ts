@@ -9,6 +9,7 @@ import { BackendProvider } from '../providers/backend';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { FarmersPage } from '../pages/farmers/farmers';
+import { FarmsPage } from '../pages/farms/farms';
 import { IntroPage } from '../pages/intro/intro';
 import { SettingsPage } from '../pages/settings/settings';
 
@@ -29,7 +30,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: 'Services', component: ListPage, icon: 'body' },
       { title: 'Seasons', component: ListPage, icon: 'body' },
-      { title: 'Farms', component: ListPage, icon: 'body' },
+      { title: 'Farms', component: FarmsPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },
       /*{ title: 'Settings', component: SettingsPage, icon: 'settings' }*/
     ];

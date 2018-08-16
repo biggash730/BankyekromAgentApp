@@ -16,6 +16,7 @@ import { FarmersPage } from '../pages/farmers/farmers';
 import { AddfarmerPage } from '../pages/addfarmer/addfarmer';
 import { UpdatefarmerPage } from '../pages/updatefarmer/updatefarmer';
 import { ViewfarmerPage } from '../pages/viewfarmer/viewfarmer';
+import { FarmsPage } from '../pages/farms/farms';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
@@ -52,7 +53,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     FarmersPage,
     AddfarmerPage,
     ViewfarmerPage,
-    UpdatefarmerPage
+    UpdatefarmerPage,
+    FarmsPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     FarmersPage,
     AddfarmerPage,
     ViewfarmerPage,
-    UpdatefarmerPage
+    UpdatefarmerPage,
+    FarmsPage
   ],
   providers: [
     StatusBar,

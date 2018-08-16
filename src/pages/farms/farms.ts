@@ -6,20 +6,20 @@ import { ViewfarmerPage } from '../../pages/viewfarmer/viewfarmer';
 
 
 @Component({
-  selector: 'page-farmers',
-  templateUrl: 'farmers.html'
+  selector: 'page-farms',
+  templateUrl: 'farms.html'
 })
-export class FarmersPage {
-  farmers: any[]
+export class FarmsPage {
+  farms: any[]
   total: any = 0
   page: any = 1
   size: any = 20
   obj: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
-    this.farmers = []
+    this.farms = []
     this.start()
-    this.newFarmer()
+    this.newFarm()
   }
 
   ionViewDidLoad() {
@@ -30,18 +30,18 @@ export class FarmersPage {
     this.start()
   }
 
-  newFarmer() {
-    this.events.subscribe('Farmer: saved', () => {
+  newFarm() {
+    this.events.subscribe('Farm: saved', () => {
       this.start();
     });
   }
 
   openAdd() {
-    this.navCtrl.push(AddfarmerPage);
+    //this.navCtrl.push(AddfarmerPage);
   }
 
   openView(data) {
-    this.navCtrl.push(ViewfarmerPage, data);
+    //this.navCtrl.push(ViewfarmerPage, data);
   }
 
 
@@ -53,11 +53,11 @@ export class FarmersPage {
       content: ""
     });
     loader.present().then(() => {
-      self.backendService.getFarmers(self.obj).subscribe(data => {
+      self.backendService.getFarms(self.obj).subscribe(data => {
         //console.log(data)
         loader.dismissAll();
         if (data.success) {
-          self.farmers = data.data;
+          self.farms = data.data;
           self.total = data.total
         }
       }, (error) => {
