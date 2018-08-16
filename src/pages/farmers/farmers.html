@@ -23,48 +23,21 @@
         <h2>Register a new Farmer</h2>
     </ion-list-header>
     <ion-list>
-        <ion-card *ngFor="let farmer of farmers">
+        <ion-card *ngFor="let farmer of farmers" (click)="openView(farmer)">
             <ion-item>
-                <p style="text-align: center; color:#0083fd">
-                    {{farmer.createdAt | date:'mediumDate'}} - {{farmer.status}}
-                </p>
+                <ion-icon name="md-contact" item-end></ion-icon> {{farmer.name}}
+                <p>Reference: {{farmer.reference}}</p>
             </ion-item>
             <ion-item>
-                <h2 style="color:#807e7e; font-size: 2.0em;text-align: center;">GHS {{farmer.amount | number}}</h2>
-                <p style="text-align: center; color:#212020;">
-                    Amount Requested
-                </p>
+                <ion-icon name="md-call" item-end></ion-icon> {{farmer.phoneNumber}}
             </ion-item>
             <ion-item>
-                <ion-row>
-                    <ion-col>
-                        <h4 style="color:#212020; text-align: center; font-weight: 400">Duration</h4>
-                        <p style="text-align: center">
-                            {{farmer.days}} Days
-                        </p>
-                    </ion-col>
-                    <ion-col>
-                        <h4 style="color:#212020; text-align: center; font-weight: 400">Rate</h4>
-                        <p style="text-align: center">
-                            {{farmer.rate | number}}%
-                        </p>
-                    </ion-col>
-                    <ion-col>
-                        <h4 style="color:#212020; text-align: center; font-weight: 400">Interest</h4>
-                        <p style="text-align: center">
-                            GHS {{farmer.interest | number}}
-                        </p>
-                    </ion-col>
-                </ion-row>
+                <span item-start>{{farmer.district}}</span>
+                <button ion-button icon-start clear item-end>
+                          <ion-icon name="md-navigate"></ion-icon>
+                          {{farmer.town}}
+                        </button>
             </ion-item>
-            <ion-item>
-                <h4 style="color:#212020; text-align: left; font-weight: 400">Purpose</h4>
-                <p>{{request.purpose}}</p>
-            </ion-item>
-            <br/>
-            <div style="padding-left: 18px;padding-right: 18px;">
-                <button ion-button type="submit" block class="save-button" (click)="cancel(request)" style="    background-color: #f53d3d;" [hidden]="request.status != 'Pending'">Cancel Request </button></div>
-            <br/>
         </ion-card>
     </ion-list>
     <button ion-button full (click)="loadMore()" [hidden]="!(total > farmers.length)">Load More</button>

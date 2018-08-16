@@ -21,21 +21,32 @@ import {
  */
 
 @Component({
-  selector: 'page-addfarmer',
-  templateUrl: 'addfarmer.html',
+  selector: 'page-updatefarmer',
+  templateUrl: 'updatefarmer.html',
 })
-export class AddfarmerPage {
+export class UpdatefarmerPage {
   loader: any
   formData: any
   districts: any[]
   idtypes: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+    this.formData = this.navParams.data;
     this.start()
   }
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad RequestsPage');
+  }
+
+  getFarmer() {
+    this.backendService.getFarmer(this.formData.id).subscribe(data => {
+      if (data.success) {
+        this.formData = data.data
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   getDistricts() {
@@ -57,7 +68,7 @@ export class AddfarmerPage {
     });
   }
 
-save() {
+update() {
     //do validations
     //do save action here
     let self = this
@@ -99,10 +110,6 @@ save() {
       });
       this.getDistricts();
       this.getIdTypes();
-      this.formData = {};
+      this.getFarmer();
     }
-    refresh() {
-      this.formData = {}
-    }
-
   }

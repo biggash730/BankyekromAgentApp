@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,LoadingController, AlertController, Events } from 'ionic-angular';
 import { BackendProvider } from '../../providers/backend';
 import { AddfarmerPage } from '../../pages/addfarmer/addfarmer';
-//import { UpdateFarmerPage } from '../../pages/updatefarmer/updatefarmer';
+import { ViewfarmerPage } from '../../pages/viewfarmer/viewfarmer';
+
 
 @Component({
   selector: 'page-farmers',
@@ -39,9 +40,11 @@ export class FarmersPage {
     this.navCtrl.push(AddfarmerPage);
   }
 
-  openUpdate(param){
-    //this.navCtrl.push(UpdateFarmerPage, param);
+  openView(data){
+    this.navCtrl.push(ViewfarmerPage, data);
   }
+
+  
 
   getList(){
 

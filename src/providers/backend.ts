@@ -63,6 +63,10 @@ export class BackendProvider {
         return this.http.post(this.userService.baseUrl + "farmers",obj)
             .map(res => res.json());
     }
+    getFarmer(id) {
+        return this.http.get(this.userService.baseUrl + "farmers?id="+id)
+            .map(res => res.json());
+    }
     getFarms(obj) {
         return this.http.post(this.userService.baseUrl + "farms/mobilequery",obj)
             .map(res => res.json());
