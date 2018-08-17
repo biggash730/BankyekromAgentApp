@@ -19,6 +19,9 @@ import { ViewfarmerPage } from '../pages/viewfarmer/viewfarmer';
 import { FarmsPage } from '../pages/farms/farms';
 import { AddfarmPage } from '../pages/addfarm/addfarm';
 import { ViewfarmPage } from '../pages/viewfarm/viewfarm';
+import { UpdatefarmPage } from '../pages/updatefarm/updatefarm';
+import { GetLocationPage } from '../pages/getlocation/getlocation';
+import { LocationPage } from '../pages/location/location';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
@@ -28,6 +31,8 @@ import { SettingsPage } from '../pages/settings/settings';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Geolocation } from '@ionic-native/geolocation';
+
 
 declare var window;
 
@@ -58,7 +63,10 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     UpdatefarmerPage,
     FarmsPage,
     AddfarmPage,
-    ViewfarmPage
+    ViewfarmPage,
+    UpdatefarmPage,
+    GetLocationPage,
+    LocationPage
   ],
   imports: [
     BrowserModule,
@@ -85,11 +93,15 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     UpdatefarmerPage,
     FarmsPage,
     AddfarmPage,
-    ViewfarmPage
+    ViewfarmPage,
+    UpdatefarmPage,
+    GetLocationPage,
+    LocationPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     UserDataProvider,
     BackendProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

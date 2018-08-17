@@ -6,17 +6,7 @@
 -->
 <ion-header>
     <ion-navbar color="bk3">
-        <ion-title>Farm Details</ion-title>
-        <ion-buttons end>
-            <button (click)="getLocation(formData)" ion-button icon-only clear>
-                        <ion-icon name="md-locate" color="light">
-                        </ion-icon>
-                    </button>
-            <button (click)="openUpdate(formData)" ion-button icon-only clear>
-                                <ion-icon name="md-create" color="light">
-                                </ion-icon>
-                            </button>
-        </ion-buttons>
+        <ion-title>Geo Location Info</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
@@ -46,27 +36,21 @@
                 <h2>{{formData.location}}</h2>
                 <button ion-button clear item-end color="linkedin">Location</button>
             </ion-item>
-            <ion-item class="item-list">
-                <h2>{{formData.longitude}}</h2>
-                <button ion-button clear item-end color="linkedin">Longitude</button>
-            </ion-item>
-            <ion-item class="item-list">
-                <h2>{{formData.latitude}}</h2>
-                <button ion-button clear item-end color="linkedin">Latitude</button>
-            </ion-item>
         </ion-card>
         <ion-card>
-            <ion-item-divider color="fb">
-                Planting Seasons
+            <ion-item-divider color="light">
+                Geo Location Information
             </ion-item-divider>
-            <ion-item *ngFor="let season of formData.plantingSeasons" (click)="openSeason(season)">
-                <h2>Variety: {{season.variety}}</h2>
-                <p>Date Plated: {{season.datePlanted | date:'mediumDate'}}</p>
-                <p>Projected Harvest Date: {{season.projectedHarvestDate | date:'mediumDate'}}</p>
-                <ion-note item-end>
-                    <ion-icon name="md-arrow-dropright" color="grey"></ion-icon>
-                </ion-note>
+            <ion-item>
+                <ion-label stacked color="linkedin">Longitude</ion-label>
+                <ion-input type="number" [(ngModel)]="formData.longitude" placeholder="Longitude"></ion-input>
             </ion-item>
+            <ion-item>
+                <ion-label stacked color="linkedin">Latitude</ion-label>
+                <ion-input type="number" [(ngModel)]="formData.latitude" placeholder="Latitude"></ion-input>
+            </ion-item>
+            <br/>
+            <button ion-button type="submit" block class="save-button" (click)="setlocation(formData)" style=" background-color: #04700d;">Update Location</button>
         </ion-card>
     </ion-list>
 </ion-content>

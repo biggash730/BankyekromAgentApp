@@ -107,5 +107,9 @@ export class BackendProvider {
         return this.http.get(this.userService.baseUrl + "idtypes")
             .map(res => res.json());
     }
+    setLocation(obj) {
+        return this.http.post(this.userService.baseUrl + "farms/setgeodata",obj)
+            .map(res => res.json());
+    }
 
 }

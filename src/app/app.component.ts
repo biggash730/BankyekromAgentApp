@@ -12,6 +12,7 @@ import { FarmersPage } from '../pages/farmers/farmers';
 import { FarmsPage } from '../pages/farms/farms';
 import { IntroPage } from '../pages/intro/intro';
 import { SettingsPage } from '../pages/settings/settings';
+import { LocationPage } from '../pages/location/location';
 
 @Component({
   templateUrl: 'app.html'
@@ -32,6 +33,7 @@ export class MyApp {
       { title: 'Seasons', component: ListPage, icon: 'body' },
       { title: 'Farms', component: FarmsPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },
+      { title: 'Location', component: LocationPage, icon: 'body' },
       /*{ title: 'Settings', component: SettingsPage, icon: 'settings' }*/
     ];
     this.user = {}

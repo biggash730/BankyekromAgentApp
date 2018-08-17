@@ -11,7 +11,8 @@ import {
 import {
   BackendProvider
 } from '../../providers/backend';
-import { UpdatefarmerPage } from '../../pages/updatefarmer/updatefarmer';
+import { UpdatefarmPage } from '../../pages/updatefarm/updatefarm';
+import { GetLocationPage } from '../../pages/getlocation/getlocation';
 
 
 /**
@@ -41,7 +42,11 @@ export class ViewfarmPage {
   }
 
   openUpdate(data) {
-    //this.navCtrl.push(UpdatefarmerPage, data);
+    this.navCtrl.push(UpdatefarmPage, data);
+  }
+
+  getLocation(data) {
+    this.navCtrl.push(GetLocationPage, data);
   }
 
 
