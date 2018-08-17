@@ -6,7 +6,7 @@
 -->
 <ion-header>
     <ion-navbar color="bk3">
-        <ion-title>Farmer Details</ion-title>
+        <ion-title>Farm Details</ion-title>
         <ion-buttons end>
             <button (click)="openUpdate(formData)" ion-button icon-only clear>
                                 <ion-icon name="md-create" color="light">
@@ -16,27 +16,15 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-
     <ion-list>
         <ion-card>
-            <ion-item-divider color="light">
-                Basic Information
-            </ion-item-divider>
             <ion-item class="item-list">
-                <h2>{{formData.name}}</h2>
-                <button ion-button clear item-end color="linkedin">Name</button>
+                <h2>{{formData.code}}</h2>
+                <button ion-button clear item-end color="linkedin">Code</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.phoneNumber}}</h2>
-                <button ion-button clear item-end color="linkedin">Phone</button>
-            </ion-item>
-            <ion-item class="item-list">
-                <h2>{{formData.dateOfBirth | date:'mediumDate'}}</h2>
-                <button ion-button clear item-end color="linkedin">DOB</button>
-            </ion-item>
-            <ion-item class="item-list">
-                <h2>{{formData.gender}}</h2>
-                <button ion-button clear item-end color="linkedin">Sex</button>
+                <h2>{{formData.numberOfAcres}}</h2>
+                <button ion-button clear item-end color="linkedin"># of Acres</button>
             </ion-item>
             <ion-item class="item-list">
                 <h2>{{formData.region}}</h2>
@@ -51,33 +39,30 @@
                 <button ion-button clear item-end color="linkedin">Town</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.residentialAddress}}</h2>
-                <button ion-button clear item-end color="linkedin">Address</button>
-            </ion-item>
-            <ion-item-divider color="light">
-                Identification Information
-            </ion-item-divider>
-            <ion-item class="item-list">
-                <h2>{{formData.idType}}</h2>
-                <button ion-button clear item-end color="linkedin">Type</button>
+                <h2>{{formData.location}}</h2>
+                <button ion-button clear item-end color="linkedin">Location</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.idNumber}}</h2>
-                <button ion-button clear item-end color="linkedin">Number</button>
+                <h2>{{formData.longitude}}</h2>
+                <button ion-button clear item-end color="linkedin">Longitude</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.idExpiryDate | date:'mediumDate'}}</h2>
-                <button ion-button clear item-end color="linkedin">Expiry</button>
+                <h2>{{formData.latitude}}</h2>
+                <button ion-button clear item-end color="linkedin">Latitude</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.lontitude}}</h2>
+                <button ion-button clear item-end color="linkedin">Longitude</button>
             </ion-item>
         </ion-card>
         <ion-card>
             <ion-item-divider color="fb">
-                Registered Farms
+                Planting Seasons
             </ion-item-divider>
-            <ion-item *ngFor="let farm of formData.farms" (click)="openFarm(farm)">
-                <h2>Code: {{farm.code}}</h2>
-                <h3>{{farm.district}}/{{farm.town}}</h3>
-                <p>Location: {{farm.location}}</p>
+            <ion-item *ngFor="let season of formData.plantingSeasons" (click)="openSeason(season)">
+                <h2>Variety: {{season.variety}}</h2>
+                <p>Date Plated: {{season.datePlanted | date:'mediumDate'}}</p>
+                <p>Projected Harvest Date: {{season.projectedHarvestDate | date:'mediumDate'}}</p>
                 <ion-note item-end>
                     <ion-icon name="md-arrow-dropright" color="grey"></ion-icon>
                 </ion-note>

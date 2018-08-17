@@ -12,6 +12,7 @@ import {
   BackendProvider
 } from '../../providers/backend';
 import { UpdatefarmerPage } from '../../pages/updatefarmer/updatefarmer';
+import { ViewfarmPage } from '../../pages/viewfarm/viewfarm';
 
 
 /**
@@ -38,6 +39,10 @@ export class ViewfarmerPage {
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad RequestsPage');
+  }
+
+  openFarm(data) {
+    this.navCtrl.push(ViewfarmPage, data);
   }
 
   openUpdate(data) {
