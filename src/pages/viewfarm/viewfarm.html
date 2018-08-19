@@ -61,7 +61,7 @@
             </ion-item-divider>
             <ion-item *ngFor="let season of formData.plantingSeasons" (click)="openSeason(season)">
                 <h2>Variety: {{season.variety}}</h2>
-                <p>Date Plated: {{season.datePlanted | date:'mediumDate'}}</p>
+                <p>Date Planted: {{season.datePlanted | date:'mediumDate'}}</p>
                 <p>Projected Harvest Date: {{season.projectedHarvestDate | date:'mediumDate'}}</p>
                 <ion-note item-end>
                     <ion-icon name="md-arrow-dropright" color="grey"></ion-icon>

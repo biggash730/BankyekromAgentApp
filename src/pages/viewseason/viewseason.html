@@ -1,0 +1,79 @@
+<!--
+  Generated template for the RequestsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="bk3">
+        <ion-title>Planting Season Details</ion-title>
+        <ion-buttons end>
+            <button (click)="deactivate(formData)" ion-button icon-only clear>
+                                <ion-icon name="md-close-circle" color="light">
+                                </ion-icon>
+                            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <ion-card>
+            <ion-item-divider color="light">
+                Planting Season Information
+            </ion-item-divider>
+            <ion-item class="item-list">
+                <h2>{{formData.variety}}</h2>
+                <button ion-button clear item-end color="linkedin">Variety</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.datePlanted | date:'mediumDate'}}</h2>
+                <button ion-button clear item-end color="linkedin">Planted</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.projectedHarvestDate | date:'mediumDate'}}</h2>
+                <button ion-button clear item-end color="linkedin">Projected Harvest</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.isActive}}</h2>
+                <button ion-button clear item-end color="linkedin">Is Active</button>
+            </ion-item>
+        </ion-card>
+        <ion-card>
+            <ion-item-divider color="light">
+                Farm Information
+            </ion-item-divider>
+            <ion-item class="item-list">
+                <h2>{{formData.farmer}}</h2>
+                <button ion-button clear item-end color="linkedin">Farmer</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.numberOfAcres}}</h2>
+                <button ion-button clear item-end color="linkedin"># of Acres</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.location}}</h2>
+                <button ion-button clear item-end color="linkedin">Location</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.town}}</h2>
+                <button ion-button clear item-end color="linkedin">Town</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.district}}</h2>
+                <button ion-button clear item-end color="linkedin">District</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.region}}</h2>
+                <button ion-button clear item-end color="linkedin">Region</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.longitude}}</h2>
+                <button ion-button clear item-end color="linkedin">Long</button>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{formData.latitude}}</h2>
+                <button ion-button clear item-end color="linkedin">Lat</button>
+            </ion-item>
+        </ion-card>
+    </ion-list>
+</ion-content>

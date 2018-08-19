@@ -6,10 +6,10 @@ import { ViewseasonPage } from '../../pages/viewseason/viewseason';
 
 
 @Component({
-  selector: 'page-seasons',
-  templateUrl: 'seasons.html'
+  selector: 'page-services',
+  templateUrl: 'services.html'
 })
-export class SeasonsPage {
+export class ServicesPage {
   seasons: any[]
   total: any = 0
   page: any = 1

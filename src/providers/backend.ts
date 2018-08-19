@@ -71,6 +71,10 @@ export class BackendProvider {
         return this.http.put(this.userService.baseUrl + "farmers",obj)
             .map(res => res.json());
     }
+    getDistrictFarmers(id) {
+        return this.http.get(this.userService.baseUrl + "farmers/getdistrictfarmers?districtId="+id)
+            .map(res => res.json());
+    }
     getFarmer(id) {
         return this.http.get(this.userService.baseUrl + "farmers?id="+id)
             .map(res => res.json());
@@ -111,6 +115,10 @@ export class BackendProvider {
         return this.http.get(this.userService.baseUrl + "varieties")
             .map(res => res.json());
     }
+    getServices() {
+        return this.http.get(this.userService.baseUrl + "services")
+            .map(res => res.json());
+    }
     setLocation(obj) {
         return this.http.post(this.userService.baseUrl + "farms/setgeodata",obj)
             .map(res => res.json());
@@ -127,12 +135,37 @@ export class BackendProvider {
         return this.http.post(this.userService.baseUrl + "seasons",obj)
             .map(res => res.json());
     }
-    updateSeason(obj) {
-        return this.http.put(this.userService.baseUrl + "seasons",obj)
-            .map(res => res.json());
-    }
     getSeason(id) {
         return this.http.get(this.userService.baseUrl + "seasons?id="+id)
+            .map(res => res.json());
+    }
+    deactivateSeason(id) {
+        return this.http.get(this.userService.baseUrl + "seasons/deactivate?id="+id)
+            .map(res => res.json());
+    }
+    getStats() {
+        return this.http.get(this.userService.baseUrl + "public/agentstats")
+            .map(res => res.json());
+    }
+
+    getRequests(obj) {
+        return this.http.post(this.userService.baseUrl + "servicerequests/mobilequery",obj)
+            .map(res => res.json());
+    }
+    getAllRequests() {
+        return this.http.get(this.userService.baseUrl + "servicerequests")
+            .map(res => res.json());
+    }
+    saveRequest(obj) {
+        return this.http.post(this.userService.baseUrl + "servicerequests",obj)
+            .map(res => res.json());
+    }
+    getRequest(id) {
+        return this.http.get(this.userService.baseUrl + "servicerequests?id="+id)
+            .map(res => res.json());
+    }
+    cancelRequest(id) {
+        return this.http.get(this.userService.baseUrl + "servicerequests/cancel?id="+id)
             .map(res => res.json());
     }
 

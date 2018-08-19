@@ -21,10 +21,10 @@ import {
  */
 
 @Component({
-  selector: 'page-addseason',
-  templateUrl: 'addseason.html',
+  selector: 'page-addservice',
+  templateUrl: 'addservice.html',
 })
-export class AddseasonPage {
+export class AddservicePage {
   loader: any
   formData: any
   districts: any[]

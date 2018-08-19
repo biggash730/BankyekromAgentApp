@@ -32,27 +32,15 @@ export class HomePage {
 
   }
 
-  getScore() {
-    /*this.backendService.getUserScore().subscribe(data => {
-      //console.log(data.data)
+  getStats() {
+    this.backendService.getStats().subscribe(data => {
       if (data.success) {
-        this.score = data.data.scorePercentage;
+        this.stats = data.data;
       }
     }, (error) => {
       console.log(error);
-    });*/
+    });
   }
-
-  getActiveLoan() {
-    
-  }
-
-  getStats() {
-    
-  }
-
-  
-
 
   trackSignout() {
     this.events.subscribe('User: SignOut', () => {
@@ -70,12 +58,8 @@ export class HomePage {
 
   start() {
     this.trackSignout()
-    this.score = 0
     this.stats = {}
-    this.loan = {}
-    this.getScore()
     this.getStats();
-    this.getActiveLoan()
   }
 
 }

@@ -11,9 +11,6 @@ import {
 import {
   BackendProvider
 } from '../../providers/backend';
-import { UpdatefarmPage } from '../../pages/updatefarm/updatefarm';
-import { GetLocationPage } from '../../pages/getlocation/getlocation';
-import { ViewseasonPage } from '../../pages/viewseason/viewseason';
 
 
 /**
@@ -24,14 +21,12 @@ import { ViewseasonPage } from '../../pages/viewseason/viewseason';
  */
 
 @Component({
-  selector: 'page-viewfarm',
-  templateUrl: 'viewfarm.html',
+  selector: 'page-viewservice',
+  templateUrl: 'viewservice.html',
 })
-export class ViewfarmPage {
+export class ViewservicePage {
   loader: any
   formData: any
-  districts: any[]
-  idtypes: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
     this.formData = this.navParams.data;
@@ -42,21 +37,37 @@ export class ViewfarmPage {
     //console.log('ionViewDidLoad RequestsPage');
   }
 
-  openUpdate(data) {
-    this.navCtrl.push(UpdatefarmPage, data);
+  cancel(data) {
+    var self = this;
+    let alert = this.alertCtrl.create({
+      title: 'Cancel Service Request',
+      message: 'Do you really want to cancel this service request?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            self.backendService.cancelRequest(data.id).subscribe(data => {
+              if (data.success) {
+                self.start()
+              }
+            }, (error) => {
+              console.log(error);
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
-
-  getLocation(data) {
-    this.navCtrl.push(GetLocationPage, data);
-  }
-
-  openSeason(data) {
-    this.navCtrl.push(ViewseasonPage, data);
-  }
-
-
-  getFarm() {
-    this.backendService.getFarm(this.formData.id).subscribe(data => {
+  getRequest() {
+    this.backendService.getRequest(this.formData.id).subscribe(data => {
       if (data.success) {
         this.formData = data.data
       }
@@ -69,6 +80,6 @@ export class ViewfarmPage {
     this.loader = this.loadingCtrl.create({
       content: ""
     });
-    this.getFarm();
+    this.getRequest();
   }
 }
