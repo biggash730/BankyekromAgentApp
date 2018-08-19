@@ -30,6 +30,7 @@ export class LocationPage {
   formData: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, private geolocation: Geolocation) {
+    this.formData = {}
     this.start()
   }
 

@@ -22,6 +22,7 @@ import { ViewfarmPage } from '../pages/viewfarm/viewfarm';
 import { UpdatefarmPage } from '../pages/updatefarm/updatefarm';
 import { GetLocationPage } from '../pages/getlocation/getlocation';
 import { LocationPage } from '../pages/location/location';
+import { SeasonsPage } from '../pages/seasons/seasons';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
@@ -66,7 +67,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ViewfarmPage,
     UpdatefarmPage,
     GetLocationPage,
-    LocationPage
+    LocationPage,
+    SeasonsPage
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     ViewfarmPage,
     UpdatefarmPage,
     GetLocationPage,
-    LocationPage
+    LocationPage,
+    SeasonsPage
   ],
   providers: [
     StatusBar,

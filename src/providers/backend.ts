@@ -107,8 +107,32 @@ export class BackendProvider {
         return this.http.get(this.userService.baseUrl + "idtypes")
             .map(res => res.json());
     }
+    getVarieties() {
+        return this.http.get(this.userService.baseUrl + "varieties")
+            .map(res => res.json());
+    }
     setLocation(obj) {
         return this.http.post(this.userService.baseUrl + "farms/setgeodata",obj)
+            .map(res => res.json());
+    }
+    getSeasons(obj) {
+        return this.http.post(this.userService.baseUrl + "seasons/mobilequery",obj)
+            .map(res => res.json());
+    }
+    getAllSeasons() {
+        return this.http.get(this.userService.baseUrl + "seasons")
+            .map(res => res.json());
+    }
+    saveSeason(obj) {
+        return this.http.post(this.userService.baseUrl + "seasons",obj)
+            .map(res => res.json());
+    }
+    updateSeason(obj) {
+        return this.http.put(this.userService.baseUrl + "seasons",obj)
+            .map(res => res.json());
+    }
+    getSeason(id) {
+        return this.http.get(this.userService.baseUrl + "seasons?id="+id)
             .map(res => res.json());
     }
 
