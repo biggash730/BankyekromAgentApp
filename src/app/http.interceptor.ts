@@ -63,7 +63,7 @@ export class HttpInterceptor extends Http {
         options.headers.append('Authorization', 'Bearer ' + JSON.parse(token));
       }
       options.headers.append('Content-Type', 'application/json');
-      console.log(options)
+      //console.log(options)
       return options;
     });
   }

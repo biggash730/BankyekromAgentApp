@@ -29,8 +29,7 @@ export class AddservicePage {
   formData: any
   districts: any[]
   farmers: any[]
-  farms: any[]
-  varieties: any[]
+  services: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
     this.start()
@@ -40,10 +39,10 @@ export class AddservicePage {
     //console.log('ionViewDidLoad RequestsPage');
   }
 
-  getVarieties() {
-    this.backendService.getVarieties().subscribe(data => {
+  getServices() {
+    this.backendService.getServices().subscribe(data => {
       if (data.success) {
-        this.varieties = data.data;
+        this.services = data.data;
       }
     }, (error) => {
       console.log(error);
@@ -69,6 +68,12 @@ export class AddservicePage {
     });
   }
 
+  addService(serv) {
+    console.log(serv)
+    serv.serviceId = serv.id;
+    this.formData.items.push(serv)
+  }
+
   save() {
     //do validations
     //do save action here
@@ -78,7 +83,7 @@ export class AddservicePage {
       content: ""
     });
     loader.present().then(() => {
-      self.backendService.saveSeason(self.formData).subscribe(data => {
+      self.backendService.saveRequest(self.formData).subscribe(data => {
         loader.dismissAll();
         if (data.success) {
           let alert = self.alertCtrl.create({
@@ -87,7 +92,7 @@ export class AddservicePage {
             buttons: ['OK']
           });
           alert.present();
-          self.events.publish('Season: saved');
+          self.events.publish('Service: saved');
           self.navCtrl.pop();
         } else {
           let alert = self.alertCtrl.create({
@@ -109,11 +114,11 @@ export class AddservicePage {
       content: ""
     });
     this.getDistricts();
-    this.getVarieties();
-    this.formData = {farmer:{}};
+    this.getServices();
+    this.formData = { items: [] };
   }
   refresh() {
-    this.formData = {farmer:{}};
+    this.formData = { items: [] };
   }
 
 }

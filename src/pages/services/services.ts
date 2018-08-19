@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController, Events } from 'ionic-angular';
 import { BackendProvider } from '../../providers/backend';
-import { AddseasonPage } from '../../pages/addseason/addseason';
-import { ViewseasonPage } from '../../pages/viewseason/viewseason';
+import { AddservicePage } from '../../pages/addservice/addservice';
+import { ViewservicePage } from '../../pages/viewservice/viewservice';
 
 
 @Component({
@@ -10,16 +10,16 @@ import { ViewseasonPage } from '../../pages/viewseason/viewseason';
   templateUrl: 'services.html'
 })
 export class ServicesPage {
-  seasons: any[]
+  services: any[]
   total: any = 0
   page: any = 1
   size: any = 20
   obj: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
-    this.seasons = []
+    this.services = []
     this.start()
-    this.newSeason()
+    this.newService()
   }
 
   ionViewDidLoad() {
@@ -30,18 +30,18 @@ export class ServicesPage {
     this.start()
   }
 
-  newSeason() {
-    this.events.subscribe('Season: saved', () => {
+  newService() {
+    this.events.subscribe('Service: saved', () => {
       this.start();
     });
   }
 
   openAdd() {
-    this.navCtrl.push(AddseasonPage);
+    this.navCtrl.push(AddservicePage);
   }
 
   openView(data) {
-    this.navCtrl.push(ViewseasonPage, data);
+    this.navCtrl.push(ViewservicePage, data);
   }
   
   getList() {
@@ -51,11 +51,11 @@ export class ServicesPage {
       content: ""
     });
     loader.present().then(() => {
-      self.backendService.getSeasons(self.obj).subscribe(data => {
+      self.backendService.getRequests(self.obj).subscribe(data => {
         //console.log(data)
         loader.dismissAll();
         if (data.success) {
-          self.seasons = data.data;
+          self.services = data.data;
           self.total = data.total
         }
       }, (error) => {

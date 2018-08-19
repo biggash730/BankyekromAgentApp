@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="sidemenustarter.sixonelabs.com" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>6one Labs</name>
-    <description>sidemenustarter sixonelabs</description>
+<widget id="bankyekromagent.sixonelabs.com" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bankyekrom Agent</name>
+    <description>Bankyekrom Agent App</description>
     <author email="biggash730@gmail.com" href="http://ionicframework.com/">Francis Miah</author>
     <content src="index.html" />
     <access origin="*" />
@@ -85,4 +85,5 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
+    <engine name="android" spec="~7.0.0" />
 </widget>

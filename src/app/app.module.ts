@@ -11,7 +11,6 @@ import { BackendProvider } from '../providers/backend';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { FarmersPage } from '../pages/farmers/farmers';
 import { AddfarmerPage } from '../pages/addfarmer/addfarmer';
 import { UpdatefarmerPage } from '../pages/updatefarmer/updatefarmer';
@@ -25,6 +24,9 @@ import { LocationPage } from '../pages/location/location';
 import { SeasonsPage } from '../pages/seasons/seasons';
 import { AddseasonPage } from '../pages/addseason/addseason';
 import { ViewseasonPage } from '../pages/viewseason/viewseason';
+import { ServicesPage } from '../pages/services/services';
+import { AddservicePage } from '../pages/addservice/addservice';
+import { ViewservicePage } from '../pages/viewservice/viewservice';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
@@ -53,7 +55,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     IntroPage,
     LoginPage,
     ProfilePage,
@@ -72,7 +73,10 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     LocationPage,
     SeasonsPage,
     AddseasonPage,
-    ViewseasonPage
+    ViewseasonPage,
+    ServicesPage,
+    AddservicePage,
+    ViewservicePage
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     IntroPage,
     LoginPage,
     ProfilePage,
@@ -105,7 +108,10 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     LocationPage,
     SeasonsPage,
     AddseasonPage,
-    ViewseasonPage
+    ViewseasonPage,
+    ServicesPage,
+    AddservicePage,
+    ViewservicePage
   ],
   providers: [
     StatusBar,

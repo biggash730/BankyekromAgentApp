@@ -7,7 +7,7 @@ import { UserDataProvider } from '../providers/user-data';
 import { BackendProvider } from '../providers/backend';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { ServicesPage } from '../pages/services/services';
 import { FarmersPage } from '../pages/farmers/farmers';
 import { FarmsPage } from '../pages/farms/farms';
 import { IntroPage } from '../pages/intro/intro';
@@ -30,7 +30,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Services', component: ListPage, icon: 'body' },
+      { title: 'Services', component: ServicesPage, icon: 'body' },
       { title: 'Seasons', component: SeasonsPage, icon: 'body' },
       { title: 'Farms', component: FarmsPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },

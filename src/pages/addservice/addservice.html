@@ -20,41 +20,39 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Select Farmer</ion-label>
-                <ion-select [(ngModel)]="formData.farmer">
-                    <ion-option *ngFor="let p of farmers" [value]="p">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.farmerId">
+                    <ion-option *ngFor="let p of farmers" [value]="p.id">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label stacked color="linkedin">Select Farm</ion-label>
-                <ion-select [(ngModel)]="formData.farmId">
-                    <ion-option *ngFor="let p of formData.farmer.farms" [value]="p.id">
-                        {{p.code}} -
-                        <p>{{p.town}}</p>
-                    </ion-option>
-                </ion-select>
-            </ion-item>
-        </ion-card>
-        <ion-card [hidden]="!formData.farmId">
-            <ion-item-divider color="light">
-                New Season Information
-            </ion-item-divider>
-            <ion-item>
-                <ion-label stacked color="linkedin">Select Variety</ion-label>
-                <ion-select [(ngModel)]="formData.varietyId">
-                    <ion-option *ngFor="let p of varieties" [value]="p.id">{{p.name}}</ion-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked color="linkedin">Date Planted</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.datePlanted"></ion-datetime>
+                <ion-label stacked color="linkedin">Service Date</ion-label>
+                <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.serviceDate" min="2017" max="2030-10-10"></ion-datetime>
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Notes</ion-label>
                 <ion-textarea [(ngModel)]="formData.notes" placeholder="Notes"></ion-textarea>
             </ion-item>
-            <p style="text-align: center;color:#f53d3d;margin-bottom: 0px;">
-                Please confirm that you have entered the right details in the fields provided.
-            </p>
+        </ion-card>
+        <ion-card [hidden]="!formData.farmerId">
+            <ion-item-divider color="light">
+                Select and Add Service
+            </ion-item-divider>
+            <ion-item>
+                <ion-label stacked color="linkedin">Select Service</ion-label>
+                <ion-select [(ngModel)]="formData.service">
+                    <ion-option *ngFor="let p of services" [value]="p">{{p.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <button ion-button class="save-button" (click)="addService(formData.service)" style=" background-color: #043370; margin: 10px">Add Service</button>
+        </ion-card>
+        <ion-card [hidden]="!formData.farmerId">
+            <ion-item-divider color="light">
+                Selected Services
+            </ion-item-divider>
+            <ion-item class="item-list" *ngFor="let i of formData.items">
+                <h2>{{i.name}}</h2>
+                <button ion-button clear item-end color="linkedin">{{$index}}</button>
+            </ion-item>
             <br/>
             <button ion-button type="submit" block class="save-button" (click)="save(formData)" style=" background-color: #04700d;">Save</button>
         </ion-card>

@@ -18,37 +18,36 @@
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
         </ion-refresher-content>
     </ion-refresher>
-    <ion-list-header [hidden]="seasons.length > 0" (click)="openAdd()" text-center padding>
-        There are no active planting seasons in the system
-        <h2>Add a New Planting Season</h2>
+    <ion-list-header [hidden]="services.length > 0" (click)="openAdd()" text-center padding>
+        There are no pending service requests in the system
+        <h2>Add a New Service Request</h2>
     </ion-list-header>
     <ion-list>
-        <ion-card *ngFor="let season of seasons" (click)="openView(season)">
+        <ion-card *ngFor="let service of services" (click)="openView(service)">
             <ion-item>
-                Variety: {{season.variety}}
-                <p>Reference: {{season.reference}}</p>
-            </ion-item>
-            <ion-item class="item-list">
-                <h2>{{season.datePlanted | date:'mediumDate'}}</h2>
-                <button ion-button clear item-end color="linkedin">Planted</button>
-            </ion-item>
-            <ion-item class="item-list">
-                <h2>{{season.projectedHarvestDate | date:'mediumDate'}}</h2>
-                <button ion-button clear item-end color="linkedin">Projected Harvest</button>
-            </ion-item>
-            <ion-item>
-                <p>Farmer: {{season.farmer}}</p>
-                <p>Farm: {{season.farm}}</p>
-            </ion-item>
-            <ion-item>
-                <span item-start>{{season.district}}</span>
                 <button ion-button icon-start clear item-end>
-                          <ion-icon name="md-navigate"></ion-icon>
-                          {{season.town}}
-                        </button>
+                                  <ion-icon name="md-bookmark"></ion-icon>
+                                  {{service.status}}
+                                </button>
+            </ion-item>
+            <ion-item>
+                Farmer: {{service.farmer}}
+                <p>Phone Number: {{service.phoneNumber}}</p>
+            </ion-item>
+            <ion-item class="item-list">
+                <h2>{{service.serviceDate | date:'mediumDate'}}</h2>
+                <button ion-button clear item-end color="linkedin">Date</button>
+            </ion-item>
+            <ion-item text-wrap>
+                <p>Services: {{service.services}}</p>
+                <p>Notes: {{service.notes}}</p>
+            </ion-item>
+            <ion-item>
+                <span item-start>{{service.district}}</span>
+                <span item-end>{{service.town}}</span>
             </ion-item>
         </ion-card>
     </ion-list>
-    <button ion-button full (click)="loadMore()" [hidden]="!(total > seasons.length)">Load More</button>
+    <button ion-button full (click)="loadMore()" [hidden]="!(total > services.length)">Load More</button>
 
 </ion-content>

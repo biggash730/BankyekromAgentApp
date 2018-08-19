@@ -55,7 +55,7 @@ export class ViewservicePage {
           handler: () => {
             self.backendService.cancelRequest(data.id).subscribe(data => {
               if (data.success) {
-                self.start()
+                self.navCtrl.pop();
               }
             }, (error) => {
               console.log(error);
