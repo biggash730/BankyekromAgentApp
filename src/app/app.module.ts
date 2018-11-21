@@ -6,10 +6,12 @@ import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {HttpInterceptor} from './http.interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { MomentModule } from 'angular2-moment';
+import { Network } from '@ionic-native/network';
 import { UserDataProvider } from '../providers/user-data';
 import { BackendProvider } from '../providers/backend';
 
 import { MyApp } from './app.component';
+import { SetupPage } from '../pages/setup/setup';
 import { HomePage } from '../pages/home/home';
 import { FarmersPage } from '../pages/farmers/farmers';
 import { AddfarmerPage } from '../pages/addfarmer/addfarmer';
@@ -37,7 +39,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-import { LocaldbProvider } from '../providers/localdb/localdb';
+import { LocaldbProvider } from '../providers/localdb';
 
 
 declare var window;
@@ -58,6 +60,7 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     HomePage,
     IntroPage,
     LoginPage,
+    SetupPage,
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
@@ -93,6 +96,7 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     HomePage,
     IntroPage,
     LoginPage,
+    SetupPage,
     ProfilePage,
     PhotoPage,
     UpdateProfilePage,
@@ -118,6 +122,7 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     StatusBar,
     SplashScreen,
     Geolocation,
+    Network,
     UserDataProvider,
     BackendProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

@@ -3,7 +3,7 @@ import { Component} from '@angular/core';
 import { UserDataProvider } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
 import { BackendProvider } from '../../providers/backend';
-import { HomePage } from '../home/home';
+import { SetupPage } from '../setup/setup';
 
 /**
  * Generated class for the LoginPage page.
@@ -59,8 +59,19 @@ export class LoginPage {
       let loader = this.loadingCtrl.create({
         content: "Login Initiated..."
       });
-      loader.present();  
-
+      
+      this.storage.get(this.userService.CONNECTIONSTATUS).then((val) => {
+        if(val == "offline"){
+          let alert = this.alertCtrl.create({
+            title:'Offline Network', 
+            subTitle:'Please check that you have internet connection',
+            buttons:['OK']
+          });
+          alert.present();
+          return;
+        }
+      }); 
+      loader.present(); 
       this.backendService.login(obj).subscribe(data => {
           //console.log(data)
           loader.dismissAll();
@@ -75,7 +86,7 @@ export class LoginPage {
               this.userService.setLoggedIn()
               this.userService.setCurrentUser(data.data)
               this.userService.setToken(data.data.token)
-              this.navCtrl.setRoot(HomePage)
+              this.navCtrl.setRoot(SetupPage)
             }
             else{
               let alert = this.alertCtrl.create({

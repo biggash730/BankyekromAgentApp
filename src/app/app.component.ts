@@ -5,13 +5,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../providers/user-data';
 import { BackendProvider } from '../providers/backend';
+import { LocaldbProvider } from '../providers/localdb';
+import { Network } from '@ionic-native/network';
 
 import { HomePage } from '../pages/home/home';
 import { ServicesPage } from '../pages/services/services';
 import { FarmersPage } from '../pages/farmers/farmers';
 import { FarmsPage } from '../pages/farms/farms';
 import { IntroPage } from '../pages/intro/intro';
-import { SettingsPage } from '../pages/settings/settings';
+//import { SettingsPage } from '../pages/settings/settings';
 import { LocationPage } from '../pages/location/location';
 import { SeasonsPage } from '../pages/seasons/seasons';
 
@@ -24,7 +26,7 @@ export class MyApp {
   pages: Array<{ title: string, component: any, icon: string }>;
   user: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public alertCtrl: AlertController, public userService: UserDataProvider, public storage: Storage, public backendService: BackendProvider, public events: Events) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public alertCtrl: AlertController, public userService: UserDataProvider, public storage: Storage, public backendService: BackendProvider, public events: Events, public network: Network, public localdbProvider: LocaldbProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -39,14 +41,20 @@ export class MyApp {
     ];
     this.user = {}
     //get user
-
+    this.network.onDisconnect().subscribe(() => {
+      this.userService.setConnectionStatus("offline");
+    });
+    this.network.onConnect().subscribe(() => {
+      this.userService.setConnectionStatus("online");
+    });
+    //this.localdbProvider.createPouchDBs();
     this.storage.get(this.userService.HAS_LOGGED_IN).then((val) => {
 
       //get user
       this.storage.get(this.userService.CURRENT_USER).then((val) => {
         //console.log(val)
         this.user = JSON.parse(val)
-      });      
+      });
 
       //console.log(val)
       var res = JSON.parse(val);
@@ -58,6 +66,7 @@ export class MyApp {
     });
 
   }
+
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -91,6 +100,17 @@ export class MyApp {
           text: 'Yes',
           handler: () => {
             //console.log('Cancel the request');
+            this.storage.get(this.userService.CONNECTIONSTATUS).then((val) => {
+              if(val == "offline"){
+                let alert = this.alertCtrl.create({
+                  title:'Offline Network', 
+                  subTitle:'Please check that you have internet connection',
+                  buttons:['OK']
+                });
+                alert.present();
+                return;
+              }
+            });
             this.backendService.logout().subscribe(data => {
               //console.log(data)
               if (data.success) {
@@ -105,6 +125,5 @@ export class MyApp {
       ]
     });
     alert.present();
-
   }
 }

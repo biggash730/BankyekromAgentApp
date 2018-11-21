@@ -23,7 +23,8 @@ export class UserDataProvider {
   PAGE = 'PAGE';
   PHONENUMBER = 'PHONENUMBER';
   TOKEN = 'TOKEN';
-  SMS_SYNC_DATE = 'NULL';
+  LASTSYNCDATE = 'NULL';
+  CONNECTIONSTATUS = 'CONNECTIONSTATUS';
 
   client: any;
   userid: string;
@@ -33,6 +34,7 @@ export class UserDataProvider {
   requestOptions: RequestOptions;
   headers: Headers = new Headers;
   phoneNumber: string;
+  connectionStatus: string;
 
   constructor(public events: Events, public storage: Storage) {
     //var self = this;
@@ -112,6 +114,16 @@ export class UserDataProvider {
 
   public getToken(): any {
     return this.storage.get(this.TOKEN).then((val) => {
+      return JSON.parse(val)
+    });
+  }
+
+  public setConnectionStatus(status) {
+    this.storage.set(this.CONNECTIONSTATUS, JSON.stringify(status));
+  }
+
+  public getConnectionStatus(): any {
+    return this.storage.get(this.CONNECTIONSTATUS).then((val) => {
       return JSON.parse(val)
     });
   }
