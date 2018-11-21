@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../../providers/user-data';
@@ -21,14 +21,19 @@ export class SetupPage {
   activity: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public storage: Storage, public alertCtrl: AlertController, public localdb: LocaldbProvider, public backendService: BackendProvider,
-    private platform: Platform) {
+    private platform: Platform, public events: Events) {
     this.activity = "Please wait, App is being setup for offline use ...";
     this.platform.ready().then(() => {
       this.localdb.createPouchDBs();
       this.localdb.destroyPouchDBs();
       this.localdb.createPouchDBs();
-      this.start()
+      this.start();
+      this.events.subscribe('SETUP: Complete', () => {
+        this.finished();
+      });
     });
+
+
 
   }
 
@@ -43,7 +48,7 @@ export class SetupPage {
     //console.log('ionViewDidLoad SetupPage');
     //this.localdb.createPouchDBs();
     //this.localdb.destroyPouchDBs();
-    
+
   }
 
   finished() {
@@ -56,6 +61,9 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "districts")
         this.activity = "Finished Updating Districts ...";
+
+        //pull services
+        this.pullServices();
       }
     }, (error) => {
       console.log(error);
@@ -67,6 +75,8 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "services")
         this.activity = "Finished Updating Services ...";
+        //pull varieties
+        this.pullVarieties();
       }
     }, (error) => {
       console.log(error);
@@ -78,6 +88,8 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "varieties")
         this.activity = "Finished Updating Cassava Varieties ...";
+        //pull idtypes
+        this.pullIdTypes();
       }
     }, (error) => {
       console.log(error);
@@ -89,6 +101,7 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "idTypes")
         this.activity = "Finished Updating Identification Types ...";
+        this.events.publish('SETUP: Complete');
       }
     }, (error) => {
       console.log(error);
@@ -109,13 +122,6 @@ export class SetupPage {
     });
     //pull districts
     this.pullDistricts();
-    //pull services
-    this.pullServices();
-    //pull varieties
-    this.pullVarieties();
-    //pull idtypes
-    this.pullIdTypes();
-
   }
 
 }

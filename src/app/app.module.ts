@@ -40,6 +40,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocaldbProvider } from '../providers/localdb';
+import { SQLite } from '@ionic-native/sqlite';
 
 
 declare var window;
@@ -131,7 +132,8 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
       useFactory: httpInterceptorFactory,
       deps: [XHRBackend, RequestOptions, Storage]
     },
-    LocaldbProvider,
+    SQLite,
+    LocaldbProvider
   ]
 })
 export class AppModule {}

@@ -10,6 +10,7 @@ import { ViewfarmerPage } from '../../pages/viewfarmer/viewfarmer';
   templateUrl: 'farmers.html'
 })
 export class FarmersPage {
+  loader: any
   farmers: any[]
   total: any = 0
   page: any = 1
@@ -17,6 +18,9 @@ export class FarmersPage {
   obj: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.farmers = []
     this.start()
     this.newFarmer()
@@ -49,19 +53,17 @@ export class FarmersPage {
   getList() {
 
     let self = this
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
+
+    this.loader.present().then(() => {
       self.backendService.getFarmers(self.obj).subscribe(data => {
         //console.log(data)
-        loader.dismissAll();
+        this.loader.dismissAll();
         if (data.success) {
           self.farmers = data.data;
           self.total = data.total
         }
       }, (error) => {
-        loader.dismissAll();
+        this.loader.dismissAll();
         console.log(error);
       });
     })
