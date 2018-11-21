@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController, Events } 
 import { BackendProvider } from '../../providers/backend';
 import { AddfarmerPage } from '../../pages/addfarmer/addfarmer';
 import { ViewfarmerPage } from '../../pages/viewfarmer/viewfarmer';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class FarmersPage {
   size: any = 20
   obj: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.loader = this.loadingCtrl.create({
       content: ""
     });
@@ -47,27 +48,19 @@ export class FarmersPage {
   openView(data) {
     this.navCtrl.push(ViewfarmerPage, data);
   }
-
-
-
+  
   getList() {
-
     let self = this
-
     this.loader.present().then(() => {
-      self.backendService.getFarmers(self.obj).subscribe(data => {
-        //console.log(data)
-        this.loader.dismissAll();
-        if (data.success) {
-          self.farmers = data.data;
-          self.total = data.total
-        }
-      }, (error) => {
-        this.loader.dismissAll();
-        console.log(error);
-      });
+      this.localdb.getRecords('farmers')
+        .then(recs => {
+          console.log(recs)
+          self.loader.dismissAll();
+          self.farmers = recs;
+          self.total = recs.length
+        })
+        .catch((err) => { self.loader.dismissAll();});
     })
-
   }
 
   start() {

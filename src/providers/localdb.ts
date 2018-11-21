@@ -16,8 +16,8 @@ export class LocaldbProvider {
   public services;
   public varietiesdb;
   public varieties;
-  public idTypesdb;
-  public idTypes;
+  public idtypesdb;
+  public idtypes;
   public farmersdb;
   public farmers;
   public farmsdb;
@@ -27,22 +27,13 @@ export class LocaldbProvider {
   public requestsdb;
   public requests;
 
-  /*public createPouchDBsx() {
-    PouchDB.plugin(cordovaSqlitePlugin);
-    this.regionsdb = new PouchDB('regions.db', { adapter: 'cordova-sqlite', location: 'default' });
-    this.districtsdb = new PouchDB('districts.db', { adapter: 'cordova-sqlite', location: 'default' });
-    this.servicesdb = new PouchDB('services.db', { adapter: 'cordova-sqlite', location: 'default' });
-    this.varietiesdb = new PouchDB('varieties.db', { adapter: 'cordova-sqlite', location: 'default' });
-    this.idTypesdb = new PouchDB('idtypes.db', { adapter: 'cordova-sqlite', location: 'default' });
-    this.farmersdb = new PouchDB('farmers.db', { adapter: 'cordova-sqlite', location: 'default' });
-  }*/
   public createPouchDBs() {
     PouchDB.plugin(idbplugin);
     this.regionsdb = new PouchDB('regions.db', { adapter: 'idb', location: 'default' });
     this.districtsdb = new PouchDB('districts.db', { adapter: 'idb', location: 'default' });
     this.servicesdb = new PouchDB('services.db', { adapter: 'idb', location: 'default' });
     this.varietiesdb = new PouchDB('varieties.db', { adapter: 'idb', location: 'default' });
-    this.idTypesdb = new PouchDB('idtypes.db', { adapter: 'idb', location: 'default' });
+    this.idtypesdb = new PouchDB('idtypes.db', { adapter: 'idb', location: 'default' });
     this.farmersdb = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
     this.farmsdb = new PouchDB('farms.db', { adapter: 'idb', location: 'default' });
     this.seasonsdb = new PouchDB('seasons.db', { adapter: 'idb', location: 'default' });
@@ -53,7 +44,7 @@ export class LocaldbProvider {
     this.districtsdb.destroy();
     this.servicesdb.destroy();
     this.varietiesdb.destroy();
-    this.idTypesdb.destroy();
+    this.idtypesdb.destroy();
     this.farmersdb.destroy();
     this.farmsdb.destroy();
     this.seasonsdb.destroy();
@@ -61,75 +52,13 @@ export class LocaldbProvider {
 
   }
 
-
-  public getDistricts() {
-    var self = this
-    PouchDB.plugin(idbplugin);
-    self.districtsdb = new PouchDB('districts.db', { adapter: 'idb', location: 'default' });
-    function allDocs() {
-      return self.districtsdb.allDocs({ include_docs: true })
-        .then(docs => {
-          console.log(docs)
-          self.districts = docs.rows.map(row => {
-            row.doc.Date = new Date(row.doc.Date);
-            return row.doc;
-          });
-          return self.districts;
-        });
-    }
-
-    self.districtsdb.changes({ live: true, since: 'now', include_docs: true })
-      .on('change', () => {
-        allDocs().then((res) => {
-          console.log(res)
-          self.districts = res;
-        });
-      });
-    return allDocs();
-  }
-
-  public saveFarmer(obj) {
-    obj.modifiedAt = new Date();
-    if (obj.id) return this.farmersdb.put(obj);
-    else return this.farmersdb.post(obj);
-  }
-
-  deleteFarmer(obj) {
-    obj.deleted = true;
-    return this.farmersdb.delete(obj);
-  }
-
-  readFarmers() {
-    function allDocs() {
-      return this.farmersdb.allDocs({ include_docs: true })
-        .then(docs => {
-          this.farmers = docs.rows.map(row => {
-            row.doc.Date = new Date(row.doc.Date);
-            if (!row.doc.deleted) return row.doc;
-          });
-          return this.farmers;
-        });
-    }
-
-    this.farmersdb.changes({ live: true, since: 'now', include_docs: true })
-      .on('change', () => {
-        allDocs().then((res) => {
-          console.log(res)
-          this.farmers = res;
-        });
-      });
-    return allDocs();
-
-  }
-
-
-  public addBulkRecords(obj, type) {
+public addBulkRecords(obj, type) {
     var db;
     if (type == "regions") db = this.regionsdb;
     if (type == "districts") db = this.districtsdb;
     if (type == "services") db = this.servicesdb;
     if (type == "varieties") db = this.varietiesdb;
-    if (type == "idTypes") db = this.idTypesdb;
+    if (type == "idtypes") db = this.idtypesdb;
     if (type == "farmers") db = this.farmersdb;
     var res = db.bulkDocs(obj);
     return res;
@@ -176,9 +105,9 @@ export class LocaldbProvider {
       db = new PouchDB('varieties.db', { adapter: 'idb', location: 'default' });
       list = self.varieties;
     }
-    else if (type == "idTypes"){
-      db = new PouchDB('idTypes.db', { adapter: 'idb', location: 'default' });
-      list = self.idTypes;
+    else if (type == "idtypes"){
+      db = new PouchDB('idtypes.db', { adapter: 'idb', location: 'default' });
+      list = self.idtypes;
     }
     else if (type == "farmers"){
       db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });

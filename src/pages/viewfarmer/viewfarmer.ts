@@ -13,6 +13,7 @@ import {
 } from '../../providers/backend';
 import { UpdatefarmerPage } from '../../pages/updatefarmer/updatefarmer';
 import { ViewfarmPage } from '../../pages/viewfarm/viewfarm';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 /**
@@ -32,7 +33,7 @@ export class ViewfarmerPage {
   districts: any[]
   idtypes: any[]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
     this.start()
   }

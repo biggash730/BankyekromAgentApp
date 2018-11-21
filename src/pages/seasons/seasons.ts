@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController, Events } 
 import { BackendProvider } from '../../providers/backend';
 import { AddseasonPage } from '../../pages/addseason/addseason';
 import { ViewseasonPage } from '../../pages/viewseason/viewseason';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class SeasonsPage {
   size: any = 20
   obj: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.seasons = []
     this.start()
     this.newSeason()

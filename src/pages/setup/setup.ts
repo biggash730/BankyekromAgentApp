@@ -32,23 +32,11 @@ export class SetupPage {
         this.finished();
       });
     });
-
-
-
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad SetupPage');
-    //this.localdb.createPouchDBs();
-    //this.localdb.destroyPouchDBs();
-    //this.localdb.createPouchDBs();
-    //this.start()
   }
   ionViewDidEnter() {
-    //console.log('ionViewDidLoad SetupPage');
-    //this.localdb.createPouchDBs();
-    //this.localdb.destroyPouchDBs();
-
   }
 
   finished() {
@@ -61,7 +49,6 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "districts")
         this.activity = "Finished Updating Districts ...";
-
         //pull services
         this.pullServices();
       }
@@ -99,8 +86,21 @@ export class SetupPage {
     this.activity = "Updating Identification Types ...";
     this.backendService.getIdTypes().subscribe(data => {
       if (data.success) {
-        this.localdb.addBulkRecords(data.data, "idTypes")
+        this.localdb.addBulkRecords(data.data, "idtypes")
         this.activity = "Finished Updating Identification Types ...";
+        //pull idtypes
+        this.pullFarmers();
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  pullFarmers() {
+    this.activity = "Updating Farmers ...";
+    this.backendService.getAllFarmers().subscribe(data => {
+      if (data.success) {
+        this.localdb.addBulkRecords(data.data, "farmers")
+        this.activity = "Finished Updating Farmers ...";
         this.events.publish('SETUP: Complete');
       }
     }, (error) => {

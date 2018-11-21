@@ -14,6 +14,7 @@ import {
 import { UpdatefarmPage } from '../../pages/updatefarm/updatefarm';
 import { GetLocationPage } from '../../pages/getlocation/getlocation';
 import { ViewseasonPage } from '../../pages/viewseason/viewseason';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 /**
@@ -33,7 +34,7 @@ export class ViewfarmPage {
   districts: any[]
   idtypes: any[]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
     this.start()
   }

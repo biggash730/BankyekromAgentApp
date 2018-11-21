@@ -51,13 +51,11 @@ export class AddfarmerPage {
       .catch((err) => { });
   }
   getIdTypes() {
-    this.backendService.getIdTypes().subscribe(data => {
-      if (data.success) {
-        this.idtypes = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('idtypes')
+      .then(recs => {
+        this.idtypes = recs;
+      })
+      .catch((err) => { });
   }
 
   save() {

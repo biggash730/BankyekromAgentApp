@@ -11,6 +11,7 @@ import {
 import {
   BackendProvider
 } from '../../providers/backend';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 /**
@@ -30,7 +31,7 @@ export class AddfarmPage {
   districts: any[]
   farmers: any[]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.start()
   }
 
@@ -39,22 +40,18 @@ export class AddfarmPage {
   }
 
   getDistricts() {
-    this.backendService.getDistricts().subscribe(data => {
-      if (data.success) {
-        this.districts = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('districts')
+      .then(recs => {
+        this.districts = recs;
+      })
+      .catch((err) => { });
   }
   getFarmers() {
-    this.backendService.getAllFarmers().subscribe(data => {
-      if (data.success) {
-        this.farmers = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        this.farmers = recs;
+      })
+      .catch((err) => { });
   }
 
   save() {
