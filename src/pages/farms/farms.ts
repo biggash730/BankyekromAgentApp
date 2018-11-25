@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController, Events } 
 import { BackendProvider } from '../../providers/backend';
 import { AddfarmPage } from '../../pages/addfarm/addfarm';
 import { ViewfarmPage } from '../../pages/viewfarm/viewfarm';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 @Component({
@@ -15,15 +16,19 @@ export class FarmsPage {
   page: any = 1
   size: any = 20
   obj: any
+  loader: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events) {
-    this.farms = []
-    this.start()
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
+    this.farms = []    
+    //this.start()
     this.newFarm()
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestsPage');
+    //console.log('ionViewDidLoad RequestsPage');
   }
 
   ionViewWillEnter() {
@@ -44,33 +49,27 @@ export class FarmsPage {
     this.navCtrl.push(ViewfarmPage, data);
   }
 
-
+  openMap() {
+    this.navCtrl.push(AddfarmPage);
+  }
 
   getList() {
-
     let self = this
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-      self.backendService.getFarms(self.obj).subscribe(data => {
-        //console.log(data)
-        loader.dismissAll();
-        if (data.success) {
-          self.farms = data.data;
-          self.total = data.total
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
+    this.loader.present();
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        self.loader.dismissAll();
+        self.farms = recs;
+        self.total = recs.length
+      })
+      .catch((err) => {
+        self.loader.dismissAll();
       });
-    })
-
   }
 
   start() {
-    this.page = 1;
-    this.obj = { pager: { page: this.page, size: this.size } };
+    this.page = 1; 
+    this.obj = { pager: { page: this.page, size: this.size } };   
     this.getList()
   }
 

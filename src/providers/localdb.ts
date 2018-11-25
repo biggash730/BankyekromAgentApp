@@ -60,26 +60,46 @@ public addBulkRecords(obj, type) {
     if (type == "varieties") db = this.varietiesdb;
     if (type == "idtypes") db = this.idtypesdb;
     if (type == "farmers") db = this.farmersdb;
+    if (type == "farms") db = this.farmsdb;
+    if (type == "seasons") db = this.seasonsdb;
+    if (type == "requests") db = this.requestsdb;
     var res = db.bulkDocs(obj);
     return res;
   }
-  public saveRecord(obj, type) {    
+  public saveRecord(obj, type) {   
+    console.log(obj) 
     var db;
     obj.modifiedAt = new Date();
-    if (type == "farmers") db = this.farmersdb;
-    if (type == "farms") db = this.farmersdb;
-    if (type == "seasons") db = this.farmersdb;
-    if (type == "requests") db = this.farmersdb;
+    if (type == "farmers"){
+      db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "farms"){
+      db = new PouchDB('farms.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "seasons"){
+      db = new PouchDB('seasons.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "requests"){
+      db = new PouchDB('requests.db', { adapter: 'idb', location: 'default' });
+    }
     if (obj.id) return db.put(obj);
     else return db.post(obj);
   }
   deleteRecord(obj, type) {
     var db;
     obj.deleted = true;
-    if (type == "farmers") db = this.farmersdb;
-    if (type == "farms") db = this.farmersdb;
-    if (type == "seasons") db = this.farmersdb;
-    if (type == "requests") db = this.farmersdb;
+    if (type == "farmers"){
+      db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "farms"){
+      db = new PouchDB('farms.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "seasons"){
+      db = new PouchDB('seasons.db', { adapter: 'idb', location: 'default' });
+    }
+    else if (type == "requests"){
+      db = new PouchDB('requests.db', { adapter: 'idb', location: 'default' });
+    }
     
     return db.delete(obj);
   }
@@ -112,6 +132,18 @@ public addBulkRecords(obj, type) {
     else if (type == "farmers"){
       db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
       list = self.farmers;
+    }
+    else if (type == "farms"){
+      db = new PouchDB('farms.db', { adapter: 'idb', location: 'default' });
+      list = self.farms;
+    }
+    else if (type == "seasons"){
+      db = new PouchDB('seasons.db', { adapter: 'idb', location: 'default' });
+      list = self.seasons;
+    }
+    else if (type == "requests"){
+      db = new PouchDB('requests.db', { adapter: 'idb', location: 'default' });
+      list = self.requests;
     }
     
     function allDocs() {

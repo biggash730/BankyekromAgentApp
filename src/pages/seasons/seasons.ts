@@ -16,15 +16,19 @@ export class SeasonsPage {
   page: any = 1
   size: any = 20
   obj: any
+  loader: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.seasons = []
-    this.start()
+    //this.start()
     this.newSeason()
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestsPage');
+    //console.log('ionViewDidLoad RequestsPage');
   }
 
   ionViewWillEnter() {
@@ -44,27 +48,19 @@ export class SeasonsPage {
   openView(data) {
     this.navCtrl.push(ViewseasonPage, data);
   }
-  
+
   getList() {
-
     let self = this
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-      self.backendService.getSeasons(self.obj).subscribe(data => {
-        //console.log(data)
-        loader.dismissAll();
-        if (data.success) {
-          self.seasons = data.data;
-          self.total = data.total
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
+    this.loader.present();
+    this.localdb.getRecords('seasons')
+      .then(recs => {
+        self.loader.dismissAll();
+        self.seasons = recs;
+        self.total = recs.length
+      })
+      .catch((err) => {
+        self.loader.dismissAll();
       });
-    })
-
   }
 
   start() {

@@ -41,36 +41,29 @@ export class AddservicePage {
   }
 
   getServices() {
-    this.backendService.getServices().subscribe(data => {
-      if (data.success) {
-        this.services = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('services')
+      .then(recs => {
+        this.services = recs;
+      })
+      .catch((err) => { });
   }
 
   getDistricts() {
-    this.backendService.getDistricts().subscribe(data => {
-      if (data.success) {
-        this.districts = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('districts')
+      .then(recs => {
+        this.districts = recs;
+      })
+      .catch((err) => { });
   }
   getDistrictFarmers(id: number) {
-    this.backendService.getDistrictFarmers(id).subscribe(data => {
-      if (data.success) {
-        this.farmers = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        this.farmers = recs.filter(x => x.districtId == id);
+      })
+      .catch((err) => { });
   }
 
   addService(serv) {
-    console.log(serv)
     serv.serviceId = serv.id;
     this.formData.items.push(serv)
   }

@@ -32,6 +32,9 @@ export class AddfarmPage {
   farmers: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.start()
   }
 
@@ -55,13 +58,30 @@ export class AddfarmPage {
   }
 
   save() {
+    this.loader.present();
+    this.formData.farmerId = this.formData.farmer.id;
+    this.localdb.saveRecord(this.formData,'farms')
+      .then(res => {
+        this.loader.dismissAll();
+        console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Farm saved Successfully",
+          buttons: ['OK']
+        });
+        alert.present();
+        this.events.publish('Farm: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
+  }
+
+  /*savexx() {
     //do validations
     //do save action here
     let self = this
 
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
+    
     loader.present().then(() => {
       self.formData.farmerId = self.formData.farmer.id;
       self.backendService.saveFarm(self.formData).subscribe(data => {
@@ -88,7 +108,7 @@ export class AddfarmPage {
         console.log(error);
       });
     });
-  }
+  }*/
 
   start() {
     this.loader = this.loadingCtrl.create({

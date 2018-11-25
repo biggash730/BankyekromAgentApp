@@ -11,6 +11,7 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'services.html'
 })
 export class ServicesPage {
+  loader: any
   services: any[]
   total: any = 0
   page: any = 1
@@ -18,8 +19,10 @@ export class ServicesPage {
   obj: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.services = []
-    this.start()
     this.newService()
   }
 
@@ -44,27 +47,19 @@ export class ServicesPage {
   openView(data) {
     this.navCtrl.push(ViewservicePage, data);
   }
-  
+
   getList() {
-
     let self = this
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-      self.backendService.getRequests(self.obj).subscribe(data => {
-        //console.log(data)
-        loader.dismissAll();
-        if (data.success) {
-          self.services = data.data;
-          self.total = data.total
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
+    this.loader.present();
+    this.localdb.getRecords('requests')
+      .then(recs => {
+        self.loader.dismissAll();
+        self.services = recs;
+        self.total = recs.length
+      })
+      .catch((err) => {
+        self.loader.dismissAll();
       });
-    })
-
   }
 
   start() {

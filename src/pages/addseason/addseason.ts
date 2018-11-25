@@ -42,32 +42,26 @@ export class AddseasonPage {
   }
 
   getVarieties() {
-    this.backendService.getVarieties().subscribe(data => {
-      if (data.success) {
-        this.varieties = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('varieties')
+      .then(recs => {
+        this.varieties = recs;
+      })
+      .catch((err) => { });
   }
 
   getDistricts() {
-    this.backendService.getDistricts().subscribe(data => {
-      if (data.success) {
-        this.districts = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('districts')
+      .then(recs => {
+        this.districts = recs;
+      })
+      .catch((err) => { });
   }
   getDistrictFarmers(id: number) {
-    this.backendService.getDistrictFarmers(id).subscribe(data => {
-      if (data.success) {
-        this.farmers = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        this.farmers = recs.filter(x => x.districtId == id);
+      })
+      .catch((err) => { });
   }
 
   save() {

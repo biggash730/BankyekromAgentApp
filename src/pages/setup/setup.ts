@@ -101,6 +101,42 @@ export class SetupPage {
       if (data.success) {
         this.localdb.addBulkRecords(data.data, "farmers")
         this.activity = "Finished Updating Farmers ...";
+        this.pullFarms();
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  pullFarms() {
+    this.activity = "Updating Farms ...";
+    this.backendService.getAllFarms().subscribe(data => {
+      if (data.success) {
+        this.localdb.addBulkRecords(data.data, "farms")
+        this.activity = "Finished Updating Farms ...";
+        this.pullSeasons();
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  pullSeasons() {
+    this.activity = "Updating Seasons ...";
+    this.backendService.getAllSeasons().subscribe(data => {
+      if (data.success) {
+        this.localdb.addBulkRecords(data.data, "seasons")
+        this.activity = "Finished Updating Seasons ...";
+        this.pullRequests()
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  pullRequests() {
+    this.activity = "Updating Requests ...";
+    this.backendService.getAllRequests().subscribe(data => {
+      if (data.success) {
+        this.localdb.addBulkRecords(data.data, "requests")
+        this.activity = "Finished Updating Requests ...";
         this.events.publish('SETUP: Complete');
       }
     }, (error) => {

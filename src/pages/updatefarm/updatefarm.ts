@@ -40,13 +40,11 @@ export class UpdatefarmPage {
   }
 
   getDistricts() {
-    this.backendService.getDistricts().subscribe(data => {
-      if (data.success) {
-        this.districts = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+    this.localdb.getRecords('districts')
+      .then(recs => {
+        this.districts = recs;
+      })
+      .catch((err) => { });
   }
 
 update() {

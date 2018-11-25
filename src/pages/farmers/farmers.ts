@@ -41,6 +41,8 @@ export class FarmersPage {
     });
   }
 
+  
+
   openAdd() {
     this.navCtrl.push(AddfarmerPage);
   }
@@ -48,19 +50,19 @@ export class FarmersPage {
   openView(data) {
     this.navCtrl.push(ViewfarmerPage, data);
   }
-  
+
   getList() {
     let self = this
-    this.loader.present().then(() => {
-      this.localdb.getRecords('farmers')
-        .then(recs => {
-          console.log(recs)
-          self.loader.dismissAll();
-          self.farmers = recs;
-          self.total = recs.length
-        })
-        .catch((err) => { self.loader.dismissAll();});
-    })
+    this.loader.present();
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        self.loader.dismissAll();
+        self.farmers = recs;
+        self.total = recs.length
+      })
+      .catch((err) => {
+        self.loader.dismissAll();
+      });
   }
 
   start() {

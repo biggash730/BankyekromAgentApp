@@ -16,7 +16,8 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public storage: Storage, public userService: UserDataProvider,public events: Events) {
-    this.start()
+    //this.start()
+    this.stats = {}
   }
 
   ionViewDidLoad() {
@@ -57,8 +58,7 @@ export class HomePage {
   }
 
   start() {
-    this.trackSignout()
-    this.stats = {}
+    this.trackSignout()    
     this.getStats();
   }
 
