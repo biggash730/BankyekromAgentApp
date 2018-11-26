@@ -8,7 +8,7 @@
     <ion-navbar color="bk3">
         <ion-title>Service Request</ion-title>
         <ion-buttons end>
-            <button (click)="cancel(formData)" ion-button icon-only clear>
+            <button (click)="cancel(formData)" ion-button icon-only clear [hidden]="formData.status == 'Cancelled'">
                                 <ion-icon name="md-close-circle" color="light">
                                 </ion-icon>
                             </button>

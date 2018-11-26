@@ -69,7 +69,8 @@ public addBulkRecords(obj, type) {
   public saveRecord(obj, type) {   
     console.log(obj) 
     var db;
-    obj.modifiedAt = new Date();
+    obj.modifiedAt = this.formatDate(new Date());
+    console.log(obj)
     if (type == "farmers"){
       db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
     }
@@ -150,7 +151,8 @@ public addBulkRecords(obj, type) {
       return db.allDocs({ include_docs: true })
         .then(docs => {
           list = docs.rows.map(row => {
-            row.doc.Date = new Date(row.doc.Date);
+            //console.log(row.doc)
+            row.doc.Date = self.formatDate(row.doc.Date);
             return row.doc;
           });
           return list;
@@ -165,5 +167,21 @@ public addBulkRecords(obj, type) {
       });
     return allDocs();
   }
+
+  formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        hour = '' + (d.getHours() + 1),
+        min = '' + d.getMinutes(),
+        secs = d.getSeconds();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    var dt =year+"-"+month+"-"+day+"T"+hour+":"+min+":"+secs+"Z";
+    return dt;
+}
 
 }

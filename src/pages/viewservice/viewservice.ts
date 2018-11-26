@@ -54,20 +54,17 @@ export class ViewservicePage {
         {
           text: 'Yes',
           handler: () => {
-            self.backendService.cancelRequest(data.id).subscribe(data => {
-              if (data.success) {
-                self.navCtrl.pop();
-              }
-            }, (error) => {
-              console.log(error);
-            });
+            data.status = "Cancelled";
+            var res = this.localdb.saveRecord(data,"requests");
+            console.log(res);
+            self.navCtrl.pop();
           }
         }
       ]
     });
     alert.present();
   }
-  getRequest() {
+  /*getRequest() {
     this.backendService.getRequest(this.formData.id).subscribe(data => {
       if (data.success) {
         this.formData = data.data
@@ -75,12 +72,12 @@ export class ViewservicePage {
     }, (error) => {
       console.log(error);
     });
-  }
+  }*/
 
   start() {
     this.loader = this.loadingCtrl.create({
       content: ""
     });
-    this.getRequest();
+    //this.getRequest();
   }
 }

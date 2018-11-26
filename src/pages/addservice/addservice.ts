@@ -33,6 +33,9 @@ export class AddservicePage {
   services: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
+    this.loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.start()
   }
 
@@ -73,46 +76,39 @@ export class AddservicePage {
     //do save action here
     let self = this
 
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-      self.backendService.saveRequest(self.formData).subscribe(data => {
-        loader.dismissAll();
-        if (data.success) {
-          let alert = self.alertCtrl.create({
-            title: 'Save Successful',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-          self.events.publish('Service: saved');
-          self.navCtrl.pop();
-        } else {
-          let alert = self.alertCtrl.create({
-            title: 'Save Error',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
-      });
-    });
-  }
 
-  start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
-    this.getDistricts();
-    this.getServices();
-    this.formData = { items: [] };
-  }
-  refresh() {
-    this.formData = { items: [] };
-  }
+    this.loader.present();
+    var res = this.localdb.saveRecord(this.formData, "requests");
+    console.log(res);
+    this.loader.dismissAll();
+    /*if (data.success) {
+      let alert = self.alertCtrl.create({
+        title: 'Save Successful',
+        subTitle: data.message,
+        buttons: ['OK']
+      });
+      alert.present();
+      self.events.publish('Service: saved');
+      self.navCtrl.pop();
+    } else {
+      let alert = self.alertCtrl.create({
+        title: 'Save Error',
+        subTitle: data.message,
+        buttons: ['OK']
+      });
+      alert.present();
+    }*/
+    self.events.publish('Service: saved');
+    self.navCtrl.pop();
+}
+
+start() {
+  this.getDistricts();
+  this.getServices();
+  this.formData = { items: [] };
+}
+refresh() {
+  this.formData = { items: [] };
+}
 
 }
