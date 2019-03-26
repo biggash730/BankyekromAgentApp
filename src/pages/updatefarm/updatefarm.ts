@@ -46,43 +46,29 @@ export class UpdatefarmPage {
       .catch((err) => { });
   }
 
-update() {
-    //do validations
-    //do save action here
-    let self = this
-
+  update() {
     let loader = this.loadingCtrl.create({
-      content: ""
+      content: "Saving ..."
     });
-    loader.present().then(() => {
-
-        self.backendService.updateFarm(self.formData).subscribe(data => {
-          loader.dismissAll();
-          if (data.success) {
-            let alert = self.alertCtrl.create({
-              title: 'Updated Successful',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-            self.events.publish('Farm: saved');
-            self.navCtrl.pop();
-          } else {
-            let alert = self.alertCtrl.create({
-              title: 'Update Error',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-        }, (error) => {
-          loader.dismissAll();
-          console.log(error);
+    loader.present();
+    this.formData.districtId = this.formData.district.id
+    this.localdb.saveRecord(this.formData, 'farms')
+      .then(res => {
+        loader.dismissAll();
+        //console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Farm saved Successfully",
+          buttons: ['OK']
         });
-      });
-    }
-
-    start() {
-      this.getDistricts();
-    }
+        alert.present();
+        this.events.publish('Farm: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
   }
+
+  start() {
+    this.getDistricts();
+  }
+}

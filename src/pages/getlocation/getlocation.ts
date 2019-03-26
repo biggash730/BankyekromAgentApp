@@ -12,6 +12,7 @@ import {
   BackendProvider
 } from '../../providers/backend';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocaldbProvider } from '../../providers/localdb';
 
 
 /**
@@ -26,10 +27,9 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'getlocation.html',
 })
 export class GetLocationPage {
-loader: any
   formData: any
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, private geolocation: Geolocation, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
     this.start()
   }
@@ -38,56 +38,38 @@ loader: any
     //console.log('ionViewDidLoad RequestsPage');
   }
 
-setlocation() {
-    //do validations
-    //do save action here
-    let self = this
-
+  setlocation() {
     let loader = this.loadingCtrl.create({
-      content: ""
+      content: "Saving ..."
     });
-    loader.present().then(() => {
-
-        self.backendService.setLocation(self.formData).subscribe(data => {
-          loader.dismissAll();
-          if (data.success) {
-            let alert = self.alertCtrl.create({
-              title: 'Updated Successful',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-            self.events.publish('Farm: saved');
-            self.navCtrl.pop();
-          } else {
-            let alert = self.alertCtrl.create({
-              title: 'Update Error',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-        }, (error) => {
-          loader.dismissAll();
-          console.log(error);
+    loader.present();
+    this.localdb.saveRecord(this.formData, 'farms')
+      .then(res => {
+        loader.dismissAll();
+        //console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Farm saved Successfully",
+          buttons: ['OK']
         });
-      });
-    }
-
-    getLocation(){
-      var self = this;
-      this.geolocation.getCurrentPosition().then((resp) => {
-        self.formData.latitude = resp.coords.latitude;
-        self.formData.longitude = resp.coords.longitude;
-       }).catch((error) => {
-         console.log('Error getting location', error);
-       });
-    }
-
-    start() {
-      this.loader = this.loadingCtrl.create({
-        content: ""
-      });
-      this.getLocation();
-    }
+        alert.present();
+        this.events.publish('Farm: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
   }
+
+  getLocation() {
+    var self = this;
+    this.geolocation.getCurrentPosition().then((resp) => {
+      self.formData.latitude = resp.coords.latitude;
+      self.formData.longitude = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+  }
+
+  start() {
+    this.getLocation();
+  }
+}

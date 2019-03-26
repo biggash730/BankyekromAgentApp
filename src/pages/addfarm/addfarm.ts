@@ -59,6 +59,7 @@ export class AddfarmPage {
     });
     loader.present();
     this.formData.farmerId = this.formData.farmer.id;
+    this.formData.districtId = this.formData.district.id
     this.localdb.saveRecord(this.formData,'farms')
       .then(res => {
         loader.dismissAll();
@@ -70,44 +71,10 @@ export class AddfarmPage {
         });
         alert.present();
         this.events.publish('Farm: saved');
+        this.formData = {farmer:{}};
         this.navCtrl.pop();
       })
       .catch((err) => { });
-  }
-
-  saveLive() {
-    //do validations
-    //do save action here
-    let self = this
-    let loader = this.loadingCtrl.create({
-      content: " ... "
-    });
-    loader.present().then(() => {
-      self.formData.farmerId = self.formData.farmer.id;
-      self.backendService.saveFarm(self.formData).subscribe(data => {
-        loader.dismissAll();
-        if (data.success) {
-          let alert = self.alertCtrl.create({
-            title: 'Save Successful',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-          self.events.publish('Farm: saved');
-          self.navCtrl.pop();
-        } else {
-          let alert = self.alertCtrl.create({
-            title: 'Save Error',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
-      });
-    });
   }
 
   start() {

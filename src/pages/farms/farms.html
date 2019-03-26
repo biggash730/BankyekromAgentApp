@@ -30,17 +30,18 @@
     <ion-list>
         <ion-card *ngFor="let farm of farms" (click)="openView(farm)">
             <ion-item-divider color="light">
-                {{farm.farmer.mame}}
+                {{farm.farmer.name}}
+                <p>{{farm.farmer.phoneNumber}}</p>
                 <ion-note item-end color="grey">
-                    {{farm.createdAt | date:'shortDate'}}
+                    {{farm.modifiedAt | date:'shortDate'}}
                 </ion-note>
             </ion-item-divider>
             <ion-item>
                 Code: {{farm.code}}
-                <p>Reference: {{farm.reference}}</p>
+                <p>Location: {{farm.location}}</p>
             </ion-item>
             <ion-item>
-                <span item-start>{{farm.district}}</span>
+                <span item-start>{{farm.district.name}}</span>
                 <button ion-button icon-start clear item-end>
                           <ion-icon name="md-navigate"></ion-icon>
                           {{farm.town}}
@@ -48,6 +49,6 @@
             </ion-item>
         </ion-card>
     </ion-list>
-    <button ion-button full (click)="loadMore()" [hidden]="!(total > farms.length)">Load More</button>
+    <!--<button ion-button full (click)="loadMore()" [hidden]="!(total > farms.length)">Load More</button>-->
 
 </ion-content>

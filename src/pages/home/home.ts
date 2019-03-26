@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController, Events } 
 import { BackendProvider } from '../../providers/backend';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../../providers/user-data';
+import { LocaldbProvider } from '../../providers/localdb';
 import { LoginPage } from '../login/login';
 
 @Component({
@@ -14,7 +15,7 @@ export class HomePage {
   stats: any
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public storage: Storage, public userService: UserDataProvider,public events: Events) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public storage: Storage, public userService: UserDataProvider,public events: Events, public localdb: LocaldbProvider) {
     
     this.stats = {}
   }
@@ -33,14 +34,22 @@ export class HomePage {
 
   }
 
-  getStats() {
-    this.backendService.getStats().subscribe(data => {
-      if (data.success) {
-        this.stats = data.data;
-      }
-    }, (error) => {
-      console.log(error);
-    });
+  getFarms() {
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        this.stats.registeredFarms = recs.length;
+      })
+      .catch((err) => {
+      });
+  }
+
+  getFarmers() {
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        this.stats.registeredFarmers = recs.length;
+      })
+      .catch((err) => {
+      });
   }
 
   trackSignout() {
@@ -59,7 +68,8 @@ export class HomePage {
 
   start() {
     this.trackSignout()    
-    this.getStats();
+    this.getFarms();
+    this.getFarmers();
   }
 
 }

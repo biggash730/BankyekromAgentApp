@@ -24,7 +24,7 @@ export class FarmersPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestsPage');
+    console.log('ionViewDidLoad farmersPage');
     this.start()
   }
 

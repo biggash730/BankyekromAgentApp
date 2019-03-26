@@ -33,11 +33,12 @@ export class ViewfarmerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
-    this.start()
+    
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad RequestsPage');
+    console.log('ionViewDidLoad view farmers page');
+    this.start()
   }
 
   openFarm(data) {
@@ -49,9 +50,11 @@ export class ViewfarmerPage {
   }
 
   getFarms() {
+    let farmerId = this.formData.id
     this.localdb.getRecords('farms')
       .then(recs => {
-        this.farms = recs;
+        console.log(recs)
+        this.farms = recs.filter(farm => farm.farmerId === farmerId);
       })
       .catch((err) => {
       });

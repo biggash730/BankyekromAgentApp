@@ -62,13 +62,22 @@ export class AddseasonPage {
       })
       .catch((err) => { });
   }
+  getFarmerFarms(id: number) {
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        this.farms = recs.filter(x => x.farmerId == id);
+      })
+      .catch((err) => { });
+  }
 
-  save() {
+  save(data: any) {
     let self = this
     let loader = this.loadingCtrl.create({
       content: "Saving ..."
     });
     loader.present();
+    data.farmId = data.farm.id;
+    data.varietyId = data.variety.id
     this.localdb.saveRecord(self.formData,'seasons')
       .then(res => {
         loader.dismissAll();
@@ -83,41 +92,6 @@ export class AddseasonPage {
         this.navCtrl.pop();
       })
       .catch((err) => { });
-  }
-
-  saveLive() {
-    //do validations
-    //do save action here
-    let self = this
-
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-      self.backendService.saveSeason(self.formData).subscribe(data => {
-        loader.dismissAll();
-        if (data.success) {
-          let alert = self.alertCtrl.create({
-            title: 'Save Successful',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-          self.events.publish('Season: saved');
-          self.navCtrl.pop();
-        } else {
-          let alert = self.alertCtrl.create({
-            title: 'Save Error',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
-      });
-    });
   }
 
   start() {

@@ -30,16 +30,16 @@ import { LocaldbProvider } from '../../providers/localdb';
 })
 export class ViewfarmPage {
   formData: any
-  districts: any[]
-  idtypes: any[]
+  seasons: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
-    this.start()
+    
   }
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad RequestsPage');
+    this.start()
   }
 
   openUpdate(data) {
@@ -55,17 +55,18 @@ export class ViewfarmPage {
   }
 
 
-  getFarm() {
-    this.backendService.getFarm(this.formData.id).subscribe(data => {
-      if (data.success) {
-        this.formData = data.data
-      }
-    }, (error) => {
-      console.log(error);
-    });
+  getSeasons() {
+    let farmId = this.formData.id
+    this.localdb.getRecords('seasons')
+      .then(recs => {
+        console.log(recs)
+        this.seasons = recs.filter(s => s.farmId === farmId);
+      })
+      .catch((err) => {
+      });
   }
 
   start() {
-    this.getFarm();
+    this.getSeasons();
   }
 }

@@ -14,34 +14,34 @@
         <ion-card>
             <ion-item>
                 <ion-label stacked color="linkedin">Select District</ion-label>
-                <ion-select [(ngModel)]="formData.districtId" (ngModelChange)="getDistrictFarmers(formData.districtId)">
-                    <ion-option *ngFor="let p of districts" [value]="p.id">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.district" (ngModelChange)="getDistrictFarmers(formData.district.id)">
+                    <ion-option *ngFor="let p of districts" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Select Farmer</ion-label>
-                <ion-select [(ngModel)]="formData.farmer">
+                <ion-select [(ngModel)]="formData.farmer" (ngModelChange)="getFarmerFarms(formData.farmer.id)">
                     <ion-option *ngFor="let p of farmers" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Select Farm</ion-label>
-                <ion-select [(ngModel)]="formData.farmId">
-                    <ion-option *ngFor="let p of formData.farmer.farms" [value]="p.id">
+                <ion-select [(ngModel)]="formData.farm">
+                    <ion-option *ngFor="let p of formData.farms" [value]="p">
                         {{p.code}} -
                         <p>{{p.town}}</p>
                     </ion-option>
                 </ion-select>
             </ion-item>
         </ion-card>
-        <ion-card [hidden]="!formData.farmId">
+        <ion-card [hidden]="!formData.farm">
             <ion-item-divider color="light">
                 New Season Information
             </ion-item-divider>
             <ion-item>
                 <ion-label stacked color="linkedin">Select Variety</ion-label>
-                <ion-select [(ngModel)]="formData.varietyId">
-                    <ion-option *ngFor="let p of varieties" [value]="p.id">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.variety">
+                    <ion-option *ngFor="let p of varieties" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>

@@ -42,8 +42,8 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked color="linkedin">Select District</ion-label>
-                <ion-select [(ngModel)]="formData.districtId">
-                    <ion-option *ngFor="let p of districts" [value]="p.id">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.district">
+                    <ion-option *ngFor="let p of districts" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>

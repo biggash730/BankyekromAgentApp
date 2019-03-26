@@ -70,7 +70,7 @@ public addBulkRecords(obj, type) {
     //console.log(obj) 
     var db;
     obj.modifiedAt = this.formatDate(new Date());
-    console.log(obj)
+    obj.Date = this.formatDate(new Date());
     if (type == "farmers"){
       db = new PouchDB('farmers.db', { adapter: 'idb', location: 'default' });
     }
@@ -85,12 +85,10 @@ public addBulkRecords(obj, type) {
     }
     if (obj.id){
       var r1 = db.put(obj);
-      console.log(r1)
       return r1;
     } 
     else{
       var r2 =  db.post(obj);
-      console.log(r2);
       return r2;
     } 
   }

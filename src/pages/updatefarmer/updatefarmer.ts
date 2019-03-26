@@ -54,45 +54,33 @@ export class UpdatefarmerPage {
       .catch((err) => { });
   }
 
-update() {
-    //do validations
-    //do save action here
-    let self = this
-
+  update(data: any) {
     let loader = this.loadingCtrl.create({
-      content: ""
+      content: "Updating ..."
     });
-    loader.present().then(() => {
-
-        self.backendService.updateFarmer(self.formData).subscribe(data => {
-          loader.dismissAll();
-          if (data.success) {
-            let alert = self.alertCtrl.create({
-              title: 'Updated Successful',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-            self.events.publish('Farmer: saved');
-            self.navCtrl.pop();
-          } else {
-            let alert = self.alertCtrl.create({
-              title: 'Update Error',
-              subTitle: data.message,
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-        }, (error) => {
-          loader.dismissAll();
-          console.log(error);
+    loader.present();
+    if (data.idType) data.idTypeId = data.idType.id;
+    data.districtId = data.district.id
+    this.localdb.saveRecord(data, 'farmers')
+      .then(res => {
+        loader.dismissAll();
+        console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Farmer saved Successfully",
+          buttons: ['OK']
         });
-      });
-    }
-
-    start() {
-      this.getDistricts();
-      this.getIdTypes();
-      //this.getFarmer();
-    }
+        alert.present();
+        this.events.publish('Farmer: saved');
+        this.formData = {};
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
   }
+
+  start() {
+    this.getDistricts();
+    this.getIdTypes();
+    //this.getFarmer();
+  }
+}

@@ -32,11 +32,12 @@ export class AddfarmerPage {
   idtypes: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider, private platform: Platform) {
-    this.start()
+    this.formData = {};
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad RequestsPage');
+    console.log('ionViewDidLoad add farmer Page');
+    this.start()
   }
 
   getDistricts() {
@@ -54,15 +55,14 @@ export class AddfarmerPage {
       .catch((err) => { });
   }
 
-  save() {
-    let self = this
+  save(data: any) {
     let loader = this.loadingCtrl.create({
       content: "Saving ..."
     });
     loader.present();
-    self.formData.idTypeId = self.formData.idType.id;
-    self.formData.districtId = self.formData.district.id
-    this.localdb.saveRecord(self.formData,'farmers')
+    if(data.idType) data.idTypeId = data.idType.id;
+    data.districtId = data.district.id
+    this.localdb.saveRecord(data,'farmers')
       .then(res => {
         loader.dismissAll();
         console.log(res)
@@ -73,50 +73,15 @@ export class AddfarmerPage {
         });
         alert.present();
         this.events.publish('Farmer: saved');
+        this.formData = {};
         this.navCtrl.pop();
       })
       .catch((err) => { });
   }
 
-  saveLive() {
-    //do validations
-    //do save action here
-    let self = this
-    let loader = this.loadingCtrl.create({
-      content: ""
-    });
-    loader.present().then(() => {
-
-      self.backendService.saveFarmer(self.formData).subscribe(data => {
-        loader.dismissAll();
-        if (data.success) {
-          let alert = self.alertCtrl.create({
-            title: 'Save Successful',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-          self.events.publish('Farmer: saved');
-          self.navCtrl.pop();
-        } else {
-          let alert = self.alertCtrl.create({
-            title: 'Save Error',
-            subTitle: data.message,
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-      }, (error) => {
-        loader.dismissAll();
-        console.log(error);
-      });
-    });
-  }
-
   start() {
     this.getDistricts();
-    this.getIdTypes();
-    this.formData = {};
+    this.getIdTypes();    
   }
   refresh() {
     this.formData = {}
