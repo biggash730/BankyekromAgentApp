@@ -24,8 +24,8 @@ export class SetupPage {
     private platform: Platform, public events: Events) {
     this.activity = "Please wait, App is being setup for offline use ...";
     this.platform.ready().then(() => {
-      this.localdb.createPouchDBs();
-      this.localdb.destroyPouchDBs();
+      //this.localdb.createPouchDBs();
+      //this.localdb.destroyPouchDBs();
       this.localdb.createPouchDBs();
       this.start();
       this.events.subscribe('SETUP: Complete', () => {

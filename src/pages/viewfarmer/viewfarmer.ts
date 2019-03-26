@@ -29,8 +29,7 @@ import { LocaldbProvider } from '../../providers/localdb';
 })
 export class ViewfarmerPage {
   formData: any
-  districts: any[]
-  idtypes: any[]
+  farms: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
@@ -49,17 +48,16 @@ export class ViewfarmerPage {
     this.navCtrl.push(UpdatefarmerPage, data);
   }
 
-  getFarmer() {
-    this.backendService.getFarmer(this.formData.id).subscribe(data => {
-      if (data.success) {
-        this.formData = data.data
-      }
-    }, (error) => {
-      console.log(error);
-    });
+  getFarms() {
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        this.farms = recs;
+      })
+      .catch((err) => {
+      });
   }
 
   start() {
-    this.getFarmer();
+    this.getFarms();
   }
 }

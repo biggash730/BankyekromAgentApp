@@ -60,6 +60,8 @@ export class AddfarmerPage {
       content: "Saving ..."
     });
     loader.present();
+    self.formData.idTypeId = self.formData.idType.id;
+    self.formData.districtId = self.formData.district.id
     this.localdb.saveRecord(self.formData,'farmers')
       .then(res => {
         loader.dismissAll();

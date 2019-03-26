@@ -76,7 +76,7 @@ export class AddservicePage {
     this.localdb.saveRecord(self.formData, 'requests')
       .then(res => {
         loader.dismissAll();
-        console.log(res)
+        //console.log(res)
         let alert = this.alertCtrl.create({
           title: 'Save Successful',
           subTitle: "Services saved Successfully",

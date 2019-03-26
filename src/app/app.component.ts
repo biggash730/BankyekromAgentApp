@@ -108,16 +108,20 @@ export class MyApp {
                 alert.present();
                 return;
               }
-            });
-            this.backendService.logout().subscribe(data => {
-              //console.log(data)
-              if (data.success) {
-                this.storage.remove(this.userService.HAS_LOGGED_IN)
-                this.nav.setRoot(IntroPage);
+              else{
+                //sync data before logout
+                this.backendService.logout().subscribe(data => {
+                  //console.log(data)
+                  if (data.success) {
+                    this.storage.remove(this.userService.HAS_LOGGED_IN)
+                    this.nav.setRoot(IntroPage);
+                  }
+                }, (error) => {
+                  console.log(error);
+                });
               }
-            }, (error) => {
-              console.log(error);
             });
+            
           }
         }
       ]

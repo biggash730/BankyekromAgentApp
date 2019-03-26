@@ -25,10 +25,11 @@ export class FarmersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RequestsPage');
+    this.start()
   }
 
   ionViewWillEnter() {
-    this.start()
+    //this.start()
   }
 
   newFarmer() {
@@ -53,6 +54,7 @@ export class FarmersPage {
     this.localdb.getRecords('farmers')
       .then(recs => {
         loader.dismissAll();
+        console.log(recs)
         self.farmers = recs;
         self.total = recs.length
       })
@@ -62,16 +64,14 @@ export class FarmersPage {
   }
 
   start() {
-    this.page = 1;
-    this.obj = { pager: { page: this.page, size: this.size } };
     this.getList()
   }
 
-  loadMore() {
+  /*loadMore() {
     let self = this
     self.obj.pager.page = self.obj.pager.page + 1;
     self.getList()
-  }
+  }*/
 
   doRefresh(refresher) {
     this.start()

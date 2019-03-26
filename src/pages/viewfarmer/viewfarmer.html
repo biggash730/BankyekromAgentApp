@@ -39,11 +39,11 @@
                 <button ion-button clear item-end color="linkedin">Sex</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.region}}</h2>
+                <h2>{{formData.district.region.name}}</h2>
                 <button ion-button clear item-end color="linkedin">Region</button>
             </ion-item>
             <ion-item class="item-list">
-                <h2>{{formData.district}}</h2>
+                <h2>{{formData.district.name}}</h2>
                 <button ion-button clear item-end color="linkedin">District</button>
             </ion-item>
             <ion-item class="item-list">
@@ -58,7 +58,7 @@
                 Identification Information
             </ion-item-divider>
             <ion-item class="item-list">
-                <h2>{{formData.idType}}</h2>
+                <h2>{{formData.idType.name}}</h2>
                 <button ion-button clear item-end color="linkedin">Type</button>
             </ion-item>
             <ion-item class="item-list">
@@ -74,7 +74,7 @@
             <ion-item-divider color="fb">
                 Registered Farms
             </ion-item-divider>
-            <ion-item *ngFor="let farm of formData.farms" (click)="openFarm(farm)">
+            <ion-item *ngFor="let farm of farms" (click)="openFarm(farm)">
                 <h2>Code: {{farm.code}}</h2>
                 <h3>{{farm.district}}/{{farm.town}}</h3>
                 <p>Location: {{farm.location}}</p>

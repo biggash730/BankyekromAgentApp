@@ -31,13 +31,13 @@
         <ion-card *ngFor="let farmer of farmers" (click)="openView(farmer)">
             <ion-item>
                 <ion-icon name="md-contact" item-end></ion-icon> {{farmer.name}}
-                <p>Reference: {{farmer.reference}}</p>
+                <p>Sex: {{farmer.gender}}</p>
             </ion-item>
             <ion-item>
                 <ion-icon name="md-call" item-end></ion-icon> {{farmer.phoneNumber}}
             </ion-item>
             <ion-item>
-                <span item-start>{{farmer.district}}</span>
+                <span item-start>{{farmer.district.name}}</span>
                 <button ion-button icon-start clear item-end>
                           <ion-icon name="md-navigate"></ion-icon>
                           {{farmer.town}}
@@ -45,6 +45,6 @@
             </ion-item>
         </ion-card>
     </ion-list>
-    <button ion-button full (click)="loadMore()" [hidden]="!(total > farmers.length)">Load More</button>
+    <!--<button ion-button full (click)="loadMore()" [hidden]="!(total > farmers.length)">Load More</button>-->
 
 </ion-content>

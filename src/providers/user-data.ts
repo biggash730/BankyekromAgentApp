@@ -37,7 +37,7 @@ export class UserDataProvider {
   connectionStatus: string;
 
   constructor(public events: Events, public storage: Storage) {
-    //var self = this;
+    //var self = this; 
     //this.baseUrl = "https://bankyekrom.azurewebsites.net/api/";
     this.baseUrl = "http://localhost:1501/api/";
     storage.ready().then(() => {

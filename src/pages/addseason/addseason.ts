@@ -72,7 +72,7 @@ export class AddseasonPage {
     this.localdb.saveRecord(self.formData,'seasons')
       .then(res => {
         loader.dismissAll();
-        console.log(res)
+        //console.log(res)
         let alert = this.alertCtrl.create({
           title: 'Save Successful',
           subTitle: "Season saved Successfully",

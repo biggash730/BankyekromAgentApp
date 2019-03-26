@@ -30,7 +30,7 @@
     <ion-list>
         <ion-card *ngFor="let farm of farms" (click)="openView(farm)">
             <ion-item-divider color="light">
-                {{farm.farmer}}
+                {{farm.farmer.mame}}
                 <ion-note item-end color="grey">
                     {{farm.createdAt | date:'shortDate'}}
                 </ion-note>

@@ -60,20 +60,32 @@ export class SettingsPage {
         {
           text: 'Yes',
           handler: () => {
-            
+
             //console.log('Cancel the request');
-            this.backendService.logout().subscribe(data => {
-            //console.log(data)
-            if(data.success) 
-            {
-              this.storage.remove(this.userService.HAS_LOGGED_IN)
-              this.navCtrl.parent.parent.setRoot(LoginPage);
-            }
-          }, (error) => {
-            console.log(error);
-          });
-          //this.storage.remove(this.userService.HAS_LOGGED_IN)
-          //this.navCtrl.parent.parent.setRoot(LoginPage);
+            this.storage.get(this.userService.CONNECTIONSTATUS).then((val) => {
+              if (val == "offline") {
+                let alert = this.alertCtrl.create({
+                  title: 'Offline Network',
+                  subTitle: 'Please check that you have internet connection',
+                  buttons: ['OK']
+                });
+                alert.present();
+                return;
+              }
+              else{
+                //sync data before logout
+                this.backendService.logout().subscribe(data => {
+                  //console.log(data)
+                  if (data.success) {
+                    this.storage.remove(this.userService.HAS_LOGGED_IN)
+                    this.navCtrl.parent.parent.setRoot(LoginPage);
+                  }
+                }, (error) => {
+                  console.log(error);
+                });
+              }
+            });
+            
           }
         }
       ]

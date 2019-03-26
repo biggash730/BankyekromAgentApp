@@ -67,7 +67,7 @@ public addBulkRecords(obj, type) {
     return res;
   }
   public saveRecord(obj, type) {   
-    console.log(obj) 
+    //console.log(obj) 
     var db;
     obj.modifiedAt = this.formatDate(new Date());
     console.log(obj)
@@ -83,8 +83,16 @@ public addBulkRecords(obj, type) {
     else if (type == "requests"){
       db = new PouchDB('requests.db', { adapter: 'idb', location: 'default' });
     }
-    if (obj.id) return db.put(obj);
-    else return db.post(obj);
+    if (obj.id){
+      var r1 = db.put(obj);
+      console.log(r1)
+      return r1;
+    } 
+    else{
+      var r2 =  db.post(obj);
+      console.log(r2);
+      return r2;
+    } 
   }
   deleteRecord(obj, type) {
     var db;

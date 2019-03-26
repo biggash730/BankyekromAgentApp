@@ -62,7 +62,7 @@ export class AddfarmPage {
     this.localdb.saveRecord(this.formData,'farms')
       .then(res => {
         loader.dismissAll();
-        console.log(res)
+        //console.log(res)
         let alert = this.alertCtrl.create({
           title: 'Save Successful',
           subTitle: "Farm saved Successfully",
