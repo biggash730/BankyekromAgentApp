@@ -26,7 +26,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'updatefarm.html',
 })
 export class UpdatefarmPage {
-  loader: any
   formData: any
   districts: any[]
 
@@ -84,9 +83,6 @@ update() {
     }
 
     start() {
-      this.loader = this.loadingCtrl.create({
-        content: ""
-      });
       this.getDistricts();
     }
   }

@@ -26,7 +26,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'addseason.html',
 })
 export class AddseasonPage {
-  loader: any
   formData: any
   districts: any[]
   farmers: any[]
@@ -65,6 +64,28 @@ export class AddseasonPage {
   }
 
   save() {
+    let self = this
+    let loader = this.loadingCtrl.create({
+      content: "Saving ..."
+    });
+    loader.present();
+    this.localdb.saveRecord(self.formData,'seasons')
+      .then(res => {
+        loader.dismissAll();
+        console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Season saved Successfully",
+          buttons: ['OK']
+        });
+        alert.present();
+        this.events.publish('Season: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
+  }
+
+  saveLive() {
     //do validations
     //do save action here
     let self = this
@@ -100,9 +121,6 @@ export class AddseasonPage {
   }
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.getDistricts();
     this.getVarieties();
     this.formData = {farmer:{}};

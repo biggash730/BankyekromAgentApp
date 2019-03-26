@@ -26,15 +26,11 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'addfarm.html',
 })
 export class AddfarmPage {
-  loader: any
   formData: any
   districts: any[]
   farmers: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.start()
   }
 
@@ -58,11 +54,14 @@ export class AddfarmPage {
   }
 
   save() {
-    this.loader.present();
+    let loader = this.loadingCtrl.create({
+      content: "Saving ..."
+    });
+    loader.present();
     this.formData.farmerId = this.formData.farmer.id;
     this.localdb.saveRecord(this.formData,'farms')
       .then(res => {
-        this.loader.dismissAll();
+        loader.dismissAll();
         console.log(res)
         let alert = this.alertCtrl.create({
           title: 'Save Successful',
@@ -76,12 +75,13 @@ export class AddfarmPage {
       .catch((err) => { });
   }
 
-  /*savexx() {
+  saveLive() {
     //do validations
     //do save action here
     let self = this
-
-    
+    let loader = this.loadingCtrl.create({
+      content: " ... "
+    });
     loader.present().then(() => {
       self.formData.farmerId = self.formData.farmer.id;
       self.backendService.saveFarm(self.formData).subscribe(data => {
@@ -108,12 +108,9 @@ export class AddfarmPage {
         console.log(error);
       });
     });
-  }*/
+  }
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.getDistricts();
     this.getFarmers();
     this.formData = {farmer:{}};

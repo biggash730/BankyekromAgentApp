@@ -27,16 +27,12 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'addfarmer.html',
 })
 export class AddfarmerPage {
-  loader: any
   formData: any
   districts: any[]
   idtypes: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider, private platform: Platform) {
     this.start()
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
   }
 
   ionViewDidLoad() {
@@ -59,15 +55,38 @@ export class AddfarmerPage {
   }
 
   save() {
+    let self = this
+    let loader = this.loadingCtrl.create({
+      content: "Saving ..."
+    });
+    loader.present();
+    this.localdb.saveRecord(self.formData,'farmers')
+      .then(res => {
+        loader.dismissAll();
+        console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Farmer saved Successfully",
+          buttons: ['OK']
+        });
+        alert.present();
+        this.events.publish('Farmer: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
+  }
+
+  saveLive() {
     //do validations
     //do save action here
     let self = this
-
-
-    this.loader.present().then(() => {
+    let loader = this.loadingCtrl.create({
+      content: ""
+    });
+    loader.present().then(() => {
 
       self.backendService.saveFarmer(self.formData).subscribe(data => {
-        this.loader.dismissAll();
+        loader.dismissAll();
         if (data.success) {
           let alert = self.alertCtrl.create({
             title: 'Save Successful',
@@ -86,7 +105,7 @@ export class AddfarmerPage {
           alert.present();
         }
       }, (error) => {
-        this.loader.dismissAll();
+        loader.dismissAll();
         console.log(error);
       });
     });

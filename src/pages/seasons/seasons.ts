@@ -16,12 +16,8 @@ export class SeasonsPage {
   page: any = 1
   size: any = 20
   obj: any
-  loader: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.seasons = []
     //this.start()
     this.newSeason()
@@ -51,15 +47,18 @@ export class SeasonsPage {
 
   getList() {
     let self = this
-    this.loader.present();
+    let loader = this.loadingCtrl.create({
+      content: ""
+    });
+    loader.present();
     this.localdb.getRecords('seasons')
       .then(recs => {
-        self.loader.dismissAll();
+        loader.dismissAll();
         self.seasons = recs;
         self.total = recs.length
       })
       .catch((err) => {
-        self.loader.dismissAll();
+        loader.dismissAll();
       });
   }
 

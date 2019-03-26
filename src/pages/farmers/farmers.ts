@@ -11,7 +11,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'farmers.html'
 })
 export class FarmersPage {
-  loader: any
   farmers: any[]
   total: any = 0
   page: any = 1
@@ -19,11 +18,8 @@ export class FarmersPage {
   obj: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.farmers = []
-    this.start()
+    //this.start()
     this.newFarmer()
   }
 
@@ -41,8 +37,6 @@ export class FarmersPage {
     });
   }
 
-  
-
   openAdd() {
     this.navCtrl.push(AddfarmerPage);
   }
@@ -53,15 +47,17 @@ export class FarmersPage {
 
   getList() {
     let self = this
-    this.loader.present();
+    let loader = this.loadingCtrl.create({
+      content: ""
+    });
     this.localdb.getRecords('farmers')
       .then(recs => {
-        self.loader.dismissAll();
+        loader.dismissAll();
         self.farmers = recs;
         self.total = recs.length
       })
       .catch((err) => {
-        self.loader.dismissAll();
+        loader.dismissAll();
       });
   }
 

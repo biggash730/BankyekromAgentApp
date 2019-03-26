@@ -26,7 +26,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'viewseason.html',
 })
 export class ViewseasonPage {
-  loader: any
   formData: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
@@ -78,9 +77,6 @@ export class ViewseasonPage {
   }
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.getSeason();
   }
 }

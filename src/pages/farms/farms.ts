@@ -16,12 +16,8 @@ export class FarmsPage {
   page: any = 1
   size: any = 20
   obj: any
-  loader: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.farms = []    
     //this.start()
     this.newFarm()
@@ -55,15 +51,18 @@ export class FarmsPage {
 
   getList() {
     let self = this
-    this.loader.present();
+    let loader = this.loadingCtrl.create({
+      content: ""
+    });
+    loader.present();
     this.localdb.getRecords('farms')
       .then(recs => {
-        self.loader.dismissAll();
+        loader.dismissAll();
         self.farms = recs;
         self.total = recs.length
       })
       .catch((err) => {
-        self.loader.dismissAll();
+        loader.dismissAll();
       });
   }
 

@@ -19,17 +19,12 @@ import { PhotoPage } from '../photo/photo';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  loader:any;
   profile: any;
   error: string;
-  loading: Loading;
   ids: any[]
   documents: any[]
   constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl:LoadingController, public backendService: BackendProvider,
     public zone: NgZone, public storage: Storage, public userService: UserDataProvider, public alertCtrl: AlertController,public events: Events) {
-      this.loader = this.loadingCtrl.create({
-        content: ""
-      });
       this.ids = []
       this.documents = []
       this.profile = {};

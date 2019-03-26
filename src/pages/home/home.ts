@@ -12,7 +12,6 @@ import { LoginPage } from '../login/login';
 export class HomePage {
   score: any
   stats: any
-  loan: any
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public storage: Storage, public userService: UserDataProvider,public events: Events) {

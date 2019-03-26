@@ -26,7 +26,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'updatefarmer.html',
 })
 export class UpdatefarmerPage {
-  loader: any
   formData: any
   districts: any[]
   idtypes: any[]
@@ -92,9 +91,6 @@ update() {
     }
 
     start() {
-      this.loader = this.loadingCtrl.create({
-        content: ""
-      });
       this.getDistricts();
       this.getIdTypes();
       //this.getFarmer();

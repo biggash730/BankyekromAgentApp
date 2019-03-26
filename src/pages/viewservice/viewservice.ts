@@ -26,7 +26,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'viewservice.html',
 })
 export class ViewservicePage {
-  loader: any
   formData: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
@@ -75,9 +74,6 @@ export class ViewservicePage {
   }*/
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     //this.getRequest();
   }
 }

@@ -29,7 +29,6 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'viewfarm.html',
 })
 export class ViewfarmPage {
-  loader: any
   formData: any
   districts: any[]
   idtypes: any[]
@@ -67,9 +66,6 @@ export class ViewfarmPage {
   }
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.getFarm();
   }
 }

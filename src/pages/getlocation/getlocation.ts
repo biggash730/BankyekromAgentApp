@@ -26,7 +26,7 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'getlocation.html',
 })
 export class GetLocationPage {
-  loader: any
+loader: any
   formData: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, private geolocation: Geolocation) {

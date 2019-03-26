@@ -23,10 +23,7 @@ export class LoginPage {
   password: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public backendService: BackendProvider, public storage: Storage) {
-    userService.setPage("Login")
-    this.loader = this.loadingCtrl.create({
-      content: "Login Initiated..."
-    });
+    userService.setPage("Login")    
   }
 
   ionViewDidLoad() {
@@ -73,18 +70,20 @@ export class LoginPage {
           return;
         }
       });
-      this.loader.present();
+      let loader = this.loadingCtrl.create({
+        content: "Login Initiated..."
+      });
+      loader.present();
       this.backendService.login(obj).subscribe(data => {
         //console.log(data)
-        this.loader.dismissAll();
+        loader.dismissAll();
         if (data.success) {
           let alert = this.alertCtrl.create({
             title: 'Login Successful',
             subTitle: data.message,
             buttons: ['OK']
           });
-          alert.present();
-         
+          alert.present();         
           
           this.userService.setLoggedIn()
           this.userService.setCurrentUser(data.data)
@@ -105,10 +104,10 @@ export class LoginPage {
           alert.present();
         }
       }, (error) => {
-        this.loader.dismissAll();
+        loader.dismissAll();
         console.log(error);
       });
-      this.loader.dismissAll();
+      loader.dismissAll();
     }
   }
 }

@@ -155,9 +155,12 @@ export class SetupPage {
         alert.present();
         return;
       }
+      else {
+        //pull districts
+        this.pullDistricts();
+      }
     });
-    //pull districts
-    this.pullDistricts();
+
   }
 
 }

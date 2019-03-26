@@ -19,17 +19,12 @@ import { UserDataProvider } from '../../providers/user-data';
   templateUrl: 'photo.html',
 })
 export class PhotoPage {
-  loader: any;
   profile: any;
   error: string;
-  loading: Loading;
   lastImage: string = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider,
     public zone: NgZone, public storage: Storage, public userService: UserDataProvider, public alertCtrl: AlertController, public events: Events, public platform: Platform) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.profile = {};
     this.getProfile()
   }
@@ -48,15 +43,15 @@ export class PhotoPage {
 
   public uploadImage(base64) {
     var self = this;
-    this.loading = this.loadingCtrl.create({
+    let loading = this.loadingCtrl.create({
       content: 'Uploading...',
     });
-    this.loading.present();
+    loading.present();
       var obj = {
         image: base64
       };
       self.backendService.setImage(obj).subscribe(data => {
-        self.loading.dismissAll()
+        loading.dismissAll()
         if (data.success) {
           self.events.publish('Profile: Updated');
           let alert = self.alertCtrl.create({
@@ -69,7 +64,7 @@ export class PhotoPage {
         }
       }, (error) => {
         //console.log(error);
-        self.loading.dismissAll()
+        loading.dismissAll()
         let alert = self.alertCtrl.create({
           title: 'Error',
           subTitle: "Error Uploading Image to Server",

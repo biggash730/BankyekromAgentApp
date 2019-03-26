@@ -36,10 +36,9 @@ export class MyApp {
       { title: 'Seasons', component: SeasonsPage, icon: 'body' },
       { title: 'Farms', component: FarmsPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },
-      { title: 'Location', component: LocationPage, icon: 'body' },
-      /*{ title: 'Settings', component: SettingsPage, icon: 'settings' }*/
+      { title: 'Location', component: LocationPage, icon: 'body' }
     ];
-    this.user = {}
+    this.user = { name: "" }
     //get user
     this.network.onDisconnect().subscribe(() => {
       this.userService.setConnectionStatus("offline");
@@ -49,17 +48,16 @@ export class MyApp {
     });
     //this.localdbProvider.createPouchDBs();
     this.storage.get(this.userService.HAS_LOGGED_IN).then((val) => {
-
-      //get user
-      this.storage.get(this.userService.CURRENT_USER).then((val) => {
-        //console.log(val)
-        this.user = JSON.parse(val)
-      });
-
       //console.log(val)
-      var res = JSON.parse(val);
-      if (res) {
-        this.rootPage = HomePage;
+      const isLoggedIn = JSON.parse(val);
+      //console.log(isLoggedIn)
+      if (isLoggedIn) {
+        //get user
+        this.storage.get(this.userService.CURRENT_USER).then((v) => {
+          //console.log(v)
+          this.user = JSON.parse(v)
+          this.rootPage = HomePage;
+        });
       } else {
         this.rootPage = IntroPage;
       }
@@ -101,11 +99,11 @@ export class MyApp {
           handler: () => {
             //console.log('Cancel the request');
             this.storage.get(this.userService.CONNECTIONSTATUS).then((val) => {
-              if(val == "offline"){
+              if (val == "offline") {
                 let alert = this.alertCtrl.create({
-                  title:'Offline Network', 
-                  subTitle:'Please check that you have internet connection',
-                  buttons:['OK']
+                  title: 'Offline Network',
+                  subTitle: 'Please check that you have internet connection',
+                  buttons: ['OK']
                 });
                 alert.present();
                 return;

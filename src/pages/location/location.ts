@@ -26,7 +26,6 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'location.html',
 })
 export class LocationPage {
-  loader: any
   formData: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, private geolocation: Geolocation) {
@@ -49,9 +48,6 @@ export class LocationPage {
   }
 
   start() {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.getLocation();
   }
 }

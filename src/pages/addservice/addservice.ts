@@ -26,16 +26,12 @@ import { LocaldbProvider } from '../../providers/localdb';
   templateUrl: 'addservice.html',
 })
 export class AddservicePage {
-  loader: any
   formData: any
   districts: any[]
   farmers: any[]
   services: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.loader = this.loadingCtrl.create({
-      content: ""
-    });
     this.start()
   }
 
@@ -72,43 +68,34 @@ export class AddservicePage {
   }
 
   save() {
-    //do validations
-    //do save action here
     let self = this
+    let loader = this.loadingCtrl.create({
+      content: "Saving ..."
+    });
+    loader.present();
+    this.localdb.saveRecord(self.formData, 'requests')
+      .then(res => {
+        loader.dismissAll();
+        console.log(res)
+        let alert = this.alertCtrl.create({
+          title: 'Save Successful',
+          subTitle: "Services saved Successfully",
+          buttons: ['OK']
+        });
+        alert.present();
+        this.events.publish('Service: saved');
+        this.navCtrl.pop();
+      })
+      .catch((err) => { });
+  }
 
-
-    this.loader.present();
-    var res = this.localdb.saveRecord(this.formData, "requests");
-    console.log(res);
-    this.loader.dismissAll();
-    /*if (data.success) {
-      let alert = self.alertCtrl.create({
-        title: 'Save Successful',
-        subTitle: data.message,
-        buttons: ['OK']
-      });
-      alert.present();
-      self.events.publish('Service: saved');
-      self.navCtrl.pop();
-    } else {
-      let alert = self.alertCtrl.create({
-        title: 'Save Error',
-        subTitle: data.message,
-        buttons: ['OK']
-      });
-      alert.present();
-    }*/
-    self.events.publish('Service: saved');
-    self.navCtrl.pop();
-}
-
-start() {
-  this.getDistricts();
-  this.getServices();
-  this.formData = { items: [] };
-}
-refresh() {
-  this.formData = { items: [] };
-}
+  start() {
+    this.getDistricts();
+    this.getServices();
+    this.formData = { items: [] };
+  }
+  refresh() {
+    this.formData = { items: [] };
+  }
 
 }
