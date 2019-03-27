@@ -29,6 +29,7 @@ export class AddservicePage {
   formData: any
   districts: any[]
   farmers: any[]
+  farms: any[]
   services: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
@@ -59,6 +60,14 @@ export class AddservicePage {
     this.localdb.getRecords('farmers')
       .then(recs => {
         this.farmers = recs.filter(x => x.districtId == id);
+      })
+      .catch((err) => { });
+  }
+
+  getFarmerFarms(id: number) {
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        this.farms = recs.filter(x => x.farmerId == id);
       })
       .catch((err) => { });
   }

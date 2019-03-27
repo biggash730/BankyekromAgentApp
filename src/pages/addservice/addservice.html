@@ -33,11 +33,11 @@
                     </ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="formData.farm">
                 <ion-label stacked color="linkedin">Service Date</ion-label>
                 <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="formData.serviceDate" min="2017" max="2030-10-10"></ion-datetime>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="formData.farm">
                 <ion-label stacked color="linkedin">Notes</ion-label>
                 <ion-textarea [(ngModel)]="formData.notes" placeholder="Notes"></ion-textarea>
             </ion-item>

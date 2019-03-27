@@ -1,21 +1,41 @@
+<ion-header>
+    <ion-navbar color="bk3">
+        <ion-title>Transfer Data</ion-title>
+        <ion-buttons end>
+            <button (click)="openUpdate(formData)" ion-button icon-only clear>
+                                    <ion-icon name="md-create" color="light">
+                                    </ion-icon>
+                                </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
 <ion-content>
     <div padding class="intro-page">
-        <ion-row>
-            <ion-col>
-                <img src="assets/imgs/loading.gif" />
-            </ion-col>
-        </ion-row>
+
         <ion-row style="margin-top: 10%;">
             <ion-col>
                 <p>Network Status: {{status}}</p>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="status == 'Online' && !transfering">
             <ion-col>
-                <ion-list inset>
-                    <h1 style="color: #84716a;font-size: 12px; font-family: script-mt-bold-font; margin-top: 0px;">{{activity}}</h1>
-                </ion-list>
+                <button ion-button color="secondary" (click)="startTransfer()">Start Transfer</button>
             </ion-col>
         </ion-row>
+        <div *ngIf="transfering">
+            <ion-row>
+                <ion-col>
+                    <img src="assets/imgs/loading.gif" />
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-list inset>
+                        <h1 style="color: #84716a;font-size: 12px; font-family: script-mt-bold-font; margin-top: 0px;">{{activity}}
+                        </h1>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </div>
     </div>
 </ion-content>

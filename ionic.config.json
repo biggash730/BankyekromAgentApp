@@ -1,7 +1,7 @@
 {
-  "name": "sidemenustarter_sixonelabs",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
+    "name": "bankyekromagent.sixonelabs.com",
+    "integrations": {
+        "cordova": {}
+    },
+    "type": "ionic-angular"
 }

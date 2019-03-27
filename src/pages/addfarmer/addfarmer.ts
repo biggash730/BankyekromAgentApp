@@ -6,8 +6,7 @@ import {
   NavParams,
   LoadingController,
   AlertController,
-  Events,
-  Platform
+  Events
 } from 'ionic-angular';
 import {
   BackendProvider
@@ -31,7 +30,7 @@ export class AddfarmerPage {
   districts: any[]
   idtypes: any[]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = {};
   }
 

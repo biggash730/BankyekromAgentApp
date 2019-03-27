@@ -169,4 +169,14 @@ export class BackendProvider {
             .map(res => res.json());
     }
 
+    pushData(obj) {
+        return this.http.post(this.userService.baseUrl + "public/pushdata",obj)
+            .map(res => res.json());
+    }
+
+    getLastTransferDate() {
+        return this.http.get(this.userService.baseUrl + "public/getlasttransferdate")
+            .map(res => res.json());
+    }
+
 }

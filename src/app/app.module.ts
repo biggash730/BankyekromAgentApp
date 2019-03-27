@@ -31,10 +31,6 @@ import { AddservicePage } from '../pages/addservice/addservice';
 import { ViewservicePage } from '../pages/viewservice/viewservice';
 import { LoginPage } from '../pages/login/login';
 import { IntroPage } from '../pages/intro/intro';
-import { ProfilePage } from '../pages/profile/profile';
-import { PhotoPage } from '../pages/photo/photo';
-import { UpdateProfilePage } from '../pages/update-profile/update-profile';
-import { SettingsPage } from '../pages/settings/settings';
 import { SyncPage } from '../pages/sync/sync';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -63,10 +59,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     IntroPage,
     LoginPage,
     SetupPage,
-    ProfilePage,
-    PhotoPage,
-    UpdateProfilePage,
-    SettingsPage,
     FarmersPage,
     AddfarmerPage,
     ViewfarmerPage,
@@ -100,10 +92,6 @@ export function httpInterceptorFactory(xhrBackend: XHRBackend, requestOptions: R
     IntroPage,
     LoginPage,
     SetupPage,
-    ProfilePage,
-    PhotoPage,
-    UpdateProfilePage,
-    SettingsPage,
     FarmersPage,
     AddfarmerPage,
     ViewfarmerPage,

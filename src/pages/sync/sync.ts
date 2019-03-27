@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
-import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../../providers/user-data';
 import { LocaldbProvider } from '../../providers/localdb';
@@ -15,10 +14,13 @@ import { Network } from '@ionic-native/network';
 export class SyncPage {
   activity: any
   status: string
+  transfering: boolean
+  lastTransferDate: Date;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public storage: Storage, public alertCtrl: AlertController, public localdb: LocaldbProvider, public backendService: BackendProvider,
-    private platform: Platform, public events: Events, public network: Network,) {
-    this.activity = "Please wait, App is being setup for offline use ...";
+    private platform: Platform, public events: Events, public network: Network, ) {
+    this.activity = "...";
+    this.transfering = false;
     this.platform.ready().then(() => {
       this.network.onDisconnect().subscribe(() => {
         this.status = "Offline";
@@ -27,7 +29,7 @@ export class SyncPage {
         this.status = "Online";
       });
       this.events.subscribe('Sync: Complete', () => {
-        this.finished();
+
       });
     });
   }
@@ -37,109 +39,104 @@ export class SyncPage {
   ionViewDidEnter() {
   }
 
-  finished() {
-    //this.navCtrl.setRoot(HomePage)
+  startTransfer() {
+    let self = this
+    this.activity = "Transfer Initiated ...";
+    this.transfering = true;
+    setTimeout(function () { self.getDate() }, 3000);
+  }
+
+  getDate() {
+    this.backendService.getLastTransferDate().subscribe(res => {
+      if (res.success) {
+        this.lastTransferDate = new Date(res.data);
+        this.pushFarmers();
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  PushData(table: string, data: any[]) {
+    data = data.filter(x => new Date(x.modifiedAt) > this.lastTransferDate);
+    var obj = {
+      table: table,
+      data: JSON.stringify(data)
+    }
+    this.backendService.pushData(obj).subscribe(data => {
+      if (data.success) {
+        this.activity = "Finished pushing " + table;
+      }
+      else {
+        let alert = this.alertCtrl.create({
+          title: 'Transfer Error',
+          subTitle: data.message,
+          buttons: ['OK']
+        });
+        alert.present().then(() => {
+          return;
+        })
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   pushFarmers() {
+    let self = this
     this.activity = "Pushing Farmers ...";
-    /*this.backendService.getDistricts().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "districts")
-        this.activity = "Finished Updating Districts ...";
-        //pull services
-        this.pullServices();
-      }
-    }, (error) => {
-      console.log(error);
-    });*/
+    this.localdb.getRecords('farmers')
+      .then(recs => {
+        let lst = recs;
+        this.PushData("Farmers", lst);
+        setTimeout(function () { self.pushFarms() }, 3000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  pullServices() {
-    this.activity = "Updating Services ...";
-    this.backendService.getServices().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "services")
-        this.activity = "Finished Updating Services ...";
-        //pull varieties
-        this.pullVarieties();
-      }
-    }, (error) => {
-      console.log(error);
-    });
+
+  pushFarms() {
+    let self = this
+    this.activity = "Pushing Farms ...";
+    this.localdb.getRecords('farms')
+      .then(recs => {
+        let lst = recs;
+        this.PushData("Farms", lst);
+        setTimeout(function () { self.pushSeasons() }, 3000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  pullVarieties() {
-    this.activity = "Updating Cassava Varieties ...";
-    this.backendService.getVarieties().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "varieties")
-        this.activity = "Finished Updating Cassava Varieties ...";
-        //pull idtypes
-        this.pullIdTypes();
-      }
-    }, (error) => {
-      console.log(error);
-    });
+  pushSeasons() {
+    let self = this
+    this.activity = "Pushing Seasons ...";
+    this.localdb.getRecords('seasons')
+      .then(recs => {
+        let lst = recs;
+        this.PushData("Seasons", lst);
+        setTimeout(function () { self.pushFarms() }, 3000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  pullIdTypes() {
-    this.activity = "Updating Identification Types ...";
-    this.backendService.getIdTypes().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "idtypes")
-        this.activity = "Finished Updating Identification Types ...";
-        //pull idtypes
-        this.pullFarmers();
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
-  pullFarmers() {
-    this.activity = "Updating Farmers ...";
-    this.backendService.getAllFarmers().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "farmers")
-        this.activity = "Finished Updating Farmers ...";
-        this.pullFarms();
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
-  pullFarms() {
-    this.activity = "Updating Farms ...";
-    this.backendService.getAllFarms().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "farms")
-        this.activity = "Finished Updating Farms ...";
-        this.pullSeasons();
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
-  pullSeasons() {
-    this.activity = "Updating Seasons ...";
-    this.backendService.getAllSeasons().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "seasons")
-        this.activity = "Finished Updating Seasons ...";
-        this.pullRequests()
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
-  pullRequests() {
-    this.activity = "Updating Requests ...";
-    this.backendService.getAllRequests().subscribe(data => {
-      if (data.success) {
-        this.localdb.addBulkRecords(data.data, "requests")
-        this.activity = "Finished Updating Requests ...";
-        this.events.publish('SETUP: Complete');
-      }
-    }, (error) => {
-      console.log(error);
-    });
+  pushRequests() {
+    this.activity = "Pushing Requests ...";
+    this.localdb.getRecords('requests')
+      .then(recs => {
+        let lst = recs;
+        this.PushData("Requests", lst);
+        setTimeout(function () {
+          this.events.publish('Sync: Complete');
+          this.transfering = false;
+          this.activity = "Data has been transfered successfully";
+        }, 3000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 }

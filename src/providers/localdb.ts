@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import PouchDB from 'pouchdb';
-import cordovaSqlitePlugin from 'pouchdb-adapter-cordova-sqlite';
+//import cordovaSqlitePlugin from 'pouchdb-adapter-cordova-sqlite';
 import idbplugin from 'pouchdb-adapter-idb';
 
 

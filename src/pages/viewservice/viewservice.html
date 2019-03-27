@@ -14,8 +14,8 @@
         <ion-card>
 
             <ion-item>
-                Farmer: {{formData.farmer.name}}
-                <p>Phone Number: {{formData.farmer.phoneNumber}}</p>
+                Farmer: {{formData.farm.farmer.name}}
+                <p>Phone Number: {{formData.farm.farmer.phoneNumber}}</p>
             </ion-item>
             <ion-item class="item-list">
                 <h2>{{formData.serviceDate | date:'mediumDate'}}</h2>
@@ -29,8 +29,9 @@
                 <p>Address: {{formData.farmer.residentialAddress}}</p>
             </ion-item>
             <ion-item>
-                <span item-start>{{formData.farmer.district.name}}</span>
-                <span item-end>{{formData.farmer.town}}</span>
+                Farm Code: {{formData.farm.code}}
+                <span item-start>{{formData.farm.district.name}}</span>
+                <span item-end>{{formData.farm.town}}</span>
             </ion-item>
         </ion-card>
         <ion-card [hidden]="formData.items.length <= 0">
