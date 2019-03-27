@@ -18,16 +18,16 @@
                     <ion-option *ngFor="let p of districts" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="farmers">
                 <ion-label stacked color="linkedin">Select Farmer</ion-label>
                 <ion-select [(ngModel)]="formData.farmer" (ngModelChange)="getFarmerFarms(formData.farmer.id)">
                     <ion-option *ngFor="let p of farmers" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="farms">
                 <ion-label stacked color="linkedin">Select Farm</ion-label>
                 <ion-select [(ngModel)]="formData.farm">
-                    <ion-option *ngFor="let p of formData.farms" [value]="p">
+                    <ion-option *ngFor="let p of farms" [value]="p">
                         {{p.code}} -
                         <p>{{p.town}}</p>
                     </ion-option>

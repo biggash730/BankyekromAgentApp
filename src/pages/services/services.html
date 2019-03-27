@@ -24,30 +24,24 @@
     </ion-list-header>
     <ion-list>
         <ion-card *ngFor="let service of services" (click)="openView(service)">
+
             <ion-item>
-                <button ion-button icon-start clear item-end>
-                                  <ion-icon name="md-bookmark"></ion-icon>
-                                  {{service.status}}
-                                </button>
-            </ion-item>
-            <ion-item>
-                Farmer: {{service.farmer}}
-                <p>Phone Number: {{service.phoneNumber}}</p>
+                Farmer: {{service.farmer.name}}
+                <p>Phone Number: {{service.farmer.phoneNumber}}</p>
             </ion-item>
             <ion-item class="item-list">
                 <h2>{{service.serviceDate | date:'mediumDate'}}</h2>
                 <button ion-button clear item-end color="linkedin">Date</button>
             </ion-item>
             <ion-item text-wrap>
-                <p>Services: {{service.services}}</p>
+                <p>Services: {{service.items.length}}</p>
                 <p>Notes: {{service.notes}}</p>
             </ion-item>
             <ion-item>
-                <span item-start>{{service.district}}</span>
-                <span item-end>{{service.town}}</span>
+                <span item-start>{{service.farmer.district.name}}</span>
+                <span item-end>{{service.farmer.town}}</span>
             </ion-item>
         </ion-card>
     </ion-list>
-    <button ion-button full (click)="loadMore()" [hidden]="!(total > services.length)">Load More</button>
 
 </ion-content>

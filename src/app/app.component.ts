@@ -13,7 +13,7 @@ import { ServicesPage } from '../pages/services/services';
 import { FarmersPage } from '../pages/farmers/farmers';
 import { FarmsPage } from '../pages/farms/farms';
 import { IntroPage } from '../pages/intro/intro';
-//import { SettingsPage } from '../pages/settings/settings';
+import { SyncPage } from '../pages/sync/sync';
 import { LocationPage } from '../pages/location/location';
 import { SeasonsPage } from '../pages/seasons/seasons';
 
@@ -36,7 +36,8 @@ export class MyApp {
       { title: 'Seasons', component: SeasonsPage, icon: 'body' },
       { title: 'Farms', component: FarmsPage, icon: 'body' },
       { title: 'Farmers', component: FarmersPage, icon: 'body' },
-      { title: 'Location', component: LocationPage, icon: 'body' }
+      { title: 'Sync Data', component: SyncPage, icon: 'body' },
+      { title: 'Location', component: LocationPage, icon: 'body'}
     ];
     this.user = { name: "" }
     //get user

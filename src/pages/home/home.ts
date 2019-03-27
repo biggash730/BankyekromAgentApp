@@ -52,6 +52,24 @@ export class HomePage {
       });
   }
 
+  getSeasons() {
+    this.localdb.getRecords('seasons')
+      .then(recs => {
+        this.stats.seasons = recs.length;
+      })
+      .catch((err) => {
+      });
+  }
+
+  getRequests() {
+    this.localdb.getRecords('requests')
+      .then(recs => {
+        this.stats.requests = recs.length;
+      })
+      .catch((err) => {
+      });
+  }
+
   trackSignout() {
     this.events.subscribe('User: SignOut', () => {
       this.backendService.logout().subscribe(data => {
@@ -70,6 +88,8 @@ export class HomePage {
     this.trackSignout()    
     this.getFarms();
     this.getFarmers();
+    this.getSeasons();
+    this.getRequests();
   }
 
 }

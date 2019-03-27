@@ -30,23 +30,23 @@
     <ion-list>
         <ion-card *ngFor="let season of seasons" (click)="openView(season)">
             <ion-item>
-                Variety: {{season.variety}}
-                <p>Reference: {{season.reference}}</p>
+                Variety: {{season.variety.name}}
+                <p>Modified: {{season.modifiedAt}}</p>
             </ion-item>
             <ion-item class="item-list">
                 <h2>{{season.datePlanted | date:'mediumDate'}}</h2>
                 <button ion-button clear item-end color="linkedin">Planted</button>
             </ion-item>
-            <ion-item class="item-list">
+            <!--<ion-item class="item-list">
                 <h2>{{season.projectedHarvestDate | date:'mediumDate'}}</h2>
                 <button ion-button clear item-end color="linkedin">Projected Harvest</button>
+            </ion-item>-->
+            <ion-item>
+                <p>Farmer: {{season.farm.farmer.name}}</p>
+                <p>Farm: {{season.farm.code}}</p>
             </ion-item>
             <ion-item>
-                <p>Farmer: {{season.farmer}}</p>
-                <p>Farm: {{season.farm}}</p>
-            </ion-item>
-            <ion-item>
-                <span item-start>{{season.district}}</span>
+                <span item-start>{{season.district.name}}</span>
                 <button ion-button icon-start clear item-end>
                           <ion-icon name="md-navigate"></ion-icon>
                           {{season.town}}
@@ -54,6 +54,6 @@
             </ion-item>
         </ion-card>
     </ion-list>
-    <button ion-button full (click)="loadMore()" [hidden]="!(total > seasons.length)">Load More</button>
+    <!--<button ion-button full (click)="loadMore()" [hidden]="!(total > seasons.length)">Load More</button>-->
 
 </ion-content>

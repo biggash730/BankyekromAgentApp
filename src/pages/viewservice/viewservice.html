@@ -7,41 +7,39 @@
 <ion-header>
     <ion-navbar color="bk3">
         <ion-title>Service Request</ion-title>
-        <ion-buttons end>
-            <button (click)="cancel(formData)" ion-button icon-only clear [hidden]="formData.status == 'Cancelled'">
-                                <ion-icon name="md-close-circle" color="light">
-                                </ion-icon>
-                            </button>
-        </ion-buttons>
     </ion-navbar>
 </ion-header>
 <ion-content>
     <ion-list>
         <ion-card>
+
             <ion-item>
-                <button ion-button icon-start clear item-end>
-                                          <ion-icon name="md-bookmark"></ion-icon>
-                                          {{formData.status}}
-                                        </button>
-            </ion-item>
-            <ion-item>
-                Farmer: {{formData.farmer}}
-                <p>Phone Number: {{formData.phoneNumber}}</p>
+                Farmer: {{formData.farmer.name}}
+                <p>Phone Number: {{formData.farmer.phoneNumber}}</p>
             </ion-item>
             <ion-item class="item-list">
                 <h2>{{formData.serviceDate | date:'mediumDate'}}</h2>
                 <button ion-button clear item-end color="linkedin">Date</button>
             </ion-item>
             <ion-item text-wrap>
-                <p>Services: {{formData.services}}</p>
+                <p>Services: {{formData.items.length}}</p>
                 <p>Notes: {{formData.notes}}</p>
             </ion-item>
             <ion-item text-wrap>
-                <p>Address: {{formData.residentialAddress}}</p>
+                <p>Address: {{formData.farmer.residentialAddress}}</p>
             </ion-item>
             <ion-item>
-                <span item-start>{{formData.district}}</span>
-                <span item-end>{{formData.town}}</span>
+                <span item-start>{{formData.farmer.district.name}}</span>
+                <span item-end>{{formData.farmer.town}}</span>
+            </ion-item>
+        </ion-card>
+        <ion-card [hidden]="formData.items.length <= 0">
+            <ion-item-divider color="light">
+                Selected Services
+            </ion-item-divider>
+            <ion-item class="item-list" *ngFor="let i of formData.items">
+                <h2>{{i.name}}</h2>
+                <button ion-button clear item-end color="linkedin">{{$index}}</button>
             </ion-item>
         </ion-card>
     </ion-list>

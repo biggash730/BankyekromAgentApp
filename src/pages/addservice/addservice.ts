@@ -32,11 +32,12 @@ export class AddservicePage {
   services: any[]
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
-    this.start()
+    this.formData = { items: [] };
   }
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad RequestsPage');
+    this.start();
   }
 
   getServices() {
@@ -62,18 +63,18 @@ export class AddservicePage {
       .catch((err) => { });
   }
 
-  addService(serv) {
+  addService(serv:any) {
     serv.serviceId = serv.id;
     this.formData.items.push(serv)
   }
 
-  save() {
-    let self = this
+  save(data:any) {
     let loader = this.loadingCtrl.create({
       content: "Saving ..."
     });
     loader.present();
-    this.localdb.saveRecord(self.formData, 'requests')
+    data.farmId = data.farm.id
+    this.localdb.saveRecord(data, 'requests')
       .then(res => {
         loader.dismissAll();
         //console.log(res)
@@ -84,6 +85,7 @@ export class AddservicePage {
         });
         alert.present();
         this.events.publish('Service: saved');
+        this.formData = { items: [] };
         this.navCtrl.pop();
       })
       .catch((err) => { });
@@ -92,7 +94,7 @@ export class AddservicePage {
   start() {
     this.getDistricts();
     this.getServices();
-    this.formData = { items: [] };
+    
   }
   refresh() {
     this.formData = { items: [] };

@@ -23,11 +23,12 @@ export class ServicesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestsPage');
+    //console.log('ionViewDidLoad RequestsPage');
+    this.start()
   }
 
   ionViewWillEnter() {
-    this.start()
+    
   }
 
   newService() {
@@ -62,16 +63,9 @@ export class ServicesPage {
   }
 
   start() {
-    this.page = 1;
-    this.obj = { pager: { page: this.page, size: this.size } };
     this.getList()
   }
 
-  loadMore() {
-    let self = this
-    self.obj.pager.page = self.obj.pager.page + 1;
-    self.getList()
-  }
 
   doRefresh(refresher) {
     this.start()

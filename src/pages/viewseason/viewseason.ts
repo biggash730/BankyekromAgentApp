@@ -37,46 +37,6 @@ export class ViewseasonPage {
     //console.log('ionViewDidLoad RequestsPage');
   }
 
-  deactivate(data) {
-    var self = this;
-    let alert = this.alertCtrl.create({
-      title: 'Deactivate Planting Season',
-      message: 'Do you really want to deactivate this planting season?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            //console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            self.backendService.deactivateSeason(data.id).subscribe(data => {
-              if (data.success) {
-                self.start()
-              }
-            }, (error) => {
-              console.log(error);
-            });
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-  getSeason() {
-    this.backendService.getSeason(this.formData.id).subscribe(data => {
-      if (data.success) {
-        this.formData = data.data
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
   start() {
-    this.getSeason();
   }
 }

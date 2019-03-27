@@ -14,14 +14,23 @@
         <ion-card>
             <ion-item>
                 <ion-label stacked color="linkedin">Select District</ion-label>
-                <ion-select [(ngModel)]="formData.districtId" (ngModelChange)="getDistrictFarmers(formData.districtId)">
-                    <ion-option *ngFor="let p of districts" [value]="p.id">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.district" (ngModelChange)="getDistrictFarmers(formData.district.id)">
+                    <ion-option *ngFor="let p of districts" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="farmers">
                 <ion-label stacked color="linkedin">Select Farmer</ion-label>
-                <ion-select [(ngModel)]="formData.farmerId">
-                    <ion-option *ngFor="let p of farmers" [value]="p.id">{{p.name}}</ion-option>
+                <ion-select [(ngModel)]="formData.farmer" (ngModelChange)="getFarmerFarms(formData.farmer.id)">
+                    <ion-option *ngFor="let p of farmers" [value]="p">{{p.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="farms">
+                <ion-label stacked color="linkedin">Select Farm</ion-label>
+                <ion-select [(ngModel)]="formData.farm">
+                    <ion-option *ngFor="let p of farms" [value]="p">
+                        {{p.code}} -
+                        <p>{{p.town}}</p>
+                    </ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -33,19 +42,19 @@
                 <ion-textarea [(ngModel)]="formData.notes" placeholder="Notes"></ion-textarea>
             </ion-item>
         </ion-card>
-        <ion-card [hidden]="!formData.farmerId">
+        <ion-card [hidden]="!formData.farm">
             <ion-item-divider color="light">
                 Select and Add Service
             </ion-item-divider>
             <ion-item>
                 <ion-label stacked color="linkedin">Select Service</ion-label>
-                <ion-select [(ngModel)]="formData.service">
+                <ion-select [(ngModel)]="service">
                     <ion-option *ngFor="let p of services" [value]="p">{{p.name}}</ion-option>
                 </ion-select>
             </ion-item>
-            <button ion-button class="save-button" (click)="addService(formData.service)" style=" background-color: #043370; margin: 10px">Add Service</button>
+            <button ion-button class="save-button" (click)="addService(service)" style=" background-color: #043370; margin: 10px">Add Service</button>
         </ion-card>
-        <ion-card [hidden]="!formData.farmerId">
+        <ion-card [hidden]="formData.items.length <= 0">
             <ion-item-divider color="light">
                 Selected Services
             </ion-item-divider>
