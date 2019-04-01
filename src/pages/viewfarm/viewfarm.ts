@@ -34,6 +34,7 @@ export class ViewfarmPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public backendService: BackendProvider, public alertCtrl: AlertController, public events: Events, public localdb: LocaldbProvider) {
     this.formData = this.navParams.data;
+    console.log(JSON.stringify(this.formData))
     
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { UserDataProvider } from '../../providers/user-data';
 import { LocaldbProvider } from '../../providers/localdb';
@@ -14,27 +14,39 @@ import { Network } from '@ionic-native/network';
 export class SyncPage {
   activity: any
   status: string
+  networkType: string
   transfering: boolean
   lastTransferDate: Date;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public storage: Storage, public alertCtrl: AlertController, public localdb: LocaldbProvider, public backendService: BackendProvider,
-    private platform: Platform, public events: Events, public network: Network, ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserDataProvider, public storage: Storage, public alertCtrl: AlertController, public localdb: LocaldbProvider, public backendService: BackendProvider, public events: Events, public network: Network) {
     this.activity = "...";
+    this.status = "Offline";
+    this.networkType = "unknown"
     this.transfering = false;
-    this.platform.ready().then(() => {
-      this.network.onDisconnect().subscribe(() => {
-        this.status = "Offline";
-      });
-      this.network.onConnect().subscribe(() => {
-        this.status = "Online";
-      });
-      this.events.subscribe('Sync: Complete', () => {
+    this.events.subscribe('Sync: Complete', () => {
 
-      });
+    });
+    this.events.subscribe('Network: Online', () => {
+      this.networkType =  this.network.type;
+      this.status = "Online";
+    });
+    this.events.subscribe('Network: Offline', () => {
+      this.networkType =  this.network.type;
+      this.status = "Offline";
     });
   }
 
   ionViewDidLoad() {
+    console.log('ionViewDidLoad sync page');
+
+    this.userService.getConnectionStatus().then(status => {
+      this.status = status;
+      this.networkType =  this.network.type;
+
+    })
+      .catch((err) => {
+      });;
+
   }
   ionViewDidEnter() {
   }
@@ -50,6 +62,7 @@ export class SyncPage {
     this.backendService.getLastTransferDate().subscribe(res => {
       if (res.success) {
         this.lastTransferDate = new Date(res.data);
+        console.log(this.lastTransferDate);
         this.pushFarmers();
       }
     }, (error) => {
@@ -58,7 +71,11 @@ export class SyncPage {
   }
 
   PushData(table: string, data: any[]) {
-    data = data.filter(x => new Date(x.modifiedAt) > this.lastTransferDate);
+    if(data.length == 0){
+      if (table == "Farmers") this.pushFarms();
+        if (table == "Farms") this.pushSeasons();
+        if (table == "Seasons") this.pushRequests();
+    }    
     var obj = {
       table: table,
       data: JSON.stringify(data)
@@ -66,6 +83,14 @@ export class SyncPage {
     this.backendService.pushData(obj).subscribe(data => {
       if (data.success) {
         this.activity = "Finished pushing " + table;
+        if (table == "Farmers") this.pushFarms();
+        if (table == "Farms") this.pushSeasons();
+        if (table == "Seasons") this.pushRequests();
+        if (table == "Requests") {
+          this.events.publish('Sync: Complete');
+          this.transfering = false;
+          this.activity = "Data has been transfered successfully";
+        }
       }
       else {
         let alert = this.alertCtrl.create({
@@ -83,13 +108,15 @@ export class SyncPage {
   }
 
   pushFarmers() {
-    let self = this
     this.activity = "Pushing Farmers ...";
     this.localdb.getRecords('farmers')
       .then(recs => {
-        let lst = recs;
+        console.log("Farmers")
+        var blength = recs.length;
+        let lst = recs.filter(x => this.lastTransferDate <= new Date(x.modifiedAt) );
+        var alength = lst.length;
+        console.log(blength+" / "+alength);
         this.PushData("Farmers", lst);
-        setTimeout(function () { self.pushFarms() }, 3000);
       })
       .catch((err) => {
         console.log(err);
@@ -97,26 +124,28 @@ export class SyncPage {
   }
 
   pushFarms() {
-    let self = this
     this.activity = "Pushing Farms ...";
     this.localdb.getRecords('farms')
       .then(recs => {
-        let lst = recs;
+        var blength = recs.length;
+        let lst = recs.filter(x => this.lastTransferDate <= new Date(x.modifiedAt) );
+        var alength = lst.length;
+        console.log("Farms-- "+blength+" / "+alength);
         this.PushData("Farms", lst);
-        setTimeout(function () { self.pushSeasons() }, 3000);
       })
       .catch((err) => {
         console.log(err);
       });
   }
   pushSeasons() {
-    let self = this
     this.activity = "Pushing Seasons ...";
     this.localdb.getRecords('seasons')
       .then(recs => {
-        let lst = recs;
+        var blength = recs.length;
+        let lst = recs.filter(x => this.lastTransferDate <= new Date(x.modifiedAt) );
+        var alength = lst.length;
+        console.log("Seasons-- "+blength+" / "+alength);
         this.PushData("Seasons", lst);
-        setTimeout(function () { self.pushFarms() }, 3000);
       })
       .catch((err) => {
         console.log(err);
@@ -126,13 +155,11 @@ export class SyncPage {
     this.activity = "Pushing Requests ...";
     this.localdb.getRecords('requests')
       .then(recs => {
-        let lst = recs;
+        var blength = recs.length;
+        let lst = recs.filter(x => this.lastTransferDate <= new Date(x.modifiedAt) );
+        var alength = lst.length;
+        console.log("Requests-- "+blength+" / "+alength);
         this.PushData("Requests", lst);
-        setTimeout(function () {
-          this.events.publish('Sync: Complete');
-          this.transfering = false;
-          this.activity = "Data has been transfered successfully";
-        }, 3000);
       })
       .catch((err) => {
         console.log(err);

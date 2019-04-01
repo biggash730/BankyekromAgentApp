@@ -41,11 +41,13 @@ export class MyApp {
     ];
     this.user = { name: "" }
     //get user
-    this.network.onDisconnect().subscribe(() => {
-      this.userService.setConnectionStatus("offline");
-    });
     this.network.onConnect().subscribe(() => {
-      this.userService.setConnectionStatus("online");
+      this.userService.setConnectionStatus("Online");
+      this.events.publish('Network: Online');
+    });
+    this.network.onDisconnect().subscribe(() => {
+      this.userService.setConnectionStatus("Offline");
+      this.events.publish('Network: Offline');
     });
     //this.localdbProvider.createPouchDBs();
     this.storage.get(this.userService.HAS_LOGGED_IN).then((val) => {
