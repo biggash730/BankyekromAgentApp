@@ -32,7 +32,9 @@ const routes: Routes = [
   { path: 'request-view', loadChildren: './request-view/request-view.module#RequestViewPageModule' },
   { path: 'request-form', loadChildren: './request-form/request-form.module#RequestFormPageModule' },
   { path: 'season-view', loadChildren: './season-view/season-view.module#SeasonViewPageModule' },
-  { path: 'season-form', loadChildren: './season-form/season-form.module#SeasonFormPageModule' }
+  { path: 'season-form', loadChildren: './season-form/season-form.module#SeasonFormPageModule' },
+  { path: 'intro', loadChildren: './intro/intro.module#IntroPageModule' },
+  { path: 'setup', loadChildren: './setup/setup.module#SetupPageModule' }
 ];
 
 @NgModule({

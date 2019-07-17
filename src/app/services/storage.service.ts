@@ -23,12 +23,19 @@ export class StorageService {
    }
 
   public async isLoggedIn() {
-    const value = await this.nativeStorage.getItem(this.IS_LOGGED_IN);
-    if (value && value === true) {
-      return true;
-    } else {
-      return false;
-    }
+    return await this.nativeStorage.getItem(this.IS_LOGGED_IN).then(
+      data => {
+        if (data && data === true) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      error => {
+        console.error(error);
+        return false;
+      }
+    );
   }
   public setUsername(username: string) {
     this.nativeStorage.setItem(this.USERNAME, JSON.stringify(username));

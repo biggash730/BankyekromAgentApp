@@ -8,20 +8,19 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class ApisService {
 
-  apiUrl = 'http://localhost:3000/api/';
+  apiUrl = 'http://localhost:1501/api/';
 
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'signin', data)
+    return this.http.post<any>(this.apiUrl + 'agents/login', data)
       .pipe(
         tap(_ => this.log('login')),
         catchError(this.handleError('login', []))
       );
   }
-
   logout(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + 'signout')
+    return this.http.get<any>(this.apiUrl + 'agents/logout')
       .pipe(
         tap(_ => this.log('logout')),
         catchError(this.handleError('logout', []))
