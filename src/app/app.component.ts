@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  user: any;
   public appPages = [
     {
       title: 'Dashboard',
@@ -50,15 +53,55 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private storage: StorageService,
+    private router: Router, public alertCtrl: AlertController
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.storage.isLoggedIn().then((val) => {
+        if (val) {
+          this.storage.getCurrentUser().then((v) => {
+            this.user = JSON.parse(v);
+            this.router.navigate(['/dashboard']);
+          });
+        } else {
+          this.router.navigate(['/login']);
+        }
+      });
       this.splashScreen.hide();
+      this.statusBar.styleDefault();
     });
+  }
+  async logout() {
+    const alert = await this.alertCtrl.create({
+      subHeader: 'App Logout',
+      message: 'Are you sure you want to be logged out?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.storage.removeToken().then(
+              res => {
+                this.router.navigate(['/login']);
+              },
+              error => {
+
+              }
+            );
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

@@ -29,8 +29,6 @@ export class TokenInterceptor implements HttpInterceptor {
         },
         error => console.error(error)
       );
-
-
     if (token) {
       request = request.clone({
         setHeaders: {

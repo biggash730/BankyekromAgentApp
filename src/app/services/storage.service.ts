@@ -72,4 +72,8 @@ export class StorageService {
     const val = await this.nativeStorage.getItem(this.TOKEN);
     return JSON.parse(val);
   }
+
+  public removeToken() {
+    return this.nativeStorage.remove(this.TOKEN);
+  }
 }

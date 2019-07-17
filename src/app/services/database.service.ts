@@ -5,11 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export interface Dev {
+export interface Lookup {
   id: number;
   name: string;
-  skills: any[];
-  img: string;
+  model: string;
+  eId: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @Injectable({
@@ -19,8 +21,7 @@ export class DatabaseService {
   private database: SQLiteObject;
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  developers = new BehaviorSubject([]);
-  products = new BehaviorSubject([]);
+  lookups = new BehaviorSubject([]);
 
   constructor(private plt: Platform, private sqlitePorter: SQLitePorter, private sqlite: SQLite, private http: HttpClient) {
     this.plt.ready().then(() => {
@@ -28,120 +29,118 @@ export class DatabaseService {
         name: 'bankyekrom.db',
         location: 'default'
       })
-      .then((db: SQLiteObject) => {
+        .then((db: SQLiteObject) => {
           this.database = db;
-          this.seedDatabase();
-      });
+        });
     });
   }
 
-  seedDatabase() {
-    this.http.get('assets/seed.sql', { responseType: 'text'})
-    .subscribe(sql => {
-      this.sqlitePorter.importSqlToDb(this.database, sql)
-        .then(_ => {
-          this.loadDevelopers();
-          this.loadProducts();
-          this.dbReady.next(true);
-        })
-        .catch(e => console.error(e));
-    });
-  }
 
   getDatabaseState() {
     return this.dbReady.asObservable();
   }
 
-  getDevs(): Observable<Dev[]> {
-    return this.developers.asObservable();
+  getLookups(): Observable<Lookup[]> {
+    return this.lookups.asObservable();
   }
 
-  getProducts(): Observable<any[]> {
-    return this.products.asObservable();
-  }
-
-  loadDevelopers() {
-    return this.database.executeSql('SELECT * FROM developer', []).then(data => {
-      const developers: Dev[] = [];
+  loadLookups() {
+    return this.database.executeSql('SELECT * FROM lookups', []).then(data => {
+      const lookups: Lookup[] = [];
 
       if (data.rows.length > 0) {
         for (let i = 0; i < data.rows.length; i++) {
-          let skills = [];
-          if (data.rows.item(i).skills !== '') {
-            skills = JSON.parse(data.rows.item(i).skills);
-          }
-
-          developers.push({
+          lookups.push({
             id: data.rows.item(i).id,
             name: data.rows.item(i).name,
-            skills,
-            img: data.rows.item(i).img
-           });
+            model: data.rows.item(i).model,
+            eId: data.rows.item(i).eId,
+            createdAt: data.rows.item(i).createdAt,
+            updatedAt: data.rows.item(i).updatedAt
+          });
         }
       }
-      this.developers.next(developers);
+      this.lookups.next(lookups);
     });
   }
 
-  addDeveloper(name, skills, img) {
-    const data = [name, JSON.stringify(skills), img];
-    return this.database.executeSql('INSERT INTO developer (name, skills, img) VALUES (?, ?, ?)', data).then(res => {
-      this.loadDevelopers();
-    });
+  addLookup(name, model, eid) {
+    const now = new Date();
+    const data = [name, model, eid, now, now];
+    return this.database.executeSql('INSERT INTO lookups (name, model, eid, createdAt, updatedAt)' +
+      'VALUES (?, ?, ?, ?, ?)', data).then(res => {
+        this.loadLookups();
+      });
   }
 
-  getDeveloper(id): Promise<Dev> {
-    return this.database.executeSql('SELECT * FROM developer WHERE id = ?', [id]).then(data => {
-      let skills = [];
-      if (data.rows.item(0).skills !== '') {
-        skills = JSON.parse(data.rows.item(0).skills);
-      }
-
+  getLookup(id: any): Promise<any> {
+    return this.database.executeSql('SELECT * FROM lookups WHERE id = ?', [id]).then(data => {
       return {
         id: data.rows.item(0).id,
         name: data.rows.item(0).name,
-        skills,
-        img: data.rows.item(0).img
+        eId: data.rows.item(0).eId,
+        createdAt: data.rows.item(0).createdAt,
+        updatedAt: data.rows.item(0).updatedAt
       };
     });
   }
 
-  deleteDeveloper(id) {
-    return this.database.executeSql('DELETE FROM developer WHERE id = ?', [id]).then(_ => {
-      this.loadDevelopers();
-      this.loadProducts();
-    });
-  }
+  getLookupByModel(model: any): Promise<any> {
+    return this.database.executeSql('SELECT * FROM lookups WHERE model like ?', [model]).then(data => {
+      const lookups: Lookup[] = [];
 
-  updateDeveloper(dev: Dev) {
-    const data = [dev.name, JSON.stringify(dev.skills), dev.img];
-    return this.database.executeSql(`UPDATE developer SET name = ?, skills = ?, img = ? WHERE id = ${dev.id}`, data).then(res => {
-      this.loadDevelopers();
-    });
-  }
-
-  loadProducts() {
-    const query = 'SELECT product.name, product.id, developer.name AS creator' +
-    'FROM product JOIN developer ON developer.id = product.creatorId';
-    return this.database.executeSql(query, []).then(data => {
-      const products = [];
       if (data.rows.length > 0) {
         for (let i = 0; i < data.rows.length; i++) {
-          products.push({
-            name: data.rows.item(i).name,
+          lookups.push({
             id: data.rows.item(i).id,
-            creator: data.rows.item(i).creator,
-           });
+            name: data.rows.item(i).name,
+            model: data.rows.item(i).model,
+            eId: data.rows.item(i).eId,
+            createdAt: data.rows.item(i).createdAt,
+            updatedAt: data.rows.item(i).updatedAt
+          });
         }
       }
-      this.products.next(products);
+      this.lookups.next(lookups);
     });
   }
 
-  addProduct(name, creator) {
-    const data = [name, creator];
-    return this.database.executeSql('INSERT INTO product (name, creatorId) VALUES (?, ?)', data).then(res => {
-      this.loadProducts();
-    });
-  }
+  // deleteDeveloper(id) {
+  //   return this.database.executeSql('DELETE FROM developer WHERE id = ?', [id]).then(_ => {
+  //     this.loadDevelopers();
+  //     this.loadProducts();
+  //   });
+  // }
+
+  // updateDeveloper(dev: Dev) {
+  //   const data = [dev.name, JSON.stringify(dev.skills), dev.img];
+  //   return this.database.executeSql(`UPDATE developer SET name = ?, skills = ?, img = ? WHERE id = ${dev.id}`, data).then(res => {
+  //     this.loadDevelopers();
+  //   });
+  // }
+
+  // loadProducts() {
+  //   const query = 'SELECT product.name, product.id, developer.name AS creator' +
+  //     'FROM product JOIN developer ON developer.id = product.creatorId';
+  //   return this.database.executeSql(query, []).then(data => {
+  //     const products = [];
+  //     if (data.rows.length > 0) {
+  //       for (let i = 0; i < data.rows.length; i++) {
+  //         products.push({
+  //           name: data.rows.item(i).name,
+  //           id: data.rows.item(i).id,
+  //           creator: data.rows.item(i).creator,
+  //         });
+  //       }
+  //     }
+  //     this.products.next(products);
+  //   });
+  // }
+
+  // addProduct(name, creator) {
+  //   const data = [name, creator];
+  //   return this.database.executeSql('INSERT INTO product (name, creatorId) VALUES (?, ?)', data).then(res => {
+  //     this.loadProducts();
+  //   });
+  // }
 }
