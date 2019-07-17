@@ -1,7 +1,7 @@
 {
-    "name": "bankyekromagent.sixonelabs.com",
-    "integrations": {
-        "cordova": {}
-    },
-    "type": "ionic-angular"
+  "name": "bankyekromAgentApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
 }
