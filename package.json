@@ -20,6 +20,8 @@
         "@angular/platform-browser": "^7.2.2",
         "@angular/platform-browser-dynamic": "^7.2.2",
         "@angular/router": "^7.2.2",
+        "@capacitor/cli": "^1.1.1",
+        "@capacitor/core": "^1.1.1",
         "@ionic-native/clipboard": "^5.10.0",
         "@ionic-native/core": "^5.0.0",
         "@ionic-native/geolocation": "^5.10.0",
@@ -32,6 +34,7 @@
         "@ionic-native/status-bar": "^5.0.0",
         "@ionic-native/toast": "^5.10.0",
         "@ionic/angular": "^4.1.0",
+        "@ionic/storage": "^2.2.0",
         "cordova-android": "^8.0.0",
         "cordova-browser": "5.0.4",
         "cordova-clipboard": "^1.3.0",
@@ -39,9 +42,12 @@
         "cordova-plugin-native-spinner": "^1.1.3",
         "cordova-plugin-nativestorage": "^2.3.2",
         "cordova-plugin-network-information": "^2.0.2",
+        "cordova-plugin-sqlite-2": "^1.0.6",
         "cordova-plugin-x-toast": "^2.7.2",
         "cordova-sqlite-storage": "^3.2.1",
         "core-js": "^2.5.4",
+        "pouchdb": "^7.1.1",
+        "pouchdb-adapter-cordova-sqlite": "^2.0.6",
         "rxjs": "~6.5.1",
         "tslib": "^1.9.0",
         "uk.co.workingedge.cordova.plugin.sqliteporter": "^1.1.0",
@@ -82,7 +88,8 @@
             "cordova-clipboard": {},
             "cordova-plugin-native-spinner": {},
             "cordova-plugin-x-toast": {},
-            "uk.co.workingedge.cordova.plugin.sqliteporter": {}
+            "uk.co.workingedge.cordova.plugin.sqliteporter": {},
+            "cordova-plugin-sqlite-2": {}
         }
     }
 }

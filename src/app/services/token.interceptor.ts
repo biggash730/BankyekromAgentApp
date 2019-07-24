@@ -12,17 +12,17 @@ import { map, catchError } from 'rxjs/operators';
 import {
   Router
 } from '@angular/router';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, public toastController: ToastController, private nativeStorage: NativeStorage) { }
+  constructor(private router: Router, public toastController: ToastController, private storage: Storage) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = null;
-    this.nativeStorage.getItem('TOKEN')
+    this.storage.get('TOKEN')
       .then(
         data => {
           token = JSON.parse(data);

@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class ApisService {
 
-  apiUrl = 'http://localhost:1501/api/';
+  apiUrl = 'https://bankyekrom.azurewebsites.net/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -27,13 +27,22 @@ export class ApisService {
       );
   }
 
-  getBooks(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + 'book')
+  getVarieties(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'public/getvarieties')
       .pipe(
-        tap(_ => this.log('fetched books')),
-        catchError(this.handleError('getBooks', []))
+        tap(_ => this.log('fetched varieties')),
+        catchError(this.handleError('getVarieties', []))
       );
   }
+
+  getServices(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'public/getservices')
+      .pipe(
+        tap(_ => this.log('fetched services')),
+        catchError(this.handleError('getServices', []))
+      );
+  }
+
 
 
   private handleError<T>(operation = 'operation', result?: T) {

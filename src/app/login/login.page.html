@@ -1,9 +1,10 @@
 <ion-content padding>
     <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
-        <ion-card>
-            <ion-card-header text-center>
+        <ion-card style=" border-bottom: solid 3px green; ">
+            <ion-card-header>
                 <ion-card-subtitle>Bankyekrom Agent</ion-card-subtitle>
-                <ion-card-title>Login</ion-card-title>
+                <ion-card-title>
+                    <ion-icon name="log-in"></ion-icon> Login</ion-card-title>
 
             </ion-card-header>
             <ion-card-content>

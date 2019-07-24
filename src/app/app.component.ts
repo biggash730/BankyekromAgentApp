@@ -64,8 +64,8 @@ export class AppComponent {
       this.storage.isLoggedIn().then((val) => {
         if (val) {
           this.storage.getCurrentUser().then((v) => {
-            this.user = JSON.parse(v);
-            this.router.navigate(['/dashboard']);
+            this.user = v;
+            this.router.navigate(['/setup']);
           });
         } else {
           this.router.navigate(['/login']);
