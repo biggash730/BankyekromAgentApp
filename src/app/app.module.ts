@@ -9,8 +9,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import { SQLite } from '@ionic-native/sqlite/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,9 +31,7 @@ driverOrder: ['sqlite', 'indexeddb', 'websql']
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },
-    SQLite,
-    SQLitePorter
+    }
   ],
   bootstrap: [AppComponent]
 })

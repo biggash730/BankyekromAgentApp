@@ -18,8 +18,8 @@ export class StorageService {
   phoneNumber: string;
   constructor(private nativeStorage: Storage) {
     // var self = this;
-    this.baseUrl = 'https://bankyekrom.azurewebsites.net/api/';
-    // this.baseUrl = "http://localhost:1501/api/";
+    // this.baseUrl = 'https://bankyekrom.azurewebsites.net/api/';
+    this.baseUrl = 'http://localhost:1501/api/';
    }
 
   public async isLoggedIn() {

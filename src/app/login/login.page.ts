@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
           this.storageService.setLoggedIn();
           this.storageService.setCurrentUser(res.data);
           this.storageService.setToken(res.data.token);
-          this.router.navigate(['setup']);
+          this.router.navigate(['/setup']);
           this.presentToast('Login Successful');
         }
       }, (err) => {

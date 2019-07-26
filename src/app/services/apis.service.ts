@@ -8,7 +8,8 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class ApisService {
 
-  apiUrl = 'https://bankyekrom.azurewebsites.net/api/';
+  // apiUrl = 'https://bankyekrom.azurewebsites.net/api/';
+  apiUrl = 'http://localhost:1501/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -42,6 +43,47 @@ export class ApisService {
         catchError(this.handleError('getServices', []))
       );
   }
+
+  getRegions(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'public/getregions')
+      .pipe(
+        tap(_ => this.log('fetched regions')),
+        catchError(this.handleError('getRegions', []))
+      );
+  }
+
+  getDistricts(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'public/getdistricts')
+      .pipe(
+        tap(_ => this.log('fetched districts')),
+        catchError(this.handleError('getDistricts', []))
+      );
+  }
+
+  getFarmers(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'farmers/agentget')
+      .pipe(
+        tap(_ => this.log('fetched farmers')),
+        catchError(this.handleError('getFarmers', []))
+      );
+  }
+
+  getFarms(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'farms/agentget')
+      .pipe(
+        tap(_ => this.log('fetched farms')),
+        catchError(this.handleError('getFarms', []))
+      );
+  }
+
+  getSeasons(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'seasons/agentget')
+      .pipe(
+        tap(_ => this.log('fetched seasons')),
+        catchError(this.handleError('getSeasons', []))
+      );
+  }
+
 
 
 
