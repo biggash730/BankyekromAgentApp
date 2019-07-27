@@ -31,21 +31,13 @@
                     <ion-label position="floating">Date of Birth</ion-label>
                     <ion-input type="date" formControlName="dateOfBirth"></ion-input>
                 </ion-item>
-                <ion-radio-group>
-                    <ion-list-header>
-                        <ion-label>Gender</ion-label>
-                    </ion-list-header>
-
-                    <ion-item>
-                        <ion-label>Male</ion-label>
-                        <ion-radio slot="start" value="Male" formControlName="gender"></ion-radio>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label>Female</ion-label>
-                        <ion-radio slot="start" value="Female" formControlName="gender"></ion-radio>
-                    </ion-item>
-                </ion-radio-group>
+                <ion-item>
+                    <ion-label>Gender</ion-label>
+                    <ion-select placeholder="Select One" formControlName="gender">
+                        <ion-select-option value="Female">Female</ion-select-option>
+                        <ion-select-option value="Male">Male</ion-select-option>
+                    </ion-select>
+                </ion-item>
                 <ion-item>
                     <ion-label position="floating">Town</ion-label>
                     <ion-input type="text" formControlName="town"></ion-input>

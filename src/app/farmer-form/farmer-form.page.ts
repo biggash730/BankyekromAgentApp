@@ -14,6 +14,7 @@ export class FarmerFormPage implements OnInit {
   record: any;
   type: string;
   genders = ['Male', 'Female'];
+  farmers: any[];
   constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService) { }
 
   ngOnInit() {
@@ -30,6 +31,7 @@ export class FarmerFormPage implements OnInit {
     } else {
       this.type = 'New';
     }
+    this.getFarmers();
   }
 
   get id() { return this.myForm.get('id'); }
@@ -58,19 +60,36 @@ export class FarmerFormPage implements OnInit {
     });
   }
 
-  onFormSubmit(form: NgForm) {
-    // this.apisService.login(form)
-    //   .subscribe(res => {
-    //     if (res.success) {
-    //       this.storageService.setLoggedIn();
-    //       this.storageService.setCurrentUser(res.data);
-    //       this.storageService.setToken(res.data.token);
-    //       this.router.navigate(['/setup']);
-    //       this.presentToast('Login Successful');
-    //     }
-    //   }, (err) => {
-    //     console.log(err);
-    //   });
+  getFarmers() {
+    this.storageService.getKeyValue('farmers').then(
+      data => {
+        this.farmers = data;
+      }
+    );
+  }
+
+  onFormSubmit(form: any) {
+
+    if (this.type === 'Edit') {
+      const index = this.farmers.findIndex(x => x.id === form.id);
+      console.log(this.farmers);
+      // const rec = this.farmers[index];
+      this.farmers[index].modifiedAt = new Date();
+      this.farmers[index].name = form.name;
+      this.farmers[index].phoneNumber = form.phoneNumber;
+      this.farmers[index].dateOfBirth = new Date(form.dateOfBirth);
+      this.farmers[index].residentialAddress = form.residentialAddress;
+      this.farmers[index].town = form.town;
+      this.farmers[index].gender = form.gender;
+      this.farmers[index].ghanaPostGps = form.ghanaPostGps;
+      console.log(this.farmers);
+      this.storageService.setKeyValue('farmers', this.farmers);
+      this.storageService.presentToast('Updated Successful');
+    } else {
+      this.storageService.presentToast('Saved Successful');
+    }
+    this.storageService.farmer = null;
+    this.router.navigate(['/farmers']);
   }
 
 }

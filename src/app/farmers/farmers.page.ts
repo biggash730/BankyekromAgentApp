@@ -13,7 +13,8 @@ export class FarmersPage implements OnInit {
   records: any[];
   total: number;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private router: Router, private storageService: StorageService, public menuCtrl: MenuController) { }
+  constructor(private router: Router, private storageService: StorageService, public menuCtrl: MenuController) {
+  }
 
   ngOnInit() {
     this.getFarmers();
@@ -22,7 +23,6 @@ export class FarmersPage implements OnInit {
 
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       event.target.complete();
 
       // App logic to determine if all data is loaded
