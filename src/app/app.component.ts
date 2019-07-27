@@ -41,11 +41,6 @@ export class AppComponent {
       title: 'Settings',
       url: '/settings',
       icon: 'list'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
     }
   ];
 
@@ -65,7 +60,7 @@ export class AppComponent {
         if (val) {
           this.storage.getCurrentUser().then((v) => {
             this.user = v;
-            this.router.navigate(['/setup']);
+            this.router.navigate(['/dashboard']);
           });
         } else {
           this.router.navigate(['/login']);

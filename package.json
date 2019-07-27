@@ -41,6 +41,7 @@
         "cordova-plugin-network-information": "^2.0.2",
         "cordova-plugin-x-toast": "^2.7.2",
         "core-js": "^2.5.4",
+        "ngx-filter-pipe": "^2.1.2",
         "pouchdb": "^7.1.1",
         "pouchdb-adapter-cordova-sqlite": "^2.0.6",
         "pouchdb-find": "^7.1.1",

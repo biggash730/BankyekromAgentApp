@@ -4,6 +4,7 @@ import { ApisService } from '../services/apis.service';
 import { StorageService } from '../services/storage.service';
 import { DatabaseService } from '../services/database.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-setup',
@@ -12,14 +13,20 @@ import { Router } from '@angular/router';
 })
 export class SetupPage implements OnInit {
   activity: string;
-  constructor(private router: Router, private apisService: ApisService, private storageService: StorageService) {
+  syncStarted: boolean;
+  constructor(private router: Router, private apisService: ApisService,
+              private storageService: StorageService, public menuCtrl: MenuController) {
     this.activity = 'Syncing Data';
-    this.pullVarieties();
+    this.menuCtrl.enable(false);
   }
 
   ngOnInit() {
+    this.beginSetup();
   }
-
+  beginSetup() {
+    this.syncStarted = true;
+    this.pullVarieties();
+  }
   pullVarieties() {
     this.activity = 'Pulling Varieties';
     this.apisService.getVarieties()
@@ -128,11 +135,16 @@ export class SetupPage implements OnInit {
           this.activity = 'Saving Seasons';
           this.storageService.setKeyValue('seasons', res.data);
           this.activity = 'Finished Saving Seasons';
-          this.router.navigate(['/dashboard']);
+          this.onFinish();
         }
       }, (err) => {
         console.log(err);
       });
 
+  }
+
+  onFinish() {
+    this.menuCtrl.enable(true);
+    this.router.navigate(['/dashboard']);
   }
 }

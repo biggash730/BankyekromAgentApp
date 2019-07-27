@@ -16,10 +16,19 @@ export class StorageService {
   loggedIn = false;
   baseUrl: string;
   phoneNumber: string;
+
+  farmer: any;
+  farm: any;
+  season: any;
+  request: any;
   constructor(private nativeStorage: Storage) {
     // var self = this;
     // this.baseUrl = 'https://bankyekrom.azurewebsites.net/api/';
     this.baseUrl = 'http://localhost:1501/api/';
+    this.farmer = null;
+    this.farm = null;
+    this.season = null;
+    this.request = null;
    }
 
   public async isLoggedIn() {
