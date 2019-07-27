@@ -41,6 +41,11 @@ export class AppComponent {
       title: 'Settings',
       url: '/settings',
       icon: 'list'
+    },
+    {
+      title: 'Sync Data',
+      url: '/sync',
+      icon: 'list'
     }
   ];
 

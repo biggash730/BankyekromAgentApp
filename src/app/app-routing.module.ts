@@ -4,16 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
@@ -34,7 +26,8 @@ const routes: Routes = [
   { path: 'season-view', loadChildren: './season-view/season-view.module#SeasonViewPageModule' },
   { path: 'season-form', loadChildren: './season-form/season-form.module#SeasonFormPageModule' },
   { path: 'intro', loadChildren: './intro/intro.module#IntroPageModule' },
-  { path: 'setup', loadChildren: './setup/setup.module#SetupPageModule' }
+  { path: 'setup', loadChildren: './setup/setup.module#SetupPageModule' },
+  { path: 'sync', loadChildren: './sync/sync.module#SyncPageModule' }
 ];
 
 @NgModule({
@@ -43,4 +36,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

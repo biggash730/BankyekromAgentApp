@@ -25,7 +25,38 @@
                 </ion-item>
                 <ion-item>
                     <ion-label position="floating">Phone Number</ion-label>
-                    <ion-input type="text" formControlName="phoneNumber"></ion-input>
+                    <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Date of Birth</ion-label>
+                    <ion-input type="date" formControlName="dateOfBirth"></ion-input>
+                </ion-item>
+                <ion-radio-group>
+                    <ion-list-header>
+                        <ion-label>Gender</ion-label>
+                    </ion-list-header>
+
+                    <ion-item>
+                        <ion-label>Male</ion-label>
+                        <ion-radio slot="start" value="Male" formControlName="gender"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Female</ion-label>
+                        <ion-radio slot="start" value="Female" formControlName="gender"></ion-radio>
+                    </ion-item>
+                </ion-radio-group>
+                <ion-item>
+                    <ion-label position="floating">Town</ion-label>
+                    <ion-input type="text" formControlName="town"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Ghana Post GPS</ion-label>
+                    <ion-input type="text" formControlName="ghanaPostGps"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Residential Address</ion-label>
+                    <ion-textarea placeholder="Residential Address" rows="3" formControlName="residentialAddress"></ion-textarea>
                 </ion-item>
                 <section padding-top padding-bottom>
                     <ion-button expand="block" color="success" type="submit" [disabled]="!myForm.valid">Save</ion-button>
