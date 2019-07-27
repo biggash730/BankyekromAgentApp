@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class StorageService {
   farm: any;
   season: any;
   request: any;
-  constructor(private nativeStorage: Storage) {
+  constructor(private nativeStorage: Storage,
+              public toastController: ToastController) {
     // var self = this;
     // this.baseUrl = 'https://bankyekrom.azurewebsites.net/api/';
     this.baseUrl = 'http://localhost:1501/api/';
@@ -94,5 +96,18 @@ export class StorageService {
 
   public removeToken() {
     return this.nativeStorage.remove(this.TOKEN);
+  }
+
+  public async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  public clear() {
+    return this.nativeStorage.clear();
   }
 }

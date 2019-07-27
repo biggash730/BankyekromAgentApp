@@ -3,10 +3,32 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/farmers"></ion-back-button>
         </ion-buttons>
-        <ion-title>farmer-form</ion-title>
+        <ion-title>{{type}} Farmer</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    {{type}}
+    <form [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm.value)">
+        <ion-card style=" border-bottom: solid 3px green; ">
+            <ion-card-header>
+                <ion-card-subtitle>Farmer Form</ion-card-subtitle>
+                <ion-card-title>
+                    {{type}} Farmer
+                </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-item>
+                    <ion-label position="floating">Name</ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Phone Number</ion-label>
+                    <ion-input type="text" formControlName="phoneNumber"></ion-input>
+                </ion-item>
+                <section padding-top padding-bottom>
+                    <ion-button expand="block" color="success" type="submit" [disabled]="!myForm.valid">Save</ion-button>
+                </section>
+            </ion-card-content>
+        </ion-card>
+    </form>
 </ion-content>

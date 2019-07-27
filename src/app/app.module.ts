@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Interceptor } from './services/http.interceptor';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,9 +22,11 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     HttpClientModule,
     IonicStorageModule.forRoot({
       name: 'bankyekromdb',
-driverOrder: ['sqlite', 'indexeddb', 'websql']
+      driverOrder: ['sqlite', 'indexeddb', 'websql']
     }),
-    FilterPipeModule
+    FilterPipeModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     StatusBar,
@@ -37,4 +40,4 @@ driverOrder: ['sqlite', 'indexeddb', 'websql']
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

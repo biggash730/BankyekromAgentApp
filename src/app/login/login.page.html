@@ -17,7 +17,10 @@
                     <ion-input type="password" formControlName="password"></ion-input>
                 </ion-item>
                 <section padding-top padding-bottom>
-                    <ion-button expand="block" color="success" type="submit" [disabled]="!loginForm.valid">Login</ion-button>
+                    <ion-button expand="block" color="success" type="submit" [disabled]="!loginForm.valid || loading">Login</ion-button>
+                </section>
+                <section [hidden]="!loading" text-center>
+                    <ion-spinner></ion-spinner>
                 </section>
             </ion-card-content>
         </ion-card>

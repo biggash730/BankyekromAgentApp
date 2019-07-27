@@ -13,6 +13,7 @@ import { ToastController } from '@ionic/angular';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  loading: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
               public toastController: ToastController) { }
 
   ngOnInit() {
+    this.loading = false;
     this.loginForm = this.formBuilder.group({
       username : [null, Validators.required],
       password : [null, Validators.required]
@@ -28,26 +30,19 @@ export class LoginPage implements OnInit {
   }
 
   onFormSubmit(form: NgForm) {
+    this.loading = true;
     this.apisService.login(form)
       .subscribe(res => {
+        this.loading = false;
         if (res.success) {
           this.storageService.setLoggedIn();
           this.storageService.setCurrentUser(res.data);
           this.storageService.setToken(res.data.token);
           this.router.navigate(['/setup']);
-          this.presentToast('Login Successful');
+          this.storageService.presentToast('Login Successful');
         }
       }, (err) => {
         console.log(err);
       });
   }
-  async presentToast(msg) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 2000,
-      position: 'top'
-    });
-    toast.present();
-  }
-
 }

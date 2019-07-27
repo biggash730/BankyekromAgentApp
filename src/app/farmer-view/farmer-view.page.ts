@@ -14,7 +14,6 @@ record: any;
 
   ngOnInit() {
     this.record = this.storageService.farmer;
-    console.log(this.record);
   }
 
   edit() {

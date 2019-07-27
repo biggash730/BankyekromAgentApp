@@ -60,7 +60,8 @@ export class AppComponent {
         if (val) {
           this.storage.getCurrentUser().then((v) => {
             this.user = v;
-            this.router.navigate(['/dashboard']);
+            // this.router.navigate(['/dashboard']);
+            this.router.navigate(['/farmers']);
           });
         } else {
           this.router.navigate(['/login']);
@@ -84,7 +85,7 @@ export class AppComponent {
         {
           text: 'Yes',
           handler: () => {
-            this.storage.removeToken().then(
+            this.storage.clear().then(
               res => {
                 this.router.navigate(['/login']);
               },
