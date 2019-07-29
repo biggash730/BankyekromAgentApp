@@ -3,6 +3,7 @@ import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
 import { Events } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-farm-form',
@@ -17,13 +18,15 @@ export class FarmFormPage implements OnInit {
   farms: any[];
   farmers: any[];
   districts: any[];
-  constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService, public events: Events) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+              private storageService: StorageService, public events: Events, private geolocation: Geolocation) { }
 
   ngOnInit() {
     this.setupForm();
     this.record = this.storageService.farm;
     if (this.record) {
       this.type = 'Edit';
+      console.log(this.record);
       this.myForm.patchValue(this.record);
       this.myForm.patchValue({
         createdAt: new Date(this.record.createdAt).toISOString().substring(0, 10),
@@ -62,6 +65,17 @@ export class FarmFormPage implements OnInit {
       createdBy: new FormControl(null),
       modifiedAt: new FormControl(null),
       modifiedBy: new FormControl(null)
+    });
+  }
+
+  setLocation() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.myForm.patchValue({
+        latitude: resp.coords.latitude,
+        longitude: resp.coords.longitude
+      });
+    }).catch((error) => {
+      this.storageService.presentToast('Error getting location');
     });
   }
 
@@ -109,19 +123,25 @@ export class FarmFormPage implements OnInit {
       this.storageService.presentToast('Updated Successful');
     } else {
       const ID = new Date().getTime();
-      const rec =  {
-        id : ID,
-        eId : ID,
+      const rec = {
+        id: ID,
+        eId: ID,
         code: ID,
-        modifiedAt : new Date(),
-        createdAt : new Date(),
-        location : form.location,
-        latitude : form.latitude,
-        dateOfBirth : new Date(form.dateOfBirth),
-        residentialAddress : form.residentialAddress,
-        town : form.town,
-        gender : form.gender,
-        ghanaPostGps : form.ghanaPostGps
+        modifiedAt: new Date(),
+        createdAt: new Date(),
+        location: form.location,
+        latitude: form.latitude,
+        longitude: form.longitude,
+        numberOfAcres: form.numberOfAcres,
+        town: form.town,
+        districtId: form.districtId,
+        district: dist.name,
+        region: dist.region,
+        farmerId: form.farmerId,
+        farmer: frmer.name,
+        phoneNumber: frmer.phoneNumber,
+        ghanaPostGps: form.ghanaPostGps,
+        syncedAt: null
       };
       this.farms.push(rec);
       this.storageService.setKeyValue('farms', this.farms);
@@ -133,10 +153,16 @@ export class FarmFormPage implements OnInit {
   }
 
   getFarmer(id) {
-    return this.farmers.find(x => x.id === id);
+    const res = this.farmers.find(x => {
+      return x.id === +id;
+    });
+    return res;
   }
   getDistrict(id) {
-    return this.districts.find(x => x.id === id);
+    const res = this.districts.find(x => {
+      return x.id === +id;
+    });
+    return res;
   }
 
 }

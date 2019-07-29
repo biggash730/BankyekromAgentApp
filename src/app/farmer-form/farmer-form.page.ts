@@ -97,7 +97,8 @@ export class FarmerFormPage implements OnInit {
         residentialAddress : form.residentialAddress,
         town : form.town,
         gender : form.gender,
-        ghanaPostGps : form.ghanaPostGps
+        ghanaPostGps : form.ghanaPostGps,
+        syncedAt: null
       };
       this.farmers.push(rec);
       this.storageService.setKeyValue('farmers', this.farmers);

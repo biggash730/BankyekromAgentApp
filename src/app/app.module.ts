@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { Interceptor } from './services/http.interceptor';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true
-    }
+    },
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })

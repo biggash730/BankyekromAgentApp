@@ -1,9 +1,9 @@
 <ion-header>
     <ion-toolbar style="border-bottom: 3px solid green;">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/farmers"></ion-back-button>
+            <ion-back-button defaultHref="/farms"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{type}} Farmer</ion-title>
+        <ion-title>{{type}} Farm</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -11,31 +11,28 @@
     <ion-card style="border-bottom: solid 3px green;">
         <ion-card-header>
             <ion-card-subtitle>
-                Farmer Form
+                Farm Form
             </ion-card-subtitle>
             <ion-card-title>
-                {{type}} Farmer
+                {{type}} Farm
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
             <form [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm.value)">
                 <ion-item>
-                    <ion-label position="floating">Name</ion-label>
-                    <ion-input type="text" formControlName="name"></ion-input>
+                    <ion-label position="floating">Farmer</ion-label>
+                    <ion-select placeholder="Farmer" formControlName="farmerId">
+                        <ion-select-option *ngFor="let f of farmers" value="{{f.id}}">{{f.name}}</ion-select-option>
+                    </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="floating">Phone Number</ion-label>
-                    <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+                    <ion-label position="floating">Number Of Acres</ion-label>
+                    <ion-input type="number" formControlName="numberOfAcres"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label>Date of Birth</ion-label>
-                    <ion-datetime formControlName="dateOfBirth" placeholder="Date of Birth"></ion-datetime>
-                </ion-item>
-                <ion-item>
-                    <ion-label>Gender</ion-label>
-                    <ion-select placeholder="Select One" formControlName="gender">
-                        <ion-select-option value="Female">Female</ion-select-option>
-                        <ion-select-option value="Male">Male</ion-select-option>
+                    <ion-label position="floating">District</ion-label>
+                    <ion-select placeholder="District" formControlName="districtId">
+                        <ion-select-option *ngFor="let f of districts" value="{{f.id}}">{{f.name}}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
@@ -43,12 +40,23 @@
                     <ion-input type="text" formControlName="town"></ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label position="floating">Location</ion-label>
+                    <ion-input type="text" formControlName="location"></ion-input>
+                </ion-item>
+                <ion-item>
                     <ion-label position="floating">Ghana Post GPS</ion-label>
                     <ion-input type="text" formControlName="ghanaPostGps"></ion-input>
                 </ion-item>
+                <section padding-top text-center>
+                    <ion-button shape="round" fill="outline" (click)="setLocation()">Set Geolocation</ion-button>
+                </section>
                 <ion-item>
-                    <ion-label position="floating">Residential Address</ion-label>
-                    <ion-textarea placeholder="Residential Address" rows="3" formControlName="residentialAddress"></ion-textarea>
+                    <ion-label position="floating">Latitude</ion-label>
+                    <ion-input type="number" formControlName="latitude"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Longitude</ion-label>
+                    <ion-input type="number" formControlName="longitude"></ion-input>
                 </ion-item>
                 <section padding-top padding-bottom>
                     <ion-button expand="block" color="success" type="submit" [disabled]="!myForm.valid">Save</ion-button>
