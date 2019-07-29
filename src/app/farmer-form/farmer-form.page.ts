@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-farmer-form',
@@ -15,7 +16,7 @@ export class FarmerFormPage implements OnInit {
   type: string;
   genders = ['Male', 'Female'];
   farmers: any[];
-  constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private storageService: StorageService, public events: Events) { }
 
   ngOnInit() {
     this.setupForm();
@@ -72,7 +73,6 @@ export class FarmerFormPage implements OnInit {
 
     if (this.type === 'Edit') {
       const index = this.farmers.findIndex(x => x.id === form.id);
-      console.log(this.farmers);
       // const rec = this.farmers[index];
       this.farmers[index].modifiedAt = new Date();
       this.farmers[index].name = form.name;
@@ -82,12 +82,28 @@ export class FarmerFormPage implements OnInit {
       this.farmers[index].town = form.town;
       this.farmers[index].gender = form.gender;
       this.farmers[index].ghanaPostGps = form.ghanaPostGps;
-      console.log(this.farmers);
       this.storageService.setKeyValue('farmers', this.farmers);
       this.storageService.presentToast('Updated Successful');
     } else {
+      const ID = new Date().getTime();
+      const rec =  {
+        id : ID,
+        eId : ID,
+        modifiedAt : new Date(),
+        createdAt : new Date(),
+        name : form.name,
+        phoneNumber : form.phoneNumber,
+        dateOfBirth : new Date(form.dateOfBirth),
+        residentialAddress : form.residentialAddress,
+        town : form.town,
+        gender : form.gender,
+        ghanaPostGps : form.ghanaPostGps
+      };
+      this.farmers.push(rec);
+      this.storageService.setKeyValue('farmers', this.farmers);
       this.storageService.presentToast('Saved Successful');
     }
+    this.events.publish('farmers:changed');
     this.storageService.farmer = null;
     this.router.navigate(['/farmers']);
   }

@@ -1,9 +1,54 @@
 <ion-header>
     <ion-toolbar style="border-bottom: 3px solid green;">
-        <ion-title>farm-view</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/farmers"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Farm Details</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="edit()">
+        <ion-fab-button color="primary">
+            <ion-icon name="create"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-card>
+        <ion-item class="activated">
+            <ion-label>Code: {{record.code}}</ion-label>
+            <ion-badge color="medium" slot="end">{{record.farms}}</ion-badge>
+        </ion-item>
+        <ion-item class="activated">
+            <ion-label>Size: {{record.numberOfAcres}}</ion-label>
+        </ion-item>
+        <ion-item class="activated">
+            <ion-label>Farmer: {{record.farmer}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-label>{{record.phoneNumber}}</ion-label>
+        </ion-item>
+    </ion-card>
+    <ion-card>
+        <ion-item>
+            <ion-icon name="pin" slot="start"></ion-icon>
+            <ion-label>{{record.ghanaPostGps}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="globe" slot="start"></ion-icon>
+            <ion-label>{{record.longitude}}, {{record.latitude}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Location: {{record.location}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Town: {{record.town}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>District: {{record.district}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Region: {{record.region}}</ion-label>
+        </ion-item>
+    </ion-card>
 </ion-content>

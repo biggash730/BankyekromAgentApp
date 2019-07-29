@@ -1,9 +1,59 @@
 <ion-header>
     <ion-toolbar style="border-bottom: 3px solid green;">
-        <ion-title>farm-form</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/farmers"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{type}} Farmer</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-card style="border-bottom: solid 3px green;">
+        <ion-card-header>
+            <ion-card-subtitle>
+                Farmer Form
+            </ion-card-subtitle>
+            <ion-card-title>
+                {{type}} Farmer
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm.value)">
+                <ion-item>
+                    <ion-label position="floating">Name</ion-label>
+                    <ion-input type="text" formControlName="name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Phone Number</ion-label>
+                    <ion-input type="tel" formControlName="phoneNumber"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Date of Birth</ion-label>
+                    <ion-datetime formControlName="dateOfBirth" placeholder="Date of Birth"></ion-datetime>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Gender</ion-label>
+                    <ion-select placeholder="Select One" formControlName="gender">
+                        <ion-select-option value="Female">Female</ion-select-option>
+                        <ion-select-option value="Male">Male</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Town</ion-label>
+                    <ion-input type="text" formControlName="town"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Ghana Post GPS</ion-label>
+                    <ion-input type="text" formControlName="ghanaPostGps"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Residential Address</ion-label>
+                    <ion-textarea placeholder="Residential Address" rows="3" formControlName="residentialAddress"></ion-textarea>
+                </ion-item>
+                <section padding-top padding-bottom>
+                    <ion-button expand="block" color="success" type="submit" [disabled]="!myForm.valid">Save</ion-button>
+                </section>
+            </form>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

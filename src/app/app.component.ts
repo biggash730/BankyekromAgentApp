@@ -66,7 +66,7 @@ export class AppComponent {
           this.storage.getCurrentUser().then((v) => {
             this.user = v;
             // this.router.navigate(['/dashboard']);
-            this.router.navigate(['/farmers']);
+            this.router.navigate(['/farms']);
           });
         } else {
           this.router.navigate(['/login']);

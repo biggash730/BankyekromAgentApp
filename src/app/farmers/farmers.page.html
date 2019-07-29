@@ -16,8 +16,8 @@
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
-    <ion-list>
-        <ion-item *ngFor="let itm of records; let i = index" (click)="open(itm)">
+    <ion-virtual-scroll [items]="records" approxItemHeight="320px">
+        <ion-item *virtualItem="let itm; let itemBounds = bounds;" (click)="open(itm)">
             <ion-label>
                 <h2>{{itm.name}}</h2>
                 <h3>{{itm.gender}} | {{itm.phoneNumber}}</h3>
@@ -25,9 +25,5 @@
             </ion-label>
             <ion-badge color="medium" slot="end">{{itm.farms}}</ion-badge>
         </ion-item>
-    </ion-list>
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+    </ion-virtual-scroll>
 </ion-content>

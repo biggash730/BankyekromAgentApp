@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, Events } from '@ionic/angular';
 import { StorageService } from '../services/storage.service';
-import { IonInfiniteScroll } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,25 +11,15 @@ import { Router } from '@angular/router';
 export class FarmersPage implements OnInit {
   records: any[];
   total: number;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  constructor(private router: Router, private storageService: StorageService, public menuCtrl: MenuController) {
+  constructor(private router: Router, private storageService: StorageService, public menuCtrl: MenuController, public events: Events) {
   }
 
   ngOnInit() {
     this.getFarmers();
     this.storageService.farmer = null;
-  }
-
-  loadData(event) {
-    setTimeout(() => {
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.records.length === this.total) {
-        event.target.disabled = true;
-      }
-    }, 500);
+    this.events.subscribe('farmers:changed', () => {
+      this.getFarmers();
+    });
   }
 
   getFarmers() {
@@ -44,9 +33,5 @@ export class FarmersPage implements OnInit {
   open(obj: any) {
     this.storageService.farmer = obj;
     this.router.navigateByUrl(`/farmer-view`);
-  }
-
-  addNew() {
-
   }
 }
