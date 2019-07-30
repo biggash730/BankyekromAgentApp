@@ -26,7 +26,6 @@ export class FarmFormPage implements OnInit {
     this.record = this.storageService.farm;
     if (this.record) {
       this.type = 'Edit';
-      console.log(this.record);
       this.myForm.patchValue(this.record);
       this.myForm.patchValue({
         createdAt: new Date(this.record.createdAt).toISOString().substring(0, 10),

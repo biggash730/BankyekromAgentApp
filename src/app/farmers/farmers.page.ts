@@ -33,7 +33,9 @@ export class FarmersPage implements OnInit {
     this.storageService.getKeyValue('farmers').then(
       data => {
         this.records = data;
-        this.total = data.length;
+        if (data) {
+          this.total = data.length;
+        }
       }
     );
   }

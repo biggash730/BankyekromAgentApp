@@ -18,7 +18,6 @@ export class FarmsPage implements OnInit {
   ngOnInit() {
     const self = this;
     this.getFarms();
-    console.log('farms:ngOnInit');
     this.storageService.farm = null;
     this.events.subscribe('farms:changed', () => {
       setTimeout(() => {
@@ -34,7 +33,9 @@ export class FarmsPage implements OnInit {
     await this.storageService.getKeyValue('farms').then(
       data => {
         this.records = data;
-        this.total = data.length;
+        if (data) {
+          this.total = data.length;
+        }
       }
     );
   }

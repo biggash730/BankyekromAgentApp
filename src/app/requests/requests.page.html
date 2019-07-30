@@ -3,10 +3,28 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>requests</ion-title>
+        <ion-title>Service Requests</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar [(ngModel)]="filter"></ion-searchbar>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="/request-form" routerDirection="forward">
+        <ion-fab-button color="success">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-virtual-scroll [items]="records" approxItemHeight="320px">
+        <ion-item *virtualItem="let itm; let itemBounds = bounds;" (click)="open(itm)">
+            <ion-label>
+                <h2>{{itm.code}} | {{itm.farmer}}</h2>
+                <h3>Geolocation: {{itm.longitude}} | {{itm.latitude}}</h3>
+                <p>Location: {{itm.location}}</p>
+                <p>Town: {{itm.town}}</p>
+            </ion-label>
+            <ion-badge color="medium" slot="end">{{itm.numberOfAcres}}</ion-badge>
+        </ion-item>
+    </ion-virtual-scroll>
 </ion-content>
