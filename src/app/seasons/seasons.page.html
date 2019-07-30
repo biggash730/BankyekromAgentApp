@@ -19,7 +19,7 @@
     <ion-virtual-scroll [items]="records" approxItemHeight="320px">
         <ion-item *virtualItem="let itm; let itemBounds = bounds;" (click)="open(itm)">
             <ion-label>
-                <h2>{{itm.datePlanted}} | {{itm.projectedHarvestDate}}</h2>
+                <h2>{{itm.datePlanted | date:'mediumDate'}} | {{itm.projectedHarvestDate | date:'mediumDate'}}</h2>
                 <h2>{{itm.farm}} | {{itm.farmer}}</h2>
                 <p>Variety: {{itm.variety}}</p>
                 <h3>Geolocation: {{itm.longitude}} | {{itm.latitude}}</h3>
