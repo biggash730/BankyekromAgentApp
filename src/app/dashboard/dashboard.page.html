@@ -19,7 +19,7 @@
             <ion-card style="border-bottom: 3px solid green;">
                 <ion-card-header text-center>
                     <ion-card-title>
-                        <ion-badge color="light"> 200</ion-badge>
+                        <ion-badge color="light">{{totalFarmers | number}}</ion-badge>
                     </ion-card-title>
                 </ion-card-header>
                 <ion-card-content text-center>
@@ -31,7 +31,7 @@
             <ion-card style="border-bottom: 3px solid green;">
                 <ion-card-header text-center>
                     <ion-card-title>
-                        <ion-badge color="light"> 1,100</ion-badge>
+                        <ion-badge color="light">{{totalFarms | number}}</ion-badge>
                     </ion-card-title>
                 </ion-card-header>
                 <ion-card-content text-center>
@@ -45,7 +45,7 @@
             <ion-card style="border-bottom: 3px solid green;">
                 <ion-card-header text-center>
                     <ion-card-title>
-                        <ion-badge color="light"> 3,400</ion-badge>
+                        <ion-badge color="light">{{totalSeasons | number}}</ion-badge>
                     </ion-card-title>
                 </ion-card-header>
                 <ion-card-content text-center>
@@ -57,7 +57,7 @@
             <ion-card style="border-bottom: 3px solid green;">
                 <ion-card-header text-center>
                     <ion-card-title>
-                        <ion-badge color="light"> 15,200</ion-badge>
+                        <ion-badge color="light">{{totalRequests | number}}</ion-badge>
                     </ion-card-title>
                 </ion-card-header>
                 <ion-card-content text-center>
@@ -73,11 +73,7 @@
         <ion-icon name="list-box" slot="start" color="danger"></ion-icon>
     </ion-item-divider>
     <ion-list>
-        <ion-item>Item 1</ion-item>
-        <ion-item>Item 2</ion-item>
-        <ion-item>Item 3</ion-item>
-        <ion-item>Item 4</ion-item>
-        <ion-item>Item 5</ion-item>
+        <ion-item *ngFor="let f of farmers; let i = index">{{i+1}}. {{f.name}}</ion-item>
     </ion-list>
     <ion-item-divider class="item-divider">
         <ion-label>
@@ -86,10 +82,6 @@
         <ion-icon name="list-box" slot="start" color="danger"></ion-icon>
     </ion-item-divider>
     <ion-list>
-        <ion-item>Item 1</ion-item>
-        <ion-item>Item 2</ion-item>
-        <ion-item>Item 3</ion-item>
-        <ion-item>Item 4</ion-item>
-        <ion-item>Item 5</ion-item>
+        <ion-item *ngFor="let f of farms; let i = index">{{i+1}}. {{f.code}} | {{f.farmer}}</ion-item>
     </ion-list>
 </ion-content>
