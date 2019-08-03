@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>sync</ion-title>
-  </ion-toolbar>
+    <ion-toolbar style="border-bottom: 3px solid green;">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Sync Data Page</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content fullscreen>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle>Bankyekrom Data Sync Page</ion-card-subtitle>
+            <ion-card-title>Sync Data</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            This will push the data captured to the Bankyekrom Servers.
+        </ion-card-content>
+        <ion-card-content [hidden]="!syncStarted">
+            <ion-progress-bar type="indeterminate" color="danger" style="margin-bottom: 30px;"></ion-progress-bar>
+            <ion-card-subtitle>{{activity}}</ion-card-subtitle>
+            <ion-progress-bar type="indeterminate" reversed="true" color="danger" style="margin-top: 30px;"></ion-progress-bar>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

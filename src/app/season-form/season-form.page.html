@@ -1,9 +1,48 @@
 <ion-header>
     <ion-toolbar style="border-bottom: 3px solid green;">
-        <ion-title>season-form</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/seasons"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{type}} Season</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-card style="border-bottom: solid 3px green;">
+        <ion-card-header>
+            <ion-card-subtitle>
+                Season Form
+            </ion-card-subtitle>
+            <ion-card-title>
+                {{type}} Season
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm.value)">
+                <ion-item>
+                    <ion-label position="floating">Farm</ion-label>
+                    <ion-select placeholder="Farm" formControlName="farmId">
+                        <ion-select-option *ngFor="let f of farms" value="{{f.id}}">{{f.code}}-{{f.farmer}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Variety</ion-label>
+                    <ion-select placeholder="Service" formControlName="varietyId">
+                        <ion-select-option *ngFor="let f of varieties" value="{{f.id}}">{{f.name}}</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Date Planted</ion-label>
+                    <ion-datetime formControlName="datePlanted" placeholder="Date Planted"></ion-datetime>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Notes</ion-label>
+                    <ion-textarea placeholder="Notes" rows="2" formControlName="notes"></ion-textarea>
+                </ion-item>
+                <section padding-top padding-bottom>
+                    <ion-button expand="block" color="success" type="submit" [disabled]="!myForm.valid">Save</ion-button>
+                </section>
+            </form>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

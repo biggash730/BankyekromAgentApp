@@ -36,7 +36,7 @@ export class SeasonsPage implements OnInit {
         if (data) {
           this.total = data.length;
         }
-        console.log(data);
+        // console.log(data);
       }
     );
   }
