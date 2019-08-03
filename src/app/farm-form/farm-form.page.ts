@@ -82,6 +82,9 @@ export class FarmFormPage implements OnInit {
     this.storageService.getKeyValue('farms').then(
       data => {
         this.farms = data;
+        if (this.farms == null) {
+          this.farms = [];
+        }
       }
     );
   }

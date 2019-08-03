@@ -37,11 +37,11 @@ export class AppComponent {
       url: '/farmers',
       icon: 'list'
     },
-    {
-      title: 'Settings',
-      url: '/settings',
-      icon: 'list'
-    },
+    // {
+    //   title: 'Settings',
+    //   url: '/settings',
+    //   icon: 'list'
+    // },
     {
       title: 'Sync Data',
       url: '/sync',

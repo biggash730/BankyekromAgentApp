@@ -36,7 +36,6 @@ export class RequestsPage implements OnInit {
         if (data) {
           this.total = data.length;
         }
-        console.log(data);
       }
     );
   }
