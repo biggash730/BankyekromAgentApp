@@ -8,8 +8,8 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class ApisService {
 
-  // apiUrl = 'https://bankyekrom.azurewebsites.net/api/';
-  apiUrl = 'http://localhost:1501/api/';
+  apiUrl = 'https://bankyekrom.azurewebsites.net/api/';
+  // apiUrl = 'http://localhost:1501/api/';
 
   constructor(private http: HttpClient) { }
 
