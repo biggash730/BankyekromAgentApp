@@ -23,7 +23,7 @@ export class SeasonFormPage implements OnInit {
 
   ngOnInit() {
     this.setupForm();
-    this.record = this.storageService.request;
+    this.record = this.storageService.season;
     if (this.record) {
       this.type = 'Edit';
       this.myForm.patchValue(this.record);
@@ -116,7 +116,7 @@ export class SeasonFormPage implements OnInit {
         createdAt: new Date(),
         notes: form.notes,
         datePlanted: form.datePlanted,
-        varietyId: form.serviceId,
+        varietyId: form.varietyId,
         variety: variet.name,
         farmId: form.farmId,
         farmCode: farm.code,

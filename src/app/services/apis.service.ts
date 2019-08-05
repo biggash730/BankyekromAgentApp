@@ -84,6 +84,14 @@ export class ApisService {
       );
   }
 
+  pushData(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'agents/saveofflinedata', data)
+      .pipe(
+        tap(_ => this.log('push data')),
+        catchError(this.handleError('push data', []))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

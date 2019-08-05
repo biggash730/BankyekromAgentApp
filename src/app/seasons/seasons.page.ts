@@ -18,7 +18,7 @@ export class SeasonsPage implements OnInit {
   ngOnInit() {
     const self = this;
     this.getSeasons();
-    this.storageService.farm = null;
+    this.storageService.season = null;
     this.events.subscribe('seasons:changed', () => {
       setTimeout(() => {
         this.zone.run(() => {

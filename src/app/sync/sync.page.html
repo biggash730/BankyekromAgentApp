@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Sync Data Page</ion-title>
+        <ion-title>Sync Data</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -13,8 +13,11 @@
             <ion-card-subtitle>Bankyekrom Data Sync Page</ion-card-subtitle>
             <ion-card-title>Sync Data</ion-card-title>
         </ion-card-header>
-        <ion-card-content>
-            This will push the data captured to the Bankyekrom Servers.
+        <ion-card-content [hidden]="syncStarted">
+            Press Sync now to push the data captured to the Bankyekrom Servers.
+            <section padding-top padding-bottom>
+                <ion-button expand="block" color="success" (click)="beginSetup()">Sync Now</ion-button>
+            </section>
         </ion-card-content>
         <ion-card-content [hidden]="!syncStarted">
             <ion-progress-bar type="indeterminate" color="danger" style="margin-bottom: 30px;"></ion-progress-bar>

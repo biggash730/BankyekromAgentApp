@@ -12,137 +12,92 @@ import { MenuController } from '@ionic/angular';
 export class SyncPage implements OnInit {
   activity: string;
   syncStarted: boolean;
+  data: any;
   constructor(private router: Router, private apisService: ApisService,
               private storageService: StorageService, public menuCtrl: MenuController) {
     this.activity = 'Syncing Data';
-    this.menuCtrl.enable(false);
   }
 
   ngOnInit() {
-    // this.beginSetup();
+    this.data = {};
   }
-  beginSetup() {
+  async beginSetup() {
     this.syncStarted = true;
-    this.pullVarieties();
+    await this.getFarmers();
   }
-  pullVarieties() {
-    this.activity = 'Pulling Varieties';
-    this.apisService.getVarieties()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Varieties';
-          this.activity = 'Saving Varieties';
-          this.storageService.setKeyValue('varieties', res.data);
-          this.activity = 'Finished Saving Varieties';
-          this.pullServices();
+  async getFarmers() {
+    console.log(1);
+    await this.storageService.getKeyValue('farmers').then(
+      data => {
+        if (data) {
+          this.data.farmers = data;
         }
-      }, (err) => {
-        console.log(err);
-      });
-
+        this.getFarms();
+      }
+    );
   }
 
-  pullServices() {
-    this.activity = 'Pulling Services';
-    this.apisService.getServices()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Services';
-          this.activity = 'Saving Services';
-          this.storageService.setKeyValue('services', res.data);
-          this.activity = 'Finished Saving Services';
-          this.pullRegions();
+  async getFarms() {
+    console.log(2);
+    await this.storageService.getKeyValue('farms').then(
+      data => {
+        if (data) {
+          this.data.farms = data;
         }
-      }, (err) => {
-        console.log(err);
-      });
+        this.getSeasons();
+      }
+    );
   }
 
-  pullRegions() {
-    this.activity = 'Pulling Regions';
-    this.apisService.getRegions()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Regions';
-          this.activity = 'Saving Regions';
-          this.storageService.setKeyValue('regions', res.data);
-          this.activity = 'Finished Saving Regions';
-          this.pullDistricts();
+  async getSeasons() {
+    console.log(3);
+    await this.storageService.getKeyValue('seasons').then(
+      data => {
+        if (data) {
+          this.data.seasons = data;
         }
-      }, (err) => {
-        console.log(err);
-      });
+        this.getRequests();
+      }
+    );
   }
 
-  pullDistricts() {
-    this.activity = 'Pulling Districts';
-    this.apisService.getDistricts()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Districts';
-          this.activity = 'Saving Districts';
-          this.storageService.setKeyValue('districts', res.data);
-          this.activity = 'Finished Saving Districts';
-          this.pullFarmers();
+  async getRequests() {
+    console.log(4);
+    await this.storageService.getKeyValue('requests').then(
+      data => {
+        if (data) {
+          this.data.requests = data;
         }
-      }, (err) => {
-        console.log(err);
-      });
+        this.pushData();
+      }
+    );
   }
 
-
-  pullFarmers() {
-    this.activity = 'Pulling Farmers';
-    this.apisService.getFarmers()
+  pushData() {
+    console.log(5);
+    this.activity = 'Pushing Data';
+    this.apisService.pushData(this.data)
       .subscribe(res => {
+        this.syncStarted = false;
         if (res.success) {
-          this.activity = 'Finished Pulling Farmers';
-          this.activity = 'Saving Farmers';
-          this.storageService.setKeyValue('farmers', res.data);
-          this.activity = 'Finished Saving Farmers';
-          this.pullFarms();
-        }
-      }, (err) => {
-        console.log(err);
-      });
-  }
-
-  pullFarms() {
-    this.activity = 'Pulling Farms';
-    this.apisService.getFarms()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Farms';
-          this.activity = 'Saving Farms';
-          this.storageService.setKeyValue('farms', res.data);
-          this.activity = 'Finished Saving Farms';
-          this.pullSeasons();
-        }
-      }, (err) => {
-        console.log(err);
-      });
-
-  }
-
-  pullSeasons() {
-    this.activity = 'Pulling Seasons';
-    this.apisService.getSeasons()
-      .subscribe(res => {
-        if (res.success) {
-          this.activity = 'Finished Pulling Seasons';
-          this.activity = 'Saving Seasons';
-          this.storageService.setKeyValue('seasons', res.data);
-          this.activity = 'Finished Saving Seasons';
+          this.activity = 'Finished Pushing Data';
           this.onFinish();
+        } else {
+          this.activity = res.message;
         }
       }, (err) => {
         console.log(err);
       });
-
   }
+
 
   onFinish() {
-    this.menuCtrl.enable(true);
-    this.router.navigate(['/dashboard']);
+    this.storageService.clear().then(
+      res => {
+        this.router.navigate(['/login']);
+      },
+      error => {
+      }
+    );
   }
 }
