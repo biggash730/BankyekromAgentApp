@@ -11,6 +11,7 @@ import { MenuController, Events } from '@ionic/angular';
 export class RequestsPage implements OnInit {
   records: any[];
   total: number;
+  filter: string;
   constructor(private router: Router, private storageService: StorageService,
               public menuCtrl: MenuController, public events: Events, private zone: NgZone) {
   }
