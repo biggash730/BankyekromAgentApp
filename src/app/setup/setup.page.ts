@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ApisService } from '../services/apis.service';
 import { StorageService } from '../services/storage.service';
-import { DatabaseService } from '../services/database.service';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 

@@ -60,8 +60,11 @@ export class AppComponent {
   }
 
   initializeApp() {
+    console.log(0);
     this.platform.ready().then(() => {
+      console.log(1);
       this.storage.isLoggedIn().then((val) => {
+        console.log(2);
         if (val) {
           this.storage.getCurrentUser().then((v) => {
             this.user = v;
