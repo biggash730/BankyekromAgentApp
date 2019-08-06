@@ -1,0 +1,7 @@
+{
+  "appId": "com.bankyekrom.agent",
+  "appName": "bankyekromAgentApp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

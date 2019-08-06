@@ -1,7 +1,8 @@
 {
   "name": "bankyekromAgentApp",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }
