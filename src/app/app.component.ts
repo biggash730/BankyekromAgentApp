@@ -73,7 +73,6 @@ export class AppComponent implements OnInit  {
           this.storage.getCurrentUser().then((v) => {
             this.user = v;
             this.router.navigate(['/dashboard']);
-            // this.router.navigate(['/requests']);
           });
         } else {
           this.router.navigate(['/login']);

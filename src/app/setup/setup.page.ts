@@ -15,7 +15,7 @@ export class SetupPage implements OnInit {
   constructor(private router: Router, private apisService: ApisService,
               private storageService: StorageService, public menuCtrl: MenuController) {
     this.activity = 'Syncing Data';
-    this.menuCtrl.enable(false);
+    // this.menuCtrl.enable(false);
   }
 
   ngOnInit() {
@@ -142,7 +142,7 @@ export class SetupPage implements OnInit {
   }
 
   onFinish() {
-    this.menuCtrl.enable(true);
+    // this.menuCtrl.enable(true);
     this.router.navigate(['/dashboard']);
   }
 }
